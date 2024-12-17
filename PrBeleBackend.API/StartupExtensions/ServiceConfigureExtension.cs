@@ -1,5 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PrBeleBackend.Core.Domain.RepositoryContracts;
+using PrBeleBackend.Core.ServiceContracts.CategoryContracts;
+using PrBeleBackend.Core.Services.CategoryServices;
 using PrBeleBackend.Infrastructure.DbContexts;
+using PrBeleBackend.Infrastructure.Repositories;
 
 namespace PrBeleBackend.API.StartupExtensions
 {
@@ -15,7 +19,18 @@ namespace PrBeleBackend.API.StartupExtensions
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnect"));
             });
-            
+
+            #region DI Category
+            Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            Services.AddScoped<ICategoryAdderService, CategoryAdderService>();
+            Services.AddScoped<ICategoryGetterService, CategoryGetterService>();
+            Services.AddScoped<ICategoryUpdaterService, CategoryUpdaterService>();
+            Services.AddScoped<ICategorySorterService, CategorySorterService>();
+            Services.AddScoped<ICategoryDeleterService, CategoryDeleterService>();
+
+            #endregion
+
+
         }
     }
 }

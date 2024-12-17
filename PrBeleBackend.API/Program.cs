@@ -1,4 +1,5 @@
 using PrBeleBackend.API.StartupExtensions;
+using PrBeleBackend.Infrastructure.Seeder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,9 +17,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
+SeedData.EnsurePopulated(app);
 app.Run();
