@@ -1,0 +1,3 @@
+NullReferenceException: Tham chiếu đến một đối tượng null.
+ArgumentException: Tham số không hợp lệ.
+InvalidOperationException: Thao tác không hợp lệ trong trạng thái hiện tại.
