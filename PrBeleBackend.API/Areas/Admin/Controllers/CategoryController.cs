@@ -14,7 +14,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         private readonly ICategoryAdderService _categoryAdderService;
         private readonly ICategoryUpdaterService _categoryUpdaterService;
         private readonly ICategoryDeleterService _categoryDeleterService;
-        public CategoryController(ICategoryGetterService categoryGetterService,
+        public CategoryController(
+            ICategoryGetterService categoryGetterService,
             ICategoryAdderService categoryAdderService,
             ICategoryUpdaterService categoryUpdaterService,
             ICategoryDeleterService categoryDeleterService)
@@ -31,6 +32,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             IEnumerable<CategoryResponse> categories = await _categoryGetterService.GetAllCategory();
             return Ok(categories);
         }
+
         [HttpGet("{Id}")]
         public async Task<IActionResult> Detail(int Id)
         {

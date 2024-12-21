@@ -19,8 +19,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
 
         public CategoryRepository(BeleStoreContext context) { 
             _context = context;
-        
         }
+
         public async Task<List<Category>> GetAllCategory()
         {
             return await _context.categories

@@ -32,6 +32,7 @@ namespace PrBeleBackend.Core.Domain.Entities
         public bool Deleted { get; set; } = false;
 
         public DateTime CreatedAt { get; set; }
+
         public DateTime UpdatedAt { get; set; }
 
         public Category? Category { get; set; }

@@ -13,10 +13,10 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
     {
         public Task<List<Category>> GetAllCategory();
 
-
         public Task<List<Category>> GetFilteredCategory(Expression<Func<Category, bool>> predicate);
 
         public Task<Category?> GetCategoryById(int? Id);
+
         public Task<Category> AddCategory(Category category);
 
         public Task<Category> UpdateCategory(Category category);
