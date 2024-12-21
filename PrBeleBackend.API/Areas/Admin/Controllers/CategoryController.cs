@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.CategoryDTOs;
 using PrBeleBackend.Core.ServiceContracts.CategoryContracts;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
@@ -26,22 +28,56 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? searchBy, string? searchString)
         {
-            IEnumerable<CategoryResponse> categories = await _categoryGetterService.GetAllCategory();
-            return Ok(categories);
+            List<CategoryResponse> categories = await _categoryGetterService.GetFilteredCategory(searchBy,searchString);
+            List<CategoryResponse> all = await _categoryGetterService.GetAllCategory();
+            var data = categories.Select(category => new
+            {
+                Id = category.Id,
+                Name = category.Name,
+                ReferenceCategory = all.FirstOrDefault(item=>item.Id == category.ReferenceCategoryId),
+                Status = category.Status,
+                Slug = category.Slug,
+                CreatedAt = category.CreatedAt,
+                UpdatedAt = category.UpdatedAt,
+            });
+            return Ok(new
+            {
+                status = 200,
+                data = new {
+                    categories = data,
+                },
+                message = "Successful !"
+            });
         }
         [HttpGet("{Id}")]
         public async Task<IActionResult> Detail(int Id)
         {
             try
             {
-                CategoryResponse categories = await _categoryGetterService.GetCategoryById(Id);
-                return Ok(categories);
+                CategoryResponse? categories = await _categoryGetterService.GetCategoryById(Id);
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        categories = categories,
+                    },
+                    message = "Successful !"
+                });
             }
             catch (Exception ex) { 
             
-               return BadRequest(ex.Message);
+               return BadRequest(new
+               {
+                   status = 200,
+                   data = new
+                   {
+                       
+                   },
+                   message = ex.Message
+               });
             }
  
         }
@@ -52,10 +88,26 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             try
             {
                 CategoryResponse category = await _categoryAdderService.AddCategory(categoryAddRequest);
-                return Ok(category);
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        category = category,
+                    },
+                    message = "Successful !"
+                });
             }
             catch (Exception ex) {
-                return BadRequest(ex.Message);
+                return BadRequest(new
+                {
+                    status = 404,
+                    data = new
+                    {
+
+                    },
+                    message = ex.Message
+                });
 
             }
 
@@ -68,12 +120,27 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             {
                 CategoryResponse category = await _categoryUpdaterService
                     .UpdateCategory(Id, categoryUpdateRequest);
-                return Ok(category);
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        category = category,
+                    },
+                    message = "Successful !"
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new
+                {
+                    status = 404,
+                    data = new
+                    {
 
+                    },
+                    message = ex.Message
+                });
             }
         }
 
@@ -82,12 +149,28 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         {
             try
             {
-                return Ok(await _categoryDeleterService.DeleteCategoryById(Id));
+                bool result = await _categoryDeleterService.DeleteCategoryById(Id);
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                    },
+                    message = result.ToString()
+                });
             }
             catch (Exception ex)
             {
 
-                return BadRequest(ex.Message);  
+                return BadRequest(new
+                {
+                    status = 404,
+                    data = new
+                    {
+
+                    },
+                    message = ex.Message
+                });  
             }
 
         }

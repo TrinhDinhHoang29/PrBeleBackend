@@ -35,6 +35,7 @@ namespace PrBeleBackend.Infrastructure.DbContexts
             modelBuilder.Entity<Variant>().ToTable("Variant");
             modelBuilder.Entity<VariantAttributeValue>().ToTable("VariantAttributeValue");
 
+
             modelBuilder.Entity<Product>()
             .HasOne(p => p.Category)          // Product có 1 Category
             .WithMany(c => c.Products)        // Category có nhiều Product

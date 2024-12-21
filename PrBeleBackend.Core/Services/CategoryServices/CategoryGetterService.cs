@@ -26,16 +26,15 @@ namespace PrBeleBackend.Core.Services.CategoryServices
             return categories.Select(category => category.ToCategoryResponse()).ToList();
         }
 
-        public async Task<CategoryResponse> GetCategoryById(int Id)
+        public async Task<CategoryResponse?> GetCategoryById(int Id)
         {
-            //throw new NotImplementedException();
-            Category? category = await _categoryRepository.GetCategoryById(Id);
-            if (category == null)
+
+            Category? categoryDetail = await _categoryRepository.GetCategoryById(Id);
+            if (categoryDetail == null)
             {
-                throw new NullReferenceException($"Category with Id = {Id} not found");
+                return null;
             }
-            Category? resultUpdate = await _categoryRepository.UpdateCategory(category);
-            return resultUpdate.ToCategoryResponse();
+            return categoryDetail.ToCategoryResponse();
         }
 
         public async Task<List<CategoryResponse>> GetFilteredCategory(string? searchBy, string? searchString)
@@ -54,6 +53,12 @@ namespace PrBeleBackend.Core.Services.CategoryServices
                         .GetFilteredCategory(category => category.Name.Contains(searchString));
                     return resultFilteredCategoryByName
                         .Select(cate=>cate.ToCategoryResponse())
+                        .ToList();
+                case nameof(Category.ReferenceCategoryId):
+                    List<Category> resultFilteredCategoryByRefe = await _categoryRepository
+                        .GetFilteredCategory(category => searchString=="0"?category.ReferenceCategoryId==0 : category.ReferenceCategoryId != 0);
+                    return resultFilteredCategoryByRefe
+                        .Select(cate => cate.ToCategoryResponse())
                         .ToList();
                 default:
                     return categories
