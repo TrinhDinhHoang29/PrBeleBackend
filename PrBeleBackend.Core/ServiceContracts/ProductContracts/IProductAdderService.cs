@@ -8,5 +8,6 @@ namespace PrBeleBackend.Core.ServiceContracts.ProductContracts
 {
     public interface IProductAdderService
     {
+        
     }
 }

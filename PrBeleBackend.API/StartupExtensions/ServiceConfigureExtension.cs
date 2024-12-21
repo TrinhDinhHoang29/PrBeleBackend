@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.ServiceContracts.CategoryContracts;
+using PrBeleBackend.Core.ServiceContracts.ProductContracts;
 using PrBeleBackend.Core.Services.CategoryServices;
+using PrBeleBackend.Core.Services.ProductServices;
 using PrBeleBackend.Infrastructure.DbContexts;
 using PrBeleBackend.Infrastructure.Repositories;
 
@@ -27,6 +29,9 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<ICategoryUpdaterService, CategoryUpdaterService>();
             Services.AddScoped<ICategorySorterService, CategorySorterService>();
             Services.AddScoped<ICategoryDeleterService, CategoryDeleterService>();
+
+            Services.AddScoped<IProductRepository, ProductRepository>();
+            Services.AddScoped<IProductGetterService, ProductGetterService>();
 
             #endregion
 
