@@ -21,14 +21,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PrBeleBackend.core\PrBeleBackend.Core.csproj" />
-    <ProjectReference Include="..\PrBeleBackend.Infrastructure\PrBeleBackend.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PrBeleBackend.core\PrBeleBackend.Core.csproj" />
+    <ProjectReference Include="..\PrBeleBackend.Infrastructure\PrBeleBackend.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
