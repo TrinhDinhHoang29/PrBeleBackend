@@ -16,13 +16,15 @@ namespace PrBeleBackend.Infrastructure.DbContexts
         }
         public DbSet<Category> categories { get; set; }
         public DbSet<Product> products { get; set; }
-
         public DbSet<ProductAttributeType> productAttributeTypes { get; set; }
         public DbSet<AttributeType> attributeTypes { get; set; }
         public DbSet<AttributeValue> attributeValues { get; set; }
         public DbSet<Variant> variants { get; set; }
         public DbSet<VariantAttributeValue> variantAttributeValues { get; set; }
-
+        public DbSet<Account> accounts { get; set; }
+        public DbSet<Permission> permissions { get; set; } 
+        public DbSet<Role> roles { get; set; }
+        public DbSet<RolePermission> rolePermissions { get; set; }
 
         protected override void  OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,7 +36,10 @@ namespace PrBeleBackend.Infrastructure.DbContexts
             modelBuilder.Entity<AttributeValue>().ToTable("AttributeValue");
             modelBuilder.Entity<Variant>().ToTable("Variant");
             modelBuilder.Entity<VariantAttributeValue>().ToTable("VariantAttributeValue");
-
+            modelBuilder.Entity<Role>().ToTable("Role");
+            modelBuilder.Entity<Account>().ToTable("Account");
+            modelBuilder.Entity<Permission>().ToTable("Permission");
+            modelBuilder.Entity<RolePermission>().ToTable("RolePermission");
 
             modelBuilder.Entity<Product>()
             .HasOne(p => p.Category)          // Product có 1 Category
@@ -69,6 +74,26 @@ namespace PrBeleBackend.Infrastructure.DbContexts
                 .HasOne(v=>v.Product)
                 .WithMany(p=>p.Variants)
                 .HasForeignKey(p=>p.ProductId);
+
+            //role
+            modelBuilder.Entity<Role>()
+                .HasMany(r => r.RolePermissions)
+                .WithOne(p => p.Role)
+                .HasForeignKey(p => p.RoleId);
+            //permission
+            modelBuilder.Entity<Permission>()
+               .HasMany(r => r.RolePermissions)
+               .WithOne(p => p.Permission)
+               .HasForeignKey(p => p.PermissionId);
+            //rolePermission
+            modelBuilder.Entity<RolePermission>()
+            .HasKey(r => new { r.PermissionId, r.RoleId});
+            //Account
+            modelBuilder.Entity<Account>()
+                .HasOne(a => a.Role)
+                .WithMany(r => r.Accounts)
+                .HasForeignKey(a => a.RoleId);
+
         }
     }
 }

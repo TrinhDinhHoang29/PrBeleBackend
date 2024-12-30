@@ -46,6 +46,32 @@ namespace PrBeleBackend.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Permission",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Permission", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Role",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Role", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AttributeValue",
                 columns: table => new
                 {
@@ -97,6 +123,58 @@ namespace PrBeleBackend.Infrastructure.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Category",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Account",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FullName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sex = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Deleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Account", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Account_Role_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Role",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RolePermission",
+                columns: table => new
+                {
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    PermissionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RolePermission", x => new { x.PermissionId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_RolePermission_Permission_PermissionId",
+                        column: x => x.PermissionId,
+                        principalTable: "Permission",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RolePermission_Role_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Role",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -175,6 +253,11 @@ namespace PrBeleBackend.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Account_RoleId",
+                table: "Account",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AttributeValue_AttributeTypeId",
                 table: "AttributeValue",
                 column: "AttributeTypeId");
@@ -188,6 +271,11 @@ namespace PrBeleBackend.Infrastructure.Migrations
                 name: "IX_ProductAttributeType_AttributeTypeId",
                 table: "ProductAttributeType",
                 column: "AttributeTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RolePermission_RoleId",
+                table: "RolePermission",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Variant_ProductId",
@@ -204,10 +292,22 @@ namespace PrBeleBackend.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Account");
+
+            migrationBuilder.DropTable(
                 name: "ProductAttributeType");
 
             migrationBuilder.DropTable(
+                name: "RolePermission");
+
+            migrationBuilder.DropTable(
                 name: "VariantAttributeValue");
+
+            migrationBuilder.DropTable(
+                name: "Permission");
+
+            migrationBuilder.DropTable(
+                name: "Role");
 
             migrationBuilder.DropTable(
                 name: "AttributeValue");

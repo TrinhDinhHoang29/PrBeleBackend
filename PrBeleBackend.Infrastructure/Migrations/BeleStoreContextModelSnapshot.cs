@@ -22,6 +22,57 @@ namespace PrBeleBackend.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Account", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Sex")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Account", (string)null);
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.AttributeType", b =>
                 {
                     b.Property<int>("Id")
@@ -113,6 +164,24 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.ToTable("Category", (string)null);
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Permission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permission", (string)null);
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -182,6 +251,39 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.ToTable("ProductAttributeType", (string)null);
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Role", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Role", (string)null);
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.RolePermission", b =>
+                {
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PermissionId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RolePermission", (string)null);
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Variant", b =>
                 {
                     b.Property<int>("Id")
@@ -236,6 +338,17 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.ToTable("VariantAttributeValue", (string)null);
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Account", b =>
+                {
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Role", "Role")
+                        .WithMany("Accounts")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.AttributeValue", b =>
                 {
                     b.HasOne("PrBeleBackend.Core.Domain.Entities.AttributeType", "AttributeType")
@@ -275,6 +388,25 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("AttributeType");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.RolePermission", b =>
+                {
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Permission", "Permission")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Role", "Role")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Variant", b =>
@@ -324,11 +456,23 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Permission", b =>
+                {
+                    b.Navigation("RolePermissions");
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Product", b =>
                 {
                     b.Navigation("ProductAttributeTypes");
 
                     b.Navigation("Variants");
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Role", b =>
+                {
+                    b.Navigation("Accounts");
+
+                    b.Navigation("RolePermissions");
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Variant", b =>

@@ -843,6 +843,95 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.SaveChanges();
             }
 
+            if (!_context.roles.Any())
+            {
+                var rolesSeeder = new List<Role>()
+                {
+                    new Role()
+                    {
+                        Name = "Admin",
+                    },
+                    new Role()
+                    {
+                        Name = "Product Management",
+                    }
+                };
+                _context.roles.AddRange(rolesSeeder);
+                _context.SaveChanges();
+            }
+            if (!_context.accounts.Any())
+            {
+                var accountsSeeder = new List<Account>()
+                {
+                    new Account()
+                    {
+                        RoleId = 1,
+                        FullName = "John Doe",
+                        PhoneNumber = "1234567890",
+                        Email = "johndoe@example.com",
+                        Sex = "Male",
+                        Password = "hashed_password1",
+                        Status = 1,
+                        Deleted = false,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Account()
+                    {
+                        RoleId = 1,
+                        FullName = "Jane Smith",
+                        PhoneNumber = "0987654321",
+                        Email = "janesmith@example.com",
+                        Sex = "Male",
+                        Password = "hashed_password2",
+                        Status = 1,
+                        Deleted = false,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Account()
+                    {
+                        RoleId = 2,
+                        FullName = "Alice Johnson",
+                        PhoneNumber = "5678901234",
+                        Email = "alicej@example.com",
+                        Sex = "Male",
+                        Password = "hashed_password3",
+                        Status = 1,
+                        Deleted = false,
+                        CreatedAt = DateTime.Now,
+                            UpdatedAt = DateTime.Now,
+                    },
+                    new Account()
+                    {
+                        RoleId = 2,
+                        FullName = "Bob Brown",
+                        PhoneNumber = "4321098765",
+                        Email = "bobb@example.com",
+                        Sex = "Male",
+                        Password = "hashed_password4",
+                        Status = 0,
+                        Deleted = false,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Account()
+                    {
+                        RoleId = 1,
+                        FullName = "Charlie White",
+                        PhoneNumber = "1112223333",
+                        Email = "charliew@example.com",
+                        Sex = "Male",
+                        Password = "hashed_password5",
+                        Status = 1,
+                        Deleted = false,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                    }
+                };
+                _context.accounts.AddRange(accountsSeeder);
+                _context.SaveChanges();
+            }
         }
     }
 }
