@@ -9,16 +9,17 @@ builder.Services.ServiceConfigure(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("Allow3000", policy =>
+    options.AddPolicy("AllowAllOrigins", policy =>
     {
-        policy.WithOrigins("http://localhost:3000") // Cho phép từ cổng 3000
+        policy.AllowAnyOrigin() // Cho phép từ cổng 3000
               .AllowAnyHeader() // Cho phép mọi Header
               .AllowAnyMethod(); // Cho phép mọi phương thức (GET, POST, PUT, DELETE, ...)
     });
 });
+
 var app = builder.Build();
 
-app.UseCors("Allow3000");
+app.UseCors("AllowAllOrigins");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
