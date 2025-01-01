@@ -1,4 +1,5 @@
 ﻿using PrBeleBackend.Core.Domain.Entities;
+using PrBeleBackend.Core.DTO.RoleDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,9 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
     public interface IRoleRepository
     {
         public Task<List<Role>> GetAllRole();
+        public Task<List<Role>> DecentralizeAccount(DecentralizeRequest decentralizeRequest);
+        public Task<Role> GetRoleById(int Id);
+
+
     }
 }

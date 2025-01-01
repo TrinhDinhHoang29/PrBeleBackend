@@ -3,11 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Infrastructure.DbContexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PrBeleBackend.Infrastructure.Seeder
 {
@@ -930,6 +926,107 @@ namespace PrBeleBackend.Infrastructure.Seeder
                     }
                 };
                 _context.accounts.AddRange(accountsSeeder);
+                _context.SaveChanges();
+            }
+
+            if (!_context.permissions.Any())
+            {
+                var permissionsSeeder = new List<Permission>()
+{
+    // Quản lý sản phẩm
+    new Permission { Name = "Product Create", Code = "P-C" },
+    new Permission { Name = "Product Read", Code = "P-R" },
+    new Permission { Name = "Product Update", Code = "P-U" },
+    new Permission { Name = "Product Delete", Code = "P-D" },
+
+    // Quản lý thuộc tính sản phẩm
+    new Permission { Name = "Product Attribute Create", Code = "PA-C" },
+    new Permission { Name = "Product Attribute Read", Code = "PA-R" },
+    new Permission { Name = "Product Attribute Update", Code = "PA-U" },
+    new Permission { Name = "Product Attribute Delete", Code = "PA-D" },
+
+    // Quản lý biến thể sản phẩm
+    new Permission { Name = "Product Variant Create", Code = "PV-C" },
+    new Permission { Name = "Product Variant Read", Code = "PV-R" },
+    new Permission { Name = "Product Variant Update", Code = "PV-U" },
+    new Permission { Name = "Product Variant Delete", Code = "PV-D" },
+
+    // Quản lý danh mục
+    new Permission { Name = "Category Create", Code = "C-C" },
+    new Permission { Name = "Category Read", Code = "C-R" },
+    new Permission { Name = "Category Update", Code = "C-U" },
+    new Permission { Name = "Category Delete", Code = "C-D" },
+
+    // Quản lý nhân viên
+    new Permission { Name = "Account Create", Code = "A-C" },
+    new Permission { Name = "Account Read", Code = "A-R" },
+    new Permission { Name = "Account Update", Code = "A-U" },
+    new Permission { Name = "Account Delete", Code = "A-D" },
+
+    // Quản lý đánh giá
+    new Permission { Name = "Review Create", Code = "R-C" },
+    new Permission { Name = "Review Read", Code = "R-R" },
+    new Permission { Name = "Review Update", Code = "R-U" },
+    new Permission { Name = "Review Delete", Code = "R-D" },
+
+    // Quản lý đơn hàng
+    new Permission { Name = "Order Read", Code = "O-R" },
+    new Permission { Name = "Order Update", Code = "O-U" },
+    new Permission { Name = "Order Delete", Code = "O-D" },
+
+    // Quản lý khách hàng (Không có thêm)
+    new Permission { Name = "Customer Read", Code = "CU-R" },
+    new Permission { Name = "Customer Update", Code = "CU-U" },
+    new Permission { Name = "Customer Delete", Code = "CU-D" },
+
+    // Quản lý quyền
+    new Permission { Name = "Permission Management", Code = "P-M" }
+};
+
+
+                _context.permissions.AddRange(permissionsSeeder);
+                _context.SaveChanges();
+
+                var rolePermissionsSeed = new List<RolePermission>()
+                {
+                    new RolePermission { RoleId = 2, PermissionId = 1 },
+                    new RolePermission { RoleId = 2, PermissionId = 2 },
+                    new RolePermission { RoleId = 2, PermissionId = 3 },
+                    new RolePermission { RoleId = 2, PermissionId = 4 },
+                    new RolePermission { RoleId = 1, PermissionId = 2 },
+                    new RolePermission { RoleId = 1, PermissionId = 3 },
+                    new RolePermission { RoleId = 1, PermissionId = 4 },
+                    new RolePermission { RoleId = 1, PermissionId = 5 },
+                    new RolePermission { RoleId = 1, PermissionId = 6 },
+                    new RolePermission { RoleId = 1, PermissionId = 7 },
+                    new RolePermission { RoleId = 1, PermissionId = 8 },
+                    new RolePermission { RoleId = 1, PermissionId = 9 },
+                    new RolePermission { RoleId = 1, PermissionId = 10 },
+                    new RolePermission { RoleId = 1, PermissionId = 11 },
+                    new RolePermission { RoleId = 1, PermissionId = 12 },
+                    new RolePermission { RoleId = 1, PermissionId = 13 },
+                    new RolePermission { RoleId = 1, PermissionId = 14 },
+                    new RolePermission { RoleId = 1, PermissionId = 15 },
+                    new RolePermission { RoleId = 1, PermissionId = 16 },
+                    new RolePermission { RoleId = 1, PermissionId = 17 },
+                    new RolePermission { RoleId = 1, PermissionId = 18 },
+                    new RolePermission { RoleId = 1, PermissionId = 19 },
+                    new RolePermission { RoleId = 1, PermissionId = 20 },
+                    new RolePermission { RoleId = 1, PermissionId = 21 },
+                    new RolePermission { RoleId = 1, PermissionId = 22 },
+                    new RolePermission { RoleId = 1, PermissionId = 23 },
+                    new RolePermission { RoleId = 1, PermissionId = 24 },
+                    new RolePermission { RoleId = 1, PermissionId = 25 },
+                    new RolePermission { RoleId = 1, PermissionId = 26 },
+                    new RolePermission { RoleId = 1, PermissionId = 27 },
+                    new RolePermission { RoleId = 1, PermissionId = 28 },
+                    new RolePermission { RoleId = 1, PermissionId = 29 },
+                    new RolePermission { RoleId = 1, PermissionId = 30 },
+                    new RolePermission { RoleId = 1, PermissionId = 31 }
+
+                    //tới 31 
+                };
+                _context.rolePermissions.AddRange(rolePermissionsSeed);
                 _context.SaveChanges();
             }
         }

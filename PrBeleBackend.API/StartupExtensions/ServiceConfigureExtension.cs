@@ -56,6 +56,7 @@ namespace PrBeleBackend.API.StartupExtensions
             #region DI Role
             Services.AddScoped<IRoleRepository,RoleRepository>();
             Services.AddScoped<IRoleGetterService,RoleGetterService>();
+            Services.AddScoped<IRoleAdderService,RoleAdderService>();
             #endregion
         }
     }

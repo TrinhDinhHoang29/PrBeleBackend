@@ -1,6 +1,8 @@
 ﻿
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.AccountDTOs;
+using PrBeleBackend.Core.DTO.PermissionDTOs;
+using PrBeleBackend.Core.DTO.RolePermissionDTOs;
 
 namespace PrBeleBackend.Core.DTO.RoleDTOs
 {
@@ -8,6 +10,8 @@ namespace PrBeleBackend.Core.DTO.RoleDTOs
     {
         public int Id { get; set; }
         public string? Name { get; set; }
+        public List<RolePermissionResponse>? RolePermissions { get; set; }
+
     }
     public static class RoleResponseExtensions
     {
@@ -19,7 +23,12 @@ namespace PrBeleBackend.Core.DTO.RoleDTOs
             return new RoleResponse()
             {
                 Id = role.id,
-                Name = role.Name
+                Name = role.Name,
+                RolePermissions = role.RolePermissions
+                ?.Select(r =>
+                {
+                    return r.ToRolePermissionResponse();
+                }).ToList(),
             };
         }
     }

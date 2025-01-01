@@ -9,8 +9,6 @@ namespace PrBeleBackend.Core.DTO.AccountDTOs
         public int Id { get; set; }
         public string? FullName { get; set; }
 
-        public int RoleId { get; set; }
-
         public string? PhoneNumber { get; set; }
 
         public string? Email { get; set; }
@@ -32,7 +30,6 @@ namespace PrBeleBackend.Core.DTO.AccountDTOs
             {
                 Id = account.Id,
                 FullName = account.FullName,
-                RoleId = account.RoleId,
                 PhoneNumber = account.PhoneNumber,
                 Email = account.Email,
                 Sex = account.Sex,
