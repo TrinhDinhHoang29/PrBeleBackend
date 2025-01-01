@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrBeleBackend.Infrastructure.DbContexts;
 
@@ -11,9 +12,11 @@ using PrBeleBackend.Infrastructure.DbContexts;
 namespace PrBeleBackend.Infrastructure.Migrations
 {
     [DbContext(typeof(BeleStoreContext))]
-    partial class BeleStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20250101071405_AddNewModelCustomer")]
+    partial class AddNewModelCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,48 +74,6 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Account", (string)null);
-                });
-
-            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.AddressCustomer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("AddressCustomer", (string)null);
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.AttributeType", b =>
@@ -204,63 +165,6 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category", (string)null);
-                });
-
-            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<DateTime>("LastOperatingTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<string>("Sex")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalSpending")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Permission", b =>
@@ -451,17 +355,6 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.AddressCustomer", b =>
-                {
-                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Customer", "Customer")
-                        .WithMany("AddressCustomers")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.AttributeValue", b =>
                 {
                     b.HasOne("PrBeleBackend.Core.Domain.Entities.AttributeType", "AttributeType")
@@ -567,11 +460,6 @@ namespace PrBeleBackend.Infrastructure.Migrations
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Customer", b =>
-                {
-                    b.Navigation("AddressCustomers");
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Permission", b =>

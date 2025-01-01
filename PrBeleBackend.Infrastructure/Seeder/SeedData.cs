@@ -838,7 +838,6 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.variantAttributeValues.AddRange(variantAttributeValuesSeed);
                 _context.SaveChanges();
             }
-
             if (!_context.roles.Any())
             {
                 var rolesSeeder = new List<Role>()
@@ -928,7 +927,6 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.accounts.AddRange(accountsSeeder);
                 _context.SaveChanges();
             }
-
             if (!_context.permissions.Any())
             {
                 var permissionsSeeder = new List<Permission>()
@@ -1027,6 +1025,40 @@ namespace PrBeleBackend.Infrastructure.Seeder
                     //tới 31 
                 };
                 _context.rolePermissions.AddRange(rolePermissionsSeed);
+                _context.SaveChanges();
+            }
+            if (!_context.customers.Any())
+            {
+                var customerSeed = new List<Customer>() {
+                 new Customer {  FullName = "John Doe", PhoneNumber = "123456789", Email = "john.doe@example.com", Sex = "Male", Birthday = new DateTime(1985, 5, 15), Password = "password123", TotalSpending = 1500, LastOperatingTime = DateTime.Now, Status = 1, Deleted = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Customer { FullName = "Jane Smith", PhoneNumber = "987654321", Email = "jane.smith@example.com", Sex = "Female", Birthday = new DateTime(1990, 7, 22), Password = "securepass", TotalSpending = 2000, LastOperatingTime = DateTime.Now, Status = 1, Deleted = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Customer { FullName = "Alice Johnson", PhoneNumber = "567890123", Email = "alice.johnson@example.com", Sex = "Female", Birthday = new DateTime(1995, 3, 10), Password = "alicepass", TotalSpending = 3000, LastOperatingTime = DateTime.Now, Status = 1, Deleted = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Customer {FullName = "Bob Brown", PhoneNumber = "654321789", Email = "bob.brown@example.com", Sex = "Male", Birthday = new DateTime(1987, 1, 25), Password = "bobsecure", TotalSpending = 2500, LastOperatingTime = DateTime.Now, Status = 1, Deleted = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Customer { FullName = "Charlie White", PhoneNumber = "987123456", Email = "charlie.white@example.com", Sex = "Male", Birthday = new DateTime(1992, 11, 11), Password = "charlie123", TotalSpending = 1000, LastOperatingTime = DateTime.Now, Status = 1, Deleted = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Customer {  FullName = "Diana Green", PhoneNumber = "321654987", Email = "diana.green@example.com", Sex = "Female", Birthday = new DateTime(1988, 8, 8), Password = "dianapass", TotalSpending = 3500, LastOperatingTime = DateTime.Now, Status = 1, Deleted = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Customer {  FullName = "Ethan Blue", PhoneNumber = "876543219", Email = "ethan.blue@example.com", Sex = "Male", Birthday = new DateTime(1993, 9, 19), Password = "ethansecure", TotalSpending = 4000, LastOperatingTime = DateTime.Now, Status = 1, Deleted = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Customer {  FullName = "Fiona Black", PhoneNumber = "456789321", Email = "fiona.black@example.com", Sex = "Female", Birthday = new DateTime(1997, 4, 4), Password = "fiona123", TotalSpending = 2800, LastOperatingTime = DateTime.Now, Status = 1, Deleted = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Customer {  FullName = "George Gray", PhoneNumber = "789123654", Email = "george.gray@example.com", Sex = "Male", Birthday = new DateTime(1991, 2, 20), Password = "georgepass", TotalSpending = 1700, LastOperatingTime = DateTime.Now, Status = 1, Deleted = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Customer {FullName = "Hannah Purple", PhoneNumber = "123789456", Email = "hannah.purple@example.com", Sex = "Female", Birthday = new DateTime(1994, 6, 15), Password = "hannahsecure", TotalSpending = 2200, LastOperatingTime = DateTime.Now, Status = 1, Deleted = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now }
+                };
+                _context.customers.AddRange(customerSeed);
+                _context.SaveChanges();
+            };
+            if (!_context.addressCustomers.Any())
+            {
+                var addressCustomersSeed = new List<AddressCustomer>() {
+                    new AddressCustomer {CustomerId = 1, FullName = "John Doe", Phone = "123456789", Address = "123 Main St, Cityville", IsDefault = true, CreateAt = DateTime.Now, UpdateAt = DateTime.Now },
+                    new AddressCustomer {CustomerId = 2, FullName = "Jane Smith", Phone = "987654321", Address = "456 Elm St, Townville", IsDefault = true, CreateAt = DateTime.Now, UpdateAt = DateTime.Now },
+                    new AddressCustomer {CustomerId = 3, FullName = "Alice Johnson", Phone = "567890123", Address = "789 Pine St, Suburbia", IsDefault = true, CreateAt = DateTime.Now, UpdateAt = DateTime.Now },
+                    new AddressCustomer {CustomerId = 4, FullName = "Bob Brown", Phone = "654321789", Address = "321 Oak St, Metropolis", IsDefault = true, CreateAt = DateTime.Now, UpdateAt = DateTime.Now },
+                    new AddressCustomer {CustomerId = 5, FullName = "Charlie White", Phone = "987123456", Address = "654 Cedar St, Uptown", IsDefault = true, CreateAt = DateTime.Now, UpdateAt = DateTime.Now },
+                    new AddressCustomer {CustomerId = 6, FullName = "Diana Green", Phone = "321654987", Address = "987 Maple St, Downtown", IsDefault = true, CreateAt = DateTime.Now, UpdateAt = DateTime.Now },
+                    new AddressCustomer {CustomerId = 7, FullName = "Ethan Blue", Phone = "876543219", Address = "123 Birch St, Rivertown", IsDefault = true, CreateAt = DateTime.Now, UpdateAt = DateTime.Now },
+                    new AddressCustomer {CustomerId = 8, FullName = "Fiona Black", Phone = "456789321", Address = "456 Ash St, Harbor City", IsDefault = true, CreateAt = DateTime.Now, UpdateAt = DateTime.Now },
+                    new AddressCustomer {CustomerId = 9, FullName = "George Gray", Phone = "789123654", Address = "789 Spruce St, Mountainville", IsDefault = true, CreateAt = DateTime.Now, UpdateAt = DateTime.Now },
+                    new AddressCustomer {CustomerId = 10, FullName = "Hannah Purple", Phone = "123789456", Address = "321 Walnut St, Lakeside", IsDefault = true, CreateAt = DateTime.Now, UpdateAt = DateTime.Now }
+                };
+                _context.addressCustomers.AddRange(addressCustomersSeed);
                 _context.SaveChanges();
             }
         }

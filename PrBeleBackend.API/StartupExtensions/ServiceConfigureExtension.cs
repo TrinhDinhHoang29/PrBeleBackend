@@ -2,10 +2,12 @@
 using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.ServiceContracts.AccountContracts;
 using PrBeleBackend.Core.ServiceContracts.CategoryContracts;
+using PrBeleBackend.Core.ServiceContracts.CustomerContracts;
 using PrBeleBackend.Core.ServiceContracts.ProductContracts;
 using PrBeleBackend.Core.ServiceContracts.RoleContracts;
 using PrBeleBackend.Core.Services.AccountServices;
 using PrBeleBackend.Core.Services.CategoryServices;
+using PrBeleBackend.Core.Services.CustomerServices;
 using PrBeleBackend.Core.Services.ProductServices;
 using PrBeleBackend.Core.Services.RoleServices;
 using PrBeleBackend.Infrastructure.DbContexts;
@@ -57,6 +59,15 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IRoleRepository,RoleRepository>();
             Services.AddScoped<IRoleGetterService,RoleGetterService>();
             Services.AddScoped<IRoleAdderService,RoleAdderService>();
+            #endregion
+
+            #region DI Customer
+            Services.AddScoped<ICustomerRepository, CustomerRepository>();
+            Services.AddScoped<ICustomerGetterService, CustomerGetterService>();
+            Services.AddScoped<ICustomerSorterService, CustomerSorterService>();
+            Services.AddScoped<ICustomerUpdaterService, CustomerUpdaterService>();
+            Services.AddScoped<ICustomerDeleterService, CustomerDeleterService>();
+
             #endregion
         }
     }

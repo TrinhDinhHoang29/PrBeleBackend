@@ -25,6 +25,8 @@ namespace PrBeleBackend.Infrastructure.DbContexts
         public DbSet<Permission> permissions { get; set; } 
         public DbSet<Role> roles { get; set; }
         public DbSet<RolePermission> rolePermissions { get; set; }
+        public DbSet<Customer> customers { get; set; }
+        public DbSet<AddressCustomer> addressCustomers { get; set; }
 
         protected override void  OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,6 +42,9 @@ namespace PrBeleBackend.Infrastructure.DbContexts
             modelBuilder.Entity<Account>().ToTable("Account");
             modelBuilder.Entity<Permission>().ToTable("Permission");
             modelBuilder.Entity<RolePermission>().ToTable("RolePermission");
+            modelBuilder.Entity<Customer>().ToTable("Customer");
+            modelBuilder.Entity<AddressCustomer>().ToTable("AddressCustomer");
+
 
             modelBuilder.Entity<Product>()
             .HasOne(p => p.Category)          // Product có 1 Category
@@ -93,6 +98,11 @@ namespace PrBeleBackend.Infrastructure.DbContexts
                 .HasOne(a => a.Role)
                 .WithMany(r => r.Accounts)
                 .HasForeignKey(a => a.RoleId);
+            //Customer
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.AddressCustomers)
+                .WithOne(a => a.Customer)
+                .HasForeignKey(c => c.CustomerId);
 
         }
     }
