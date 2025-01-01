@@ -11,7 +11,6 @@ namespace PrBeleBackend.Core.DTO.CustomerDTOs
         public string? Sex { get; set; } // 0: Female, 1: Male, 2: Other
         public DateTime? Birthday { get; set; }
         public int TotalSpending { get; set; }
-        public DateTime LastOperatingTime { get; set; }
         public int Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
@@ -29,7 +28,6 @@ namespace PrBeleBackend.Core.DTO.CustomerDTOs
                 Sex = customer.Sex,
                 Birthday = customer.Birthday,
                 TotalSpending = customer.TotalSpending,
-                LastOperatingTime = customer.LastOperatingTime,
                 Status = customer.Status,
                 CreatedAt = customer.CreatedAt,
                 UpdatedAt = customer.UpdatedAt

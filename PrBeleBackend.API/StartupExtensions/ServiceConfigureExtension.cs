@@ -2,11 +2,13 @@
 using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.ServiceContracts.AccountContracts;
 using PrBeleBackend.Core.ServiceContracts.CategoryContracts;
+using PrBeleBackend.Core.ServiceContracts.ContactContracts;
 using PrBeleBackend.Core.ServiceContracts.CustomerContracts;
 using PrBeleBackend.Core.ServiceContracts.ProductContracts;
 using PrBeleBackend.Core.ServiceContracts.RoleContracts;
 using PrBeleBackend.Core.Services.AccountServices;
 using PrBeleBackend.Core.Services.CategoryServices;
+using PrBeleBackend.Core.Services.ContactServices;
 using PrBeleBackend.Core.Services.CustomerServices;
 using PrBeleBackend.Core.Services.ProductServices;
 using PrBeleBackend.Core.Services.RoleServices;
@@ -68,6 +70,14 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<ICustomerUpdaterService, CustomerUpdaterService>();
             Services.AddScoped<ICustomerDeleterService, CustomerDeleterService>();
 
+            #endregion
+
+            #region DI Contact
+            Services.AddScoped<IContactRepository,ContactRepository>();
+            Services.AddScoped<IContactGetterSerivce, ContactGetterService>();
+            Services.AddScoped<IContactUpdaterService, ContactUpdaterService>();
+            Services.AddScoped<IContactDeleterService, ContactDeleterService>();
+            Services.AddScoped<IContactSorterService, ContactSorterService>();
             #endregion
         }
     }

@@ -59,6 +59,7 @@ namespace PrBeleBackend.Core.Services.AccountServices
             }
             accountExist.Status = accountUpdateRequest.Status;
             accountExist.UpdatedAt = DateTime.Now;
+
             ValidationHelper.ModelValidation(accountExist);
 
             Account result = await _accountRepository.UpdateAccount(accountExist);

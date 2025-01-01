@@ -24,7 +24,6 @@ namespace PrBeleBackend.Core.Domain.Entities
         public string Password { get; set; }
 
         public int TotalSpending { get; set; }
-        public DateTime LastOperatingTime { get; set; }
 
         [Required]
         public int Status { get; set; }
