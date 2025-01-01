@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace PrBeleBackend.Core.ServiceContracts.ProductContracts
 {
-    public interface IProductUpdaterService
+    public interface IProductModifierService
     {
-        public Task<Product> UpdateProduct(ProductUpdateRequest req, int id);
+        public Task<Product> ModifyProduct(ProductModifyRequest req, int id);
     }
 }

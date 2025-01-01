@@ -17,10 +17,12 @@ namespace PrBeleBackend.Infrastructure.Seeder
         {
             BeleStoreContext _context = app.ApplicationServices.CreateScope().ServiceProvider
                 .GetRequiredService<BeleStoreContext>();
+
             if (_context.Database.GetPendingMigrations().Any())
             {
                 _context.Database.Migrate();
             }
+
             if (!_context.categories.Any())
             {
                 var categoriesSeed = new List<Category>(){

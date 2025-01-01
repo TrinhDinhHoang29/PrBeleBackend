@@ -1,5 +1,6 @@
 ﻿using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.CategoryDTOs;
+using PrBeleBackend.Core.DTO.Pagination;
 using PrBeleBackend.Core.DTO.ProductDTOs;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,16 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
 {
     public interface IProductRepository
     {
-        public Task<List<ProductResponse>> GetAllProduct();
+        public Task<int> GetProductCount();
+
+        public Task<List<ProductResponse>> GetFilteredProduct(PaginationResponse paginationResponse, Expression<Func<Product, bool>> predicate);
 
         public Task<ProductResponse> GetProductById(int id);
+
+        public Task<Product> AddProduct(Product product);
+
+        public Task<Product> UpdateProduct(Product product);
+
+        public Task<Product> ModifyProduct(ProductModifyRequest req, int id);
     }
 }

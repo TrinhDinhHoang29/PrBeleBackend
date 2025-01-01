@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PrBeleBackend.Core.DTO.Pagination;
+using PrBeleBackend.Core.Helpers;
 
 namespace PrBeleBackend.Core.Services.ProductServices
 {
@@ -19,11 +21,29 @@ namespace PrBeleBackend.Core.Services.ProductServices
             this._productRepository = productRepository;
         }
 
-        public async Task<List<ProductResponse>> GetAllProduct()
+        public async Task<List<ProductResponse>> GetFilteredProduct(ProductGetterRequest req)
         {
-            List<ProductResponse> products = await this._productRepository.GetAllProduct();
+            ValidationHelper.ModelValidation(req);
 
-            return products;
+            PaginationResponse paginationResponse = await PaginationHelper.Handle(req.Skip, req.Limit, await this._productRepository.GetProductCount());
+
+            switch (req.SearchBy)
+            {
+                case nameof(Product.Name):
+                    List<ProductResponse> productsByName = await this._productRepository.GetFilteredProduct(paginationResponse, product => product.Name.Contains(req.SearchStr));
+
+                    return productsByName;
+
+                case nameof(Product.Status):
+                    List<ProductResponse> productsByStatus = await this._productRepository.GetFilteredProduct(paginationResponse, product => product.Name.Contains(req.SearchStr));
+
+                    return productsByStatus;
+
+                default:
+                    List<ProductResponse> products = await this._productRepository.GetFilteredProduct(paginationResponse, product => true);
+
+                    return products;
+            }
         }
 
         public async Task<ProductResponse> GetProductById(int id)

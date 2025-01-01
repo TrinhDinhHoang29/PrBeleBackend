@@ -57,9 +57,11 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .categories
                 .Where(category => category.Deleted == false)
                 .FirstOrDefaultAsync(cate => cate.Id == category.Id);
+
             if (matchingCategory == null) { 
                 throw new ArgumentException(nameof(category));
             }
+
             matchingCategory.Name = category.Name;
             matchingCategory.Status = category.Status;
             matchingCategory.Slug = category.Slug;

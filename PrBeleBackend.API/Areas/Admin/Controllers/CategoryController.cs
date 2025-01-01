@@ -33,6 +33,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         {
             List<CategoryResponse> categories = await _categoryGetterService.GetFilteredCategory(searchBy,searchString);
             List<CategoryResponse> all = await _categoryGetterService.GetAllCategory();
+
             var data = categories.Select(category => new
             {
                 Id = category.Id,
@@ -43,6 +44,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 CreatedAt = category.CreatedAt,
                 UpdatedAt = category.UpdatedAt,
             });
+
             return Ok(new
             {
                 status = 200,

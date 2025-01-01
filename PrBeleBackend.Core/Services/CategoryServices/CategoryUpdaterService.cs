@@ -27,7 +27,6 @@ namespace PrBeleBackend.Core.Services.CategoryServices
             }
 
             //check CategoryId
-
             Category? checkCategoryNeedUpdate = await _categoryRepository.GetCategoryById(Id);
 
             if(checkCategoryNeedUpdate == null)
