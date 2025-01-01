@@ -17,16 +17,19 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         private readonly IProductGetterService _productGetterService;
         private readonly IProductAdderService _productAdderService;
         private readonly IProductUpdaterService _productUpdaterService;
+        private readonly IProductModifierService _productModifierService;
 
         public ProductController(
             IProductGetterService productGetterService, 
             IProductAdderService productAdderService,
-            IProductUpdaterService productUpdaterService
+            IProductUpdaterService productUpdaterService,
+            IProductModifierService productModifierService
         )
         {
             _productGetterService = productGetterService;
             _productAdderService = productAdderService;
             _productUpdaterService = productUpdaterService;
+            _productModifierService = productModifierService;
         }
 
         [HttpGet]
@@ -108,16 +111,70 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         {
             try
             {
-
+                Product product = await this._productUpdaterService.UpdateProduct(req, id);
 
                 return Ok(new
                 {
                     status = 200,
                     data = new
                     {
-
+                        product = product
                     },
                     message = "Update product success !"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
+        [HttpPatch("{Id}")]
+        public async Task<IActionResult> Modify([FromBody] ProductModifyRequest req, int id)
+        {
+            try
+            {
+                Product product = await this._productModifierService.ModifyProduct(req, id);
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        product = product
+                    },
+                    message = "Modify product success !"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                Product product = await this._productModifierService.ModifyProduct(req, id);
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        product = product
+                    },
+                    message = "Delete product success !"
                 });
             }
             catch (Exception ex)

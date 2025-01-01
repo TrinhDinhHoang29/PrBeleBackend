@@ -112,7 +112,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
 
         public async Task<Product> UpdateProduct(Product productUpdate)
         {
-            Product product = await this._context.products
+            Product? product = await this._context.products
                 .Where(product => !product.Deleted)
                 .Where(product => product.Id == productUpdate.Id)
                 .FirstOrDefaultAsync();
@@ -210,6 +210,26 @@ namespace PrBeleBackend.Infrastructure.Repositories
             }
 
             return productMatching;
+        }
+
+        public async Task<Product> DeleteProduct(int id)
+        {
+            Product? product = await this._context.products
+                .Where(product => !product.Deleted)
+                .Where(product => product.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product));
+            }
+
+            await this._context.products
+                .Where(product => !product.Deleted)
+                .Where(product => product.Id == id)
+                .ExecuteDeleteAsync();
+
+            return product;
         }
     }
 }

@@ -29,22 +29,7 @@ namespace PrBeleBackend.Core.Services.ProductServices
 
             ValidationHelper.ModelValidation(req);
 
-            switch (req.ModifyField)
-            {
-                case nameof(Product.Status):
-                    {
-
-                        break;
-                    }
-                case nameof(Product.Like):
-                    {
-                        break;
-                    }
-                case nameof(Product.View):
-                    {
-                        break;
-                    }
-            }
+            return await _productRepository.ModifyProduct(req, id);
         }
     }
 }
