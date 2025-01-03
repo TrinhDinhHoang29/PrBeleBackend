@@ -15,6 +15,16 @@ namespace PrBeleBackend.Core.Services.AccountServices
             _accountRepository = accountRepository;
         }
 
+        public async  Task<AccountResponse?> GetAccountByEmail(string Email)
+        {
+            Account? account = await _accountRepository.GetAccountByEmail(Email);
+            if (account == null)
+            {
+                return null;
+            }
+            return account.ToAccountResponse();
+        }
+
         public async Task<AccountResponse?> GetAccountById(int Id)
         {
             Account? account = await _accountRepository.GetAccountById(Id);

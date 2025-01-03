@@ -1,19 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.ServiceContracts.AccountContracts;
+using PrBeleBackend.Core.ServiceContracts.AuthContracts;
 using PrBeleBackend.Core.ServiceContracts.CategoryContracts;
 using PrBeleBackend.Core.ServiceContracts.ContactContracts;
 using PrBeleBackend.Core.ServiceContracts.CustomerContracts;
+using PrBeleBackend.Core.ServiceContracts.JwtContracts;
 using PrBeleBackend.Core.ServiceContracts.ProductContracts;
 using PrBeleBackend.Core.ServiceContracts.RoleContracts;
 using PrBeleBackend.Core.Services.AccountServices;
+using PrBeleBackend.Core.Services.AuthServices;
 using PrBeleBackend.Core.Services.CategoryServices;
 using PrBeleBackend.Core.Services.ContactServices;
 using PrBeleBackend.Core.Services.CustomerServices;
+using PrBeleBackend.Core.Services.JwtServices;
 using PrBeleBackend.Core.Services.ProductServices;
 using PrBeleBackend.Core.Services.RoleServices;
 using PrBeleBackend.Infrastructure.DbContexts;
 using PrBeleBackend.Infrastructure.Repositories;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace PrBeleBackend.API.StartupExtensions
@@ -29,7 +36,33 @@ namespace PrBeleBackend.API.StartupExtensions
                 });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             Services.AddEndpointsApiExplorer();
-            Services.AddSwaggerGen();
+
+            Services.AddSwaggerGen(c =>
+            {
+                c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                {
+                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                    Description = "Please enter JWT with Bearer into field",
+                    Name = "Authorization",
+                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
+                });
+
+                c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+            });
+
             Services.AddDbContext<BeleStoreContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnect"));
@@ -78,6 +111,14 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IContactUpdaterService, ContactUpdaterService>();
             Services.AddScoped<IContactDeleterService, ContactDeleterService>();
             Services.AddScoped<IContactSorterService, ContactSorterService>();
+            #endregion
+
+            #region DI Auth
+            Services.AddScoped<IAuthService, AuthService>();
+            #endregion
+
+            #region DI Jwt
+            Services.AddTransient<IJwtService, JwtService>();
             #endregion
         }
     }

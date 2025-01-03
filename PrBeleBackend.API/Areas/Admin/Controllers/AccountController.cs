@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PrBeleBackend.API.Filters;
 using PrBeleBackend.Core.DTO.AccountDTOs;
 using PrBeleBackend.Core.Enums;
 using PrBeleBackend.Core.ServiceContracts.AccountContracts;
@@ -9,6 +11,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountGetterService _accountGetterService;
@@ -29,6 +32,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _accountUpdaterService = accountUpdaterService;
             _accountDeleterService = accountDeleterService;
         }
+        [PermissionAuthorize("A-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
             string? field,
@@ -73,7 +77,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
             });
         }
-
+        [PermissionAuthorize("A-R")]
         [HttpGet("{Id}")]
         public async Task<IActionResult> Detail(int Id)
         {
@@ -92,7 +96,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 message = "Data fetched successfully."
             });
         }
-
+        [PermissionAuthorize("A-C")]
         [HttpPost]
         public async Task<IActionResult> Create(AccountAddRequest accountAddRequest)
         {
@@ -117,6 +121,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
+        [PermissionAuthorize("A-U")]
         [HttpPut("{Id}")]
         public async Task<IActionResult> Update(int Id, AccountUpdateRequest accountUpdateRequest)
         {
@@ -143,6 +148,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
         }
 
+        [PermissionAuthorize("A-U")]
         [HttpPatch("{Id}")]
         public async Task<IActionResult> Edit(int Id, AccountUpdatePatchRequest accountUpdateRequest)
         {
@@ -168,6 +174,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
+        [PermissionAuthorize("A-D")]
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
         {

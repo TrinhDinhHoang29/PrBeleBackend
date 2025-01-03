@@ -16,6 +16,7 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
 
         public Task<Account?> GetAccountById(int? Id);
         public Task<Account?> GetAccountByEmail(string? Email);
+        public Task<Account?> GetAccountByRefreshToken(string? RefreshToken);
 
         public Task<Account> AddAccount(Account account);
 

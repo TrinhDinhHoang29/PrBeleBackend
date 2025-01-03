@@ -43,6 +43,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
         public async Task<Account?> GetAccountByEmail(string? Email)
         {
             Account? account = await _context.accounts
+                 .Include(a => a.Role)
                 .FirstOrDefaultAsync(a => a.Email == Email);
             return account;
         }
@@ -53,6 +54,15 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .Include(a => a.Role)
                .Where(a => a.Deleted == false)
                .FirstOrDefaultAsync(a => a.Id == Id);
+            return account;
+        }
+
+        public async Task<Account?> GetAccountByRefreshToken(string? RefreshToken)
+        {
+            Account? account = await _context.accounts
+                .Include(a => a.Role)
+               .Where(a => a.Deleted == false)
+               .FirstOrDefaultAsync(a => a.RefreshToken == RefreshToken);
             return account;
         }
 
@@ -98,5 +108,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
 
             return matchingAccount;
         }
+
+
     }
 }

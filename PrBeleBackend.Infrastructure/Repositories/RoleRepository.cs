@@ -52,7 +52,10 @@ namespace PrBeleBackend.Infrastructure.Repositories
 
         public async Task<Role> GetRoleById(int Id)
         {
-            Role role = await _context.roles.FirstAsync(r => r.id == Id);
+            Role role = await _context.roles.Include(r => r.RolePermissions)
+                .ThenInclude(r => r.Permission)
+                .
+                FirstAsync(r => r.id == Id);
             return role;
         }
     }

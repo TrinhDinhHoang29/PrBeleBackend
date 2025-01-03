@@ -11,6 +11,7 @@ namespace PrBeleBackend.Core.ServiceContracts.AccountContracts
     public interface IAccountGetterService
     {
         public Task<List<AccountResponse>> GetAllAccount();
+        public Task<AccountResponse?> GetAccountByEmail(string Email);
 
         public Task<AccountResponse?> GetAccountById(int Id);
 

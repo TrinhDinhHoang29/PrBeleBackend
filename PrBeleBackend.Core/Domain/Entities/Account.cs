@@ -34,6 +34,8 @@ namespace PrBeleBackend.Core.Domain.Entities
         public bool Deleted { get; set; } = false;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime RefreshTokenExpirationDateTime { get; set; }
 
         public Role? Role { get; set; }
     }
