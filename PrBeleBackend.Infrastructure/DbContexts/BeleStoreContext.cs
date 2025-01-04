@@ -27,7 +27,7 @@ namespace PrBeleBackend.Infrastructure.DbContexts
         public DbSet<RolePermission> rolePermissions { get; set; }
         public DbSet<Customer> customers { get; set; }
         public DbSet<AddressCustomer> addressCustomers { get; set; }
-        
+        public DbSet<Setting> settings { get; set; }
         public DbSet<Contact> contacts { get; set; }
 
         protected override void  OnModelCreating(ModelBuilder modelBuilder)
@@ -47,7 +47,7 @@ namespace PrBeleBackend.Infrastructure.DbContexts
             modelBuilder.Entity<Customer>().ToTable("Customer");
             modelBuilder.Entity<AddressCustomer>().ToTable("AddressCustomer");
             modelBuilder.Entity<Contact>().ToTable("Contact");
-
+            modelBuilder.Entity<Setting>().ToTable("Setting");
 
 
             modelBuilder.Entity<Product>()
@@ -107,6 +107,7 @@ namespace PrBeleBackend.Infrastructure.DbContexts
                 .HasMany(c => c.AddressCustomers)
                 .WithOne(a => a.Customer)
                 .HasForeignKey(c => c.CustomerId);
+
 
         }
     }

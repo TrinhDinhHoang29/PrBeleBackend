@@ -1179,6 +1179,10 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.contacts.AddRange(contactsSeed);
                 _context.SaveChanges();
             }
+            if (!_context.settings.Any())
+            {
+
+            }
         }
     }
 }

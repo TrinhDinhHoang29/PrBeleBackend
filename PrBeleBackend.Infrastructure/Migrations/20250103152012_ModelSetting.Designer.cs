@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrBeleBackend.Infrastructure.DbContexts;
 
@@ -11,9 +12,11 @@ using PrBeleBackend.Infrastructure.DbContexts;
 namespace PrBeleBackend.Infrastructure.Migrations
 {
     [DbContext(typeof(BeleStoreContext))]
-    partial class BeleStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20250103152012_ModelSetting")]
+    partial class ModelSetting
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -456,8 +459,14 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Property<string>("InstagramLink")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("MainLogoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Slogan")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SubLogoId")
+                        .HasColumnType("int");
 
                     b.Property<string>("TiktokLink")
                         .HasColumnType("nvarchar(max)");
