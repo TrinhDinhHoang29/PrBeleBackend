@@ -69,6 +69,7 @@ namespace PrBeleBackend.Infrastructure.DbContexts
                 .HasOne(a => a.AttributeType)
                 .WithMany(p => p.ProductAttributeTypes)
                 .HasForeignKey(p => p.AttributeTypeId);
+
             modelBuilder.Entity<VariantAttributeValue>()
                 .HasKey(v => new {v.VariantId,v.AttributeValueId});
             modelBuilder.Entity<VariantAttributeValue>()

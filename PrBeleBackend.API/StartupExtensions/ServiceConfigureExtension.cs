@@ -1,8 +1,14 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using CloudinaryDotNet;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+//using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
+using PrBeleBackend.Core.DTO.Cloudinary;
+using PrBeleBackend.Core.ServiceContracts;
 using PrBeleBackend.Core.ServiceContracts.AccountContracts;
+using PrBeleBackend.Core.ServiceContracts.AttributeContracts;
 using PrBeleBackend.Core.ServiceContracts.AuthContracts;
 using PrBeleBackend.Core.ServiceContracts.CategoryContracts;
 using PrBeleBackend.Core.ServiceContracts.ContactContracts;
@@ -10,7 +16,10 @@ using PrBeleBackend.Core.ServiceContracts.CustomerContracts;
 using PrBeleBackend.Core.ServiceContracts.JwtContracts;
 using PrBeleBackend.Core.ServiceContracts.ProductContracts;
 using PrBeleBackend.Core.ServiceContracts.RoleContracts;
+using PrBeleBackend.Core.ServiceContracts.VariantContracts;
+using PrBeleBackend.Core.Services;
 using PrBeleBackend.Core.Services.AccountServices;
+using PrBeleBackend.Core.Services.AttributeServices;
 using PrBeleBackend.Core.Services.AuthServices;
 using PrBeleBackend.Core.Services.CategoryServices;
 using PrBeleBackend.Core.Services.ContactServices;
@@ -18,6 +27,7 @@ using PrBeleBackend.Core.Services.CustomerServices;
 using PrBeleBackend.Core.Services.JwtServices;
 using PrBeleBackend.Core.Services.ProductServices;
 using PrBeleBackend.Core.Services.RoleServices;
+using PrBeleBackend.Core.Services.VariantServices;
 using PrBeleBackend.Infrastructure.DbContexts;
 using PrBeleBackend.Infrastructure.Repositories;
 using System.Text;
@@ -66,6 +76,13 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddDbContext<BeleStoreContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnect"));
+            });
+
+            Services.Configure<CloudinaryConfig>(configuration.GetSection("Cloudinary"));
+            Services.AddSingleton(provider =>
+            {
+                var config = provider.GetRequiredService<IOptions<CloudinaryConfig>>().Value;
+                return new Cloudinary(new Account(config.CloudName, config.ApiKey, config.ApiSecret));
             });
 
             #region DI Category
@@ -119,6 +136,37 @@ namespace PrBeleBackend.API.StartupExtensions
 
             #region DI Jwt
             Services.AddTransient<IJwtService, JwtService>();
+            #endregion
+
+            #region DI Product
+            Services.AddScoped<IProductRepository, ProductRepository>();
+            Services.AddScoped<IProductGetterService, ProductGetterService>();
+            Services.AddScoped<IProductAdderService, ProductAdderService>();
+            Services.AddScoped<IProductUpdaterService, ProductUpdaterService>();
+            Services.AddScoped<IProductModifierService, ProductModifierService>();
+            Services.AddScoped<IProductDeleterService, ProductDeleterService>();
+            #endregion
+
+            #region DI Attribute
+            Services.AddScoped<IAttributeRepository, AttributeRepository>();
+            Services.AddScoped<IAttributeGetterService, AttributeGetterService>();
+            Services.AddScoped<IAttributeAdderService, AttributeAdderService>();
+            Services.AddScoped<IAttributeDeleterService, AttributeDeleterService>();
+            Services.AddScoped<IAttributeModifyService, AttributeModifyService>();
+            #endregion
+
+            #region DI Variant
+            Services.AddScoped<IVariantRepository, VariantRepository>();
+            Services.AddScoped<IVariantGetterService, VariantGetterService>();
+            Services.AddScoped<IVariantAdderService, VariantAdderService>();
+            Services.AddScoped<IVariantUpdaterService, VariantUpdaterService>();
+            Services.AddScoped<IVariantDeleterService, VariantDeleterService>();
+            Services.AddScoped<IVariantModifierService, VariantModifierService>();
+
+            #endregion
+
+            #region DI Cloudinary
+            Services.AddScoped<ICloudinaryContract, CloudinaryService>();
             #endregion
         }
     }
