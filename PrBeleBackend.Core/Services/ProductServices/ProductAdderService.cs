@@ -16,9 +16,9 @@ namespace PrBeleBackend.Core.Services.ProductServices
     public class ProductAdderService : IProductAdderService
     {
         private readonly IProductRepository _productRepository;
-        private readonly ICloudinaryService _cloudinaryService;
+        private readonly ICloudinaryContract _cloudinaryService;
 
-        public ProductAdderService(IProductRepository productRepository, ICloudinaryService cloudinaryService)
+        public ProductAdderService(IProductRepository productRepository, ICloudinaryContract cloudinaryService)
         {
             this._productRepository = productRepository;
             this._cloudinaryService = cloudinaryService;
@@ -41,7 +41,7 @@ namespace PrBeleBackend.Core.Services.ProductServices
             product.UpdatedAt = DateTime.Now;
             product.CreatedAt = DateTime.Now;
 
-            product.Thumbnail = await this._cloudinaryService.UploadImageAsync(req.ProductFile, "product");
+            product.Thumbnail = await this._cloudinaryService.UploadImageAsync(req.ProductFile, "product", 300, 400);
 
             return await this._productRepository.AddProduct(product);
         }

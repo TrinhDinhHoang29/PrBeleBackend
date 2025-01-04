@@ -13,10 +13,10 @@ namespace PrBeleBackend.Infrastructure.Seeder
         {
             BeleStoreContext _context = app.ApplicationServices.CreateScope().ServiceProvider
                 .GetRequiredService<BeleStoreContext>();
-            if (_context.Database.GetPendingMigrations().Any())
-            {
-                _context.Database.Migrate();
-            }
+            //if (_context.Database.GetPendingMigrations().Any())
+            //{
+            //    _context.Database.Migrate();
+            //}
             if (!_context.categories.Any())
             {
                 var categoriesSeed = new List<Category>(){
@@ -1179,10 +1179,10 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.contacts.AddRange(contactsSeed);
                 _context.SaveChanges();
             }
-            if (!_context.settings.Any())
-            {
+            //if (!_context.settings.Any())
+            //{
 
-            }
+            //}
         }
     }
 }

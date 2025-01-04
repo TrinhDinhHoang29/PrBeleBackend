@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrBeleBackend.Core.DTO.AttributeDTOs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,5 +21,42 @@ namespace PrBeleBackend.Core.Domain.Entities
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public List<VariantAttributeValue>? VariantAttributeValues { get; set; }
+    }
+
+    public static class AttributeValueExtension
+    {
+        public static AttributeValue ToAttributeValue(this AttributeValueResponse attrValueRes)
+        {
+            return new AttributeValue
+            {
+                Id = attrValueRes.Id,
+                Name = attrValueRes.Name,
+                Value = attrValueRes.Value,
+                Deleted = attrValueRes.Deleted,
+                CreatedAt = attrValueRes.CreatedAt,
+                UpdatedAt = attrValueRes.UpdatedAt
+            };
+        }
+
+        public static AttributeValue ToAttributeValue(this AttributeValueAdderRequest attrValueReq)
+        {
+            return new AttributeValue
+            {
+                AttributeTypeId = attrValueReq.AttributeTypeId,
+                Name = attrValueReq.Name,
+                Value = attrValueReq.Value,
+                //Status = attrValueReq.Status,
+                Deleted = false,
+            };
+        }
+
+        public static AttributeValue ToAttributeValue(this AttributeValueUpdaterRequest attrValueReq)
+        {
+            return new AttributeValue
+            {
+                Name = attrValueReq.Name,
+                Value = attrValueReq.Value,
+            };
+        }
     }
 }

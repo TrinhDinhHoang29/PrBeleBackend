@@ -15,9 +15,9 @@ namespace PrBeleBackend.Core.Services.ProductServices
     public class ProductUpdaterService : IProductUpdaterService
     {
         private readonly IProductRepository _productRepository;
-        private readonly ICloudinaryService _cloudinaryService;
+        private readonly ICloudinaryContract _cloudinaryService;
 
-        public ProductUpdaterService(IProductRepository productRepository, ICloudinaryService cloudinaryService)
+        public ProductUpdaterService(IProductRepository productRepository, ICloudinaryContract cloudinaryService)
         {
             this._productRepository = productRepository;
             this._cloudinaryService = cloudinaryService;
@@ -39,7 +39,7 @@ namespace PrBeleBackend.Core.Services.ProductServices
             
             if(req.ProductFile != null)
             {
-                productUpdate.Thumbnail = await this._cloudinaryService.UploadImageAsync(req.ProductFile, "product");
+                productUpdate.Thumbnail = await this._cloudinaryService.UploadImageAsync(req.ProductFile, "product", 300, 400);
             }
 
             return await this._productRepository.UpdateProduct(productUpdate);

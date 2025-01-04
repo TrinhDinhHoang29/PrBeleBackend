@@ -9,6 +9,6 @@ namespace PrBeleBackend.Core.ServiceContracts
 {
     public interface ICloudinaryContract
     {
-        public Task<string> UploadImageAsync(IFormFile file, string imgType);
+        public Task<string> UploadImageAsync(IFormFile file, string folder, int width, int height);
     }
 }

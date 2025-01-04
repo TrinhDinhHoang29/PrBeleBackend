@@ -127,7 +127,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
             product.Description = productUpdate.Description;
             product.CategoryId = productUpdate.Category.Id;
             product.BasePrice = productUpdate.BasePrice;
-            product.DiscountId = productUpdate.DiscountId;
+            //product.DiscountId = productUpdate.DiscountId;
             //product.ProductAttributeTypes = productUpdate.ProductAttributeTypes;
 
             if(productUpdate.Thumbnail != "")

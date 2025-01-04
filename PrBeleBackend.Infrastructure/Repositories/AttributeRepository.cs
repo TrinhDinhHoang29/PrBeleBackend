@@ -89,7 +89,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(attrValMatching));
             }
 
-            attrValMatching.Status = status;
+            //attrValMatching.Status = status;
 
             await this._context.SaveChangesAsync();
 
@@ -108,7 +108,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(attrValMatching));
             }
 
-            attrValMatching.Deleted = 1;
+            attrValMatching.Deleted = true;
 
             await this._context.SaveChangesAsync();
 
