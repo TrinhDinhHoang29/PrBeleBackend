@@ -1,6 +1,8 @@
 ﻿using CloudinaryDotNet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PrBeleBackend.API.Filters;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.Pagination;
 using PrBeleBackend.Core.DTO.ProductDTOs;
@@ -12,6 +14,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductGetterService _productGetterService;
@@ -34,7 +37,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _productModifierService = productModifierService;
             _productDeleterService = productDeleterService;
         }
-
+        [PermissionAuthorize("P-R")]
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] ProductGetterRequest req)
         {
@@ -65,6 +68,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
+        [PermissionAuthorize("P-R")]
 
         [HttpGet("{Id}")]
         public async Task<IActionResult> Detail(int id)
@@ -82,6 +86,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             });
         }
 
+        [PermissionAuthorize("P-C")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ProductAddRequest req)
         {
@@ -108,7 +113,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
-
+        [PermissionAuthorize("P-U")]
         [HttpPut("{Id}")]
         public async Task<IActionResult> Update([FromBody] ProductUpdateRequest req, [FromQuery] int id)
         {
@@ -136,6 +141,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
+        [PermissionAuthorize("P-U")]
         [HttpPatch("{Id}")]
         public async Task<IActionResult> Modify([FromBody] ProductModifyRequest req, int id)
         {
@@ -162,6 +168,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
+        [PermissionAuthorize("P-D")]
 
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int id)

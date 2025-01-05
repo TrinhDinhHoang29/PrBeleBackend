@@ -29,6 +29,16 @@ namespace PrBeleBackend.Infrastructure.DbContexts
         public DbSet<AddressCustomer> addressCustomers { get; set; }
         public DbSet<Setting> settings { get; set; }
         public DbSet<Contact> contacts { get; set; }
+        public DbSet<Discount> discounts { get; set; }
+        public DbSet<Tag> tags { get; set; }
+        public DbSet<ProductTag> productTags { get; set; }
+        public DbSet<Order> orders { get; set; }
+        public DbSet<ProductOrder> productOrders { get; set; }
+
+        public DbSet<Rate> rates { get; set; }
+        public DbSet<Cart> carts { get; set; }
+        public DbSet<ProductCart> productCarts { get; set; }
+
 
         protected override void  OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,6 +58,14 @@ namespace PrBeleBackend.Infrastructure.DbContexts
             modelBuilder.Entity<AddressCustomer>().ToTable("AddressCustomer");
             modelBuilder.Entity<Contact>().ToTable("Contact");
             modelBuilder.Entity<Setting>().ToTable("Setting");
+            modelBuilder.Entity<Discount>().ToTable("Discount");
+            modelBuilder.Entity<Tag>().ToTable("Tag");
+            modelBuilder.Entity<ProductTag>().ToTable("ProductTag");
+            modelBuilder.Entity<Order>().ToTable("Order");
+            modelBuilder.Entity<ProductOrder>().ToTable("ProductOrder");
+            modelBuilder.Entity<Rate>().ToTable("Rate");
+            modelBuilder.Entity<Cart>().ToTable("Cart");
+            modelBuilder.Entity<ProductCart>().ToTable("ProductCart");
 
 
             modelBuilder.Entity<Product>()
@@ -108,6 +126,68 @@ namespace PrBeleBackend.Infrastructure.DbContexts
                 .HasMany(c => c.AddressCustomers)
                 .WithOne(a => a.Customer)
                 .HasForeignKey(c => c.CustomerId);
+            //Discount
+            modelBuilder.Entity<Discount>()
+                .HasMany(d => d.products)
+                .WithOne(p => p.Discount)
+                .HasForeignKey(p => p.DiscountId);
+            //Tag
+            modelBuilder.Entity<Tag>()
+                .HasMany(t => t.productTags)
+                .WithOne(pt=>pt.Tag)
+                .HasForeignKey(t => t.TagId);
+            modelBuilder.Entity<ProductTag>()
+                .HasKey(pt => new {pt.TagId,pt.ProductId});
+            modelBuilder.Entity<Product>()
+                .HasMany(p => p.ProductTags)
+                .WithOne(pt => pt.Product)
+                .HasForeignKey(pt => pt.ProductId);
+            //Order 
+            modelBuilder.Entity<ProductOrder>()
+            .HasKey(pt => new { pt.VariantId, pt.OrderId });
+            modelBuilder.Entity<Order>()
+                .HasMany(p => p.ProductOrders)
+                .WithOne(po => po.Order)
+                .HasForeignKey(p => p.OrderId);
+            modelBuilder.Entity<Variant>()
+                .HasMany(v => v.ProductOrders)
+                .WithOne(p => p.Variant)
+                .HasForeignKey(v => v.VariantId);
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.Orders)
+                .WithOne(c => c.Customer)
+                .HasForeignKey(c => c.UserId);
+            //rate
+            modelBuilder.Entity<Rate>()
+                .HasOne(r => r.Product)
+                .WithMany(p => p.Rates)
+                .HasForeignKey(r => r.ProductId);
+            modelBuilder.Entity<Account>()
+                .HasMany(a => a.Rates)
+                .WithOne(r => r.Account)
+                .HasForeignKey(r => r.UserId);
+            modelBuilder.Entity<Customer>()
+              .HasMany(a => a.Rates)
+              .WithOne(r => r.Customer)
+              .HasForeignKey(r => r.UserId);
+            //cart
+            modelBuilder.Entity<Cart>()
+                .HasOne(c => c.Customer)
+                .WithOne(c => c.Cart)
+                .HasForeignKey<Cart>(c => c.UserId);
+            modelBuilder.Entity<ProductCart>()
+                .HasKey(c => new {c.VariantId,c.CartId});
+            modelBuilder.Entity<Cart>()
+                .HasMany(c => c.ProductCarts)
+                .WithOne(c => c.Cart)
+                .HasForeignKey(c => c.CartId);
+            modelBuilder.Entity<Variant>()
+               .HasMany(c => c.ProductCarts)
+               .WithOne(c => c.Variant)
+               .HasForeignKey(c => c.VariantId);
+
+
+
 
 
         }

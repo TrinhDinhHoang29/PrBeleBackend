@@ -130,7 +130,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
             //product.DiscountId = productUpdate.DiscountId;
             //product.ProductAttributeTypes = productUpdate.ProductAttributeTypes;
 
-            if(productUpdate.Thumbnail != "")
+            if (productUpdate.Thumbnail != "")
             {
                 product.Thumbnail = product.Thumbnail;
             }

@@ -11,7 +11,5 @@ namespace PrBeleBackend.Core.DTO.JwtDTOs
     {
         [Required]
         public string? RefreshToken { get; set; }
-        [Required]
-        public DateTime RefreshTokenExpirationDateTime { get; set; }
     }
 }

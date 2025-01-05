@@ -12,8 +12,8 @@ using PrBeleBackend.Infrastructure.DbContexts;
 namespace PrBeleBackend.Infrastructure.Migrations
 {
     [DbContext(typeof(BeleStoreContext))]
-    [Migration("20250102125610_AddColumnRefreshToken")]
-    partial class AddColumnRefreshToken
+    [Migration("20250105054443_AddModelTag")]
+    partial class AddModelTag
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -313,6 +313,40 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.ToTable("Customer", (string)null);
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Discount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("DiscountValue")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ExpireDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Discount", (string)null);
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Permission", b =>
                 {
                     b.Property<int>("Id")
@@ -360,6 +394,9 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Property<string>("DescriptionPlainText")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DiscountId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Like")
                         .HasColumnType("int");
 
@@ -385,6 +422,8 @@ namespace PrBeleBackend.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("DiscountId");
+
                     b.ToTable("Product", (string)null);
                 });
 
@@ -401,6 +440,21 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.HasIndex("AttributeTypeId");
 
                     b.ToTable("ProductAttributeType", (string)null);
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.ProductTag", b =>
+                {
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TagId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductTag", (string)null);
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Role", b =>
@@ -434,6 +488,64 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("RolePermission", (string)null);
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Setting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FacebookLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hotline")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InstagramLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slogan")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TiktokLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("YoutubeLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZaloLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Setting", (string)null);
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tag", (string)null);
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Variant", b =>
@@ -531,7 +643,15 @@ namespace PrBeleBackend.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Discount", "Discount")
+                        .WithMany("products")
+                        .HasForeignKey("DiscountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Discount");
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.ProductAttributeType", b =>
@@ -551,6 +671,25 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("AttributeType");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.ProductTag", b =>
+                {
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Product", "Product")
+                        .WithMany("ProductTags")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Tag", "Tag")
+                        .WithMany("productTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.RolePermission", b =>
@@ -624,6 +763,11 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("AddressCustomers");
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Discount", b =>
+                {
+                    b.Navigation("products");
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Permission", b =>
                 {
                     b.Navigation("RolePermissions");
@@ -633,6 +777,8 @@ namespace PrBeleBackend.Infrastructure.Migrations
                 {
                     b.Navigation("ProductAttributeTypes");
 
+                    b.Navigation("ProductTags");
+
                     b.Navigation("Variants");
                 });
 
@@ -641,6 +787,11 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("Accounts");
 
                     b.Navigation("RolePermissions");
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Tag", b =>
+                {
+                    b.Navigation("productTags");
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Variant", b =>

@@ -13,6 +13,7 @@ using PrBeleBackend.Core.ServiceContracts.AuthContracts;
 using PrBeleBackend.Core.ServiceContracts.CategoryContracts;
 using PrBeleBackend.Core.ServiceContracts.ContactContracts;
 using PrBeleBackend.Core.ServiceContracts.CustomerContracts;
+using PrBeleBackend.Core.ServiceContracts.DiscountContracts;
 using PrBeleBackend.Core.ServiceContracts.JwtContracts;
 using PrBeleBackend.Core.ServiceContracts.ProductContracts;
 using PrBeleBackend.Core.ServiceContracts.RoleContracts;
@@ -24,6 +25,7 @@ using PrBeleBackend.Core.Services.AuthServices;
 using PrBeleBackend.Core.Services.CategoryServices;
 using PrBeleBackend.Core.Services.ContactServices;
 using PrBeleBackend.Core.Services.CustomerServices;
+using PrBeleBackend.Core.Services.DiscountServices;
 using PrBeleBackend.Core.Services.JwtServices;
 using PrBeleBackend.Core.Services.ProductServices;
 using PrBeleBackend.Core.Services.RoleServices;
@@ -163,6 +165,15 @@ namespace PrBeleBackend.API.StartupExtensions
 
             #region DI Cloudinary
             Services.AddScoped<ICloudinaryContract, CloudinaryService>();
+            #endregion
+
+            #region DI Discount
+            Services.AddScoped<IDiscountRepository, DiscountRepository>();
+            Services.AddScoped<IDiscountAdderService, DiscountAdderServices>();
+            Services.AddScoped<IDiscountGetterService, DiscountGetterServices>();
+            Services.AddScoped<IDiscountUpdaterService, DiscountUpdaterServices>();
+            Services.AddScoped<IDiscountSorterService, DiscountSorterServices>();
+            Services.AddScoped<IDiscountDeleterService, DiscountDeleterServices>();
             #endregion
         }
     }

@@ -11,7 +11,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountGetterService _accountGetterService;
@@ -96,7 +96,6 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 message = "Data fetched successfully."
             });
         }
-        [PermissionAuthorize("A-C")]
         [HttpPost]
         public async Task<IActionResult> Create(AccountAddRequest accountAddRequest)
         {

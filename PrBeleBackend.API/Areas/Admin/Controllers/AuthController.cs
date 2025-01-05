@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
 using PrBeleBackend.Core.DTO.AccountDTOs;
 using PrBeleBackend.Core.DTO.AuthDTOs;
 using PrBeleBackend.Core.DTO.JwtDTOs;
@@ -30,7 +31,13 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 return Ok(new
                 {
                     Account = accountResponse,
-                    jwtResponse = jwtResponse
+                    jwt = new
+                    {
+                        accessToken = jwtResponse.JwtToken,
+                        expireAccessToken = jwtResponse.ExpirationJwtToken,
+                        refreshToken = jwtResponse.RefreshToken,
+                        expireRefreshToken = jwtResponse.RefreshTokenExpirationDateTime,
+                    }
                 });
             }
             catch (Exception ex) { 
@@ -48,7 +55,12 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
                 return Ok(new
                 {
-                    jwtResponse = jwtResponse
+                    jwt = new
+                    {
+                        accessToken = jwtResponse.JwtToken,
+                        expireAccessToken = jwtResponse.ExpirationJwtToken,
+                        refreshToken = jwtResponse.RefreshToken,
+                    }
                 });
             }
             catch (Exception ex)

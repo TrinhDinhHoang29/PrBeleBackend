@@ -5,7 +5,7 @@
 namespace PrBeleBackend.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddNewModelCustomer : Migration
+    public partial class add2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

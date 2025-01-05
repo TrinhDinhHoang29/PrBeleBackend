@@ -214,7 +214,21 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.SaveChanges();
 
             }
-            if (!_context.products.Any()&& !_context.attributeValues.Any()&& !_context.variantAttributeValues.Any() && !_context.attributeTypes.Any() && !_context.variants.Any())
+            if (!_context.discounts.Any())
+            {
+                var discountSeed = new List<Discount>()
+                {
+                        new Discount { Name = "No Discount", DiscountValue = 0, ExpireDate = DateTime.MaxValue, Status = 1, Deleted = false, CreatedAt = DateTime.Now },
+                        new Discount { Name = "New Year Sale", DiscountValue = 10, ExpireDate = DateTime.Now.AddDays(30), Status = 1, Deleted = false, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                        new Discount { Name = "Christmas Deal", DiscountValue = 20, ExpireDate = DateTime.Now.AddDays(15), Status = 1, Deleted = false, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                        new Discount { Name = "Black Friday", DiscountValue = 30, ExpireDate = DateTime.Now.AddDays(45), Status = 1, Deleted = false, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                        new Discount { Name = "Summer Sale", DiscountValue = 15, ExpireDate = DateTime.Now.AddDays(60), Status = 1, Deleted = false, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                        new Discount { Name = "Flash Deal", DiscountValue = 5, ExpireDate = DateTime.Now.AddDays(5), Status = 1, Deleted = false, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now }
+                };
+                _context.discounts.AddRange(discountSeed);
+                _context.SaveChanges();
+            }
+            if (!_context.products.Any() && !_context.attributeValues.Any() && !_context.variantAttributeValues.Any() && !_context.attributeTypes.Any() && !_context.variants.Any())
             {
                 var productsSeed = new List<Product>{
                              new Product
@@ -225,6 +239,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
     CategoryId = 4,
     Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
     BasePrice = 209000M,
+    DiscountId = 1,
     View = 150,
     Like = 50,
     Slug = "ao-giu-nhiet-ex-warm-modal-co-cao",
@@ -241,6 +256,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 CategoryId = 4,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
                                 BasePrice = 127000M,
+                                    DiscountId = 1,
                                 View = 120,
                                 Like = 40,
                                 Slug = "ao-giu-nhiet-brush-poly-co-thap",
@@ -257,6 +273,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 CategoryId = 4,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
                                 BasePrice = 127000M,
+                                    DiscountId = 1,
                                 View = 130,
                                 Like = 45,
                                 Slug = "ao-giu-nhiet-brush-poly-co-trung",
@@ -273,6 +290,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 CategoryId = 4,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
                                 BasePrice = 209000M,
+                                    DiscountId = 1,
                                 View = 180,
                                 Like = 60,
                                 Slug = "ao-giu-nhiet-ex-warm-modal-co-trung",
@@ -289,6 +307,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 CategoryId = 4,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
                                 BasePrice = 399000M,
+                                    DiscountId = 1,
                                 View = 200,
                                 Like = 70,
                                 Slug = "ao-thun-relaxed-fit-84rising-venom-signature",
@@ -303,6 +322,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Description = "Áo thun Relaxed Fit 84RISING HEHEHE năng động, thoải mái khi sử dụng.",
                                 DescriptionPlainText = "Áo thun Relaxed Fit 84RISING HEHEHE.",
                                 CategoryId = 4,
+                                    DiscountId = 1,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
                                 BasePrice = 399000M,
                                 View = 180,
@@ -319,6 +339,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Description = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ ngắn, lựa chọn tiện lợi cho mùa lạnh.",
                                 DescriptionPlainText = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ ngắn.",
                                 CategoryId = 4,
+                                    DiscountId = 1,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
                                 BasePrice = 209000M,
                                 View = 150,
@@ -335,6 +356,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Description = "Áo Thun Nam Chạy Bộ Graphic Dot, thiết kế thể thao với phong cách hiện đại.",
                                 DescriptionPlainText = "Áo Thun Nam Chạy Bộ Graphic Dot.",
                                 CategoryId = 4,
+                                    DiscountId = 2,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
                                 BasePrice = 199000M,
                                 View = 170,
@@ -351,6 +373,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
     Description = "Quần shorts ECC Ripstop thiết kế thoải mái, chất liệu bền bỉ phù hợp với hoạt động thể thao.",
     DescriptionPlainText = "Quần shorts ECC Ripstop.",
     CategoryId = 11,
+        DiscountId = 3,
     Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
     BasePrice = 239000M,
     View = 140,
@@ -370,6 +393,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
                                 BasePrice = 189000M,
                                 View = 130,
+                                    DiscountId = 1,
                                 Like = 55,
                                 Slug = "quan-shorts-6-inch-racquet-sports",
                                 Status = 1,
@@ -387,6 +411,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 BasePrice = 209000M,
                                 View = 150,
                                 Like = 70,
+                                    DiscountId = 1,
                                 Slug = "quan-shorts-chay-bo-advanced-vent-tech",
                                 Status = 1,
                                 Deleted = false,
@@ -399,6 +424,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Description = "Quần shorts nam chạy bộ CoolFast 3.5 inch với thiết kế nhẹ và công nghệ CoolFast.",
                                 DescriptionPlainText = "Quần shorts nam chạy bộ CoolFast 3.5 inch.",
                                 CategoryId = 11,
+                                    DiscountId = 3,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
                                 BasePrice = 249000M,
                                 View = 160,
@@ -415,6 +441,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Description = "Quần shorts nam chạy bộ CoolFast 5 inch với thiết kế thoáng khí và công nghệ CoolFast.",
                                 DescriptionPlainText = "Quần shorts nam chạy bộ CoolFast 5 inch.",
                                 CategoryId = 11,
+                                    DiscountId = 4,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
                                 BasePrice = 329000M,
                                 View = 170,
@@ -431,6 +458,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Description = "Quần Shorts Chạy Bộ 2 lớp Fast & Free III, thiết kế năng động và linh hoạt khi tập luyện.",
                                 DescriptionPlainText = "Quần Shorts Chạy Bộ 2 lớp Fast & Free III.",
                                 CategoryId = 11,
+                                    DiscountId = 1,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
                                 BasePrice = 379000M,
                                 View = 190,
@@ -449,6 +477,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 CategoryId = 11,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
                                 BasePrice = 179000M,
+                                    DiscountId = 1,
                                 View = 160,
                                 Like = 65,
                                 Slug = "quan-shorts-the-thao-7-inch-da-nang",
@@ -467,6 +496,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 BasePrice = 174000M,
                                 View = 150,
                                 Like = 60,
+                                    DiscountId = 1,
                                 Slug = "quan-shorts-chay-bo-7-inch-essentials",
                                 Status = 1,
                                 Deleted = false,
@@ -485,6 +515,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
     Like = 45,
     Slug = "pack-3-tat-active-co-trung",
     Status = 1,
+        DiscountId = 1,
     Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -497,6 +528,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 99000M,
+                                    DiscountId = 1,
                                 View = 110,
                                 Like = 40,
                                 Slug = "pack-3-tat-active-co-ngan",
@@ -513,6 +545,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 109000M,
+                                    DiscountId = 1,
                                 View = 130,
                                 Like = 50,
                                 Slug = "combo-2-doi-tat-co-trung-cotton-ribbed",
@@ -529,6 +562,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 129000M,
+                                    DiscountId = 1,
                                 View = 140,
                                 Like = 55,
                                 Slug = "combo-2-doi-tat-co-dai-cotton-ribbed",
@@ -545,6 +579,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 55000M,
+                                    DiscountId = 1,
                                 View = 100,
                                 Like = 40,
                                 Slug = "tat-bong-da-co-cao",
@@ -561,6 +596,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 69000M,
+                                    DiscountId = 1,
                                 View = 120,
                                 Like = 45,
                                 Slug = "tat-nam-co-trung-tap-gym-essentials",
@@ -577,6 +613,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 59000M,
+                                    DiscountId = 1,
                                 View = 110,
                                 Like = 50,
                                 Slug = "tat-the-thao-seamless-co-dai",
@@ -593,6 +630,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 149000M,
+                                    DiscountId = 1,
                                 View = 150,
                                 Like = 70,
                                 Slug = "combo-10-doi-tat-nam-basics",
@@ -634,7 +672,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.attributeValues.AddRange(attributeValuesSeed);
                 _context.SaveChanges();
 
-                for (int i = 1; i <= 24; i++) 
+                for (int i = 1; i <= 24; i++)
                 {
                     productAttributeTypesSeed.Add(new ProductAttributeType { ProductId = i, AttributeTypeId = 1 }); // Color
                     productAttributeTypesSeed.Add(new ProductAttributeType { ProductId = i, AttributeTypeId = 2 }); // Size
@@ -1179,6 +1217,49 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.contacts.AddRange(contactsSeed);
                 _context.SaveChanges();
             }
+            if (!_context.tags.Any())
+            {
+                var tagsSeed = new List<Tag>
+                {
+                    new Tag()
+                    {
+                        Name = "New"
+                    },
+                    new Tag()
+                    {
+                        Name = "Outlet"
+                    },
+                    new Tag()
+                    {
+                        Name = "Đáng mua"
+                    }
+
+                };
+                _context.tags.AddRange(tagsSeed);
+                _context.SaveChanges();
+            }
+            if (_context.productTags.Any())
+            {
+                var productTagsSeed = new List<ProductTag>()
+                {
+                    new ProductTag()
+                    {
+                        ProductId = 1,
+                        TagId = 1,
+                    },
+                    new ProductTag()
+                    {
+                        ProductId = 2,
+                        TagId = 2,
+                    },
+                    new ProductTag()
+                    {
+                        ProductId = 3,
+                        TagId = 1,
+                    },
+                };
+            }
+            
             //if (!_context.settings.Any())
             //{
 

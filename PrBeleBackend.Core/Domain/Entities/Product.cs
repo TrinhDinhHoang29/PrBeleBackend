@@ -26,6 +26,8 @@ namespace PrBeleBackend.Core.Domain.Entities
 
         public int Like { get; set; }
 
+        public int DiscountId { get; set; }
+
         public string? Slug { get; set; }
 
         public int Status { get; set; }
@@ -39,8 +41,10 @@ namespace PrBeleBackend.Core.Domain.Entities
         public Category? Category { get; set; }
 
         public List<ProductAttributeType>? ProductAttributeTypes { get; set; }
-
+        public Discount? Discount { get; set; }
+        public List<ProductTag> ProductTags { get; set; }
         public List<Variant>? Variants { get; set; }
+        public List<Rate>? Rates { get; set; }
     }
 
     public static class ProductExtension
@@ -86,7 +90,7 @@ namespace PrBeleBackend.Core.Domain.Entities
                 Name = productUpdateRequest.Name,
                 BasePrice = productUpdateRequest.BasePrice,
                 CategoryId = productUpdateRequest.CategoryId,
-                //DiscountId = productUpdateRequest.DiscountId,
+                DiscountId = productUpdateRequest.DiscountId,
                 Description = productUpdateRequest.Description,
                 ProductAttributeTypes = productAttTyp
             };

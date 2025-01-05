@@ -37,8 +37,8 @@ namespace PrBeleBackend.Core.Services.AccountServices
             string hashedPassword = passwordHasher.HashPassword(null, accountAddRequest.Password);
 
             Account account = accountAddRequest.ToAccount();
-            account.CreatedAt = DateTime.UtcNow;
-            account.UpdatedAt = DateTime.UtcNow;
+            account.CreatedAt = DateTime.Now;
+            account.UpdatedAt = DateTime.Now;
 
             account.Password = hashedPassword;
             Account result = await _accountRepository.AddAccount(account);

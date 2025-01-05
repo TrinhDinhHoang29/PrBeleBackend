@@ -36,7 +36,7 @@ namespace PrBeleBackend.Core.Domain.Entities
         public DateTime UpdatedAt { get; set; }
         public string? RefreshToken { get; set; }
         public DateTime RefreshTokenExpirationDateTime { get; set; }
-
+        public List<Rate> Rates { get; set; }
         public Role? Role { get; set; }
     }
     public static class AccountExtensions

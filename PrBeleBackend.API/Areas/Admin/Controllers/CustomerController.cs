@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using PrBeleBackend.API.Filters;
 using PrBeleBackend.Core.DTO.CustomerDTOs;
 using PrBeleBackend.Core.Enums;
 using PrBeleBackend.Core.ServiceContracts.CustomerContracts;
@@ -7,6 +9,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerGetterService _customerGetterService;
@@ -25,6 +28,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _customerUpdaterService = customerUpdaterService;
             _customerDeleterService = customerDeleterService;
         }
+        [PermissionAuthorize("CU-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
             string? field,
@@ -69,6 +73,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
             });
         }
+        [PermissionAuthorize("CU-U")]
         [HttpPatch("{Id}")]
         public async Task<IActionResult> Edit(int Id, CustomerUpdatePatchRequest customerUpdateRequest)
         {
@@ -94,6 +99,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
+        [PermissionAuthorize("CU-D")]
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
         {
