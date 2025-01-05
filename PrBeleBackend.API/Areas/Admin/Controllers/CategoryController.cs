@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.CategoryDTOs;
+using PrBeleBackend.Core.Enums;
 using PrBeleBackend.Core.ServiceContracts.CategoryContracts;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -16,23 +17,43 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         private readonly ICategoryAdderService _categoryAdderService;
         private readonly ICategoryUpdaterService _categoryUpdaterService;
         private readonly ICategoryDeleterService _categoryDeleterService;
+        private readonly ICategorySorterService _categorySorterService;
         public CategoryController(
             ICategoryGetterService categoryGetterService,
             ICategoryAdderService categoryAdderService,
             ICategoryUpdaterService categoryUpdaterService,
-            ICategoryDeleterService categoryDeleterService)
+            ICategoryDeleterService categoryDeleterService,
+            ICategorySorterService categorySorterService
+            )
         {
             _categoryGetterService = categoryGetterService;
             _categoryAdderService = categoryAdderService;
             _categoryUpdaterService = categoryUpdaterService;
             _categoryDeleterService = categoryDeleterService;
+            _categorySorterService = categorySorterService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string? searchBy, string? searchString)
+        public async Task<IActionResult> Index(
+            string? field,
+            string? query,
+            int? status,
+            string? sort,
+            SortOrderOptions? order = SortOrderOptions.ASC,
+            int page = 1,
+            int limit = 10
+            )
         {
-            List<CategoryResponse> categories = await _categoryGetterService.GetFilteredCategory(searchBy,searchString);
+            List<CategoryResponse> categories = await _categoryGetterService.GetFilteredCategory(field,query);
+            categories = categories
+               .Where(a => status == 0 || status == 1 ? a.Status == status : true)
+               .Skip(limit * (page - 1)).Take(limit).ToList();
+
+            categories = await _categorySorterService.SortCategories(categories,sort,order.ToString());
+
             List<CategoryResponse> all = await _categoryGetterService.GetAllCategory();
+            int totalCategories = all.Count();
+
             var data = categories.Select(category => new
             {
                 Id = category.Id,
@@ -43,13 +64,21 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 CreatedAt = category.CreatedAt,
                 UpdatedAt = category.UpdatedAt,
             });
+
             return Ok(new
             {
                 status = 200,
-                data = new {
+                data = new
+                {
                     categories = data,
+                    pagination = new
+                    {
+                        currentPage = page,
+                        totalPages = totalCategories / limit,
+                        totalRecords = totalCategories
+                    }
                 },
-                message = "Successful !"
+                message = "Data fetched successfully."
             });
         }
 

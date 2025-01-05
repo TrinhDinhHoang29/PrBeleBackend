@@ -92,10 +92,6 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<ICategoryUpdaterService, CategoryUpdaterService>();
             Services.AddScoped<ICategorySorterService, CategorySorterService>();
             Services.AddScoped<ICategoryDeleterService, CategoryDeleterService>();
-
-            Services.AddScoped<IProductRepository, ProductRepository>();
-            Services.AddScoped<IProductGetterService, ProductGetterService>();
-
             #endregion
 
             #region DI Account
