@@ -15,6 +15,7 @@ using PrBeleBackend.Core.ServiceContracts.ContactContracts;
 using PrBeleBackend.Core.ServiceContracts.CustomerContracts;
 using PrBeleBackend.Core.ServiceContracts.DiscountContracts;
 using PrBeleBackend.Core.ServiceContracts.JwtContracts;
+using PrBeleBackend.Core.ServiceContracts.OrderContracts;
 using PrBeleBackend.Core.ServiceContracts.ProductContracts;
 using PrBeleBackend.Core.ServiceContracts.RoleContracts;
 using PrBeleBackend.Core.ServiceContracts.VariantContracts;
@@ -27,6 +28,7 @@ using PrBeleBackend.Core.Services.ContactServices;
 using PrBeleBackend.Core.Services.CustomerServices;
 using PrBeleBackend.Core.Services.DiscountServices;
 using PrBeleBackend.Core.Services.JwtServices;
+using PrBeleBackend.Core.Services.OrderServices.cs;
 using PrBeleBackend.Core.Services.ProductServices;
 using PrBeleBackend.Core.Services.RoleServices;
 using PrBeleBackend.Core.Services.VariantServices;
@@ -174,6 +176,15 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IDiscountUpdaterService, DiscountUpdaterServices>();
             Services.AddScoped<IDiscountSorterService, DiscountSorterServices>();
             Services.AddScoped<IDiscountDeleterService, DiscountDeleterServices>();
+            #endregion
+
+            #region DI Order 
+            Services.AddScoped<IOrderRepository, OrderRepository>();
+            Services.AddScoped<IOrderGetterService, OrderGetterService>();
+            Services.AddScoped<IOrderUpdaterService, OrderUpdaterService>();
+            Services.AddScoped<IOrderDeleterService, OrderDeleterService>();
+            Services.AddScoped<IOrderSorterService, OrderSorterService>();
+
             #endregion
         }
     }

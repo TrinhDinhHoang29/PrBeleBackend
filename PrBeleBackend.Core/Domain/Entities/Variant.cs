@@ -33,7 +33,5 @@ namespace PrBeleBackend.Core.Domain.Entities
         public List<ProductCart> ProductCarts {  get; set; } 
         public List<ProductOrder> ProductOrders { get; set; }
         public List<VariantAttributeValue>? VariantAttributeValues { get; set; }
-
-
     }
 }

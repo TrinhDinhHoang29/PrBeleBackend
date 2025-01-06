@@ -1238,7 +1238,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.tags.AddRange(tagsSeed);
                 _context.SaveChanges();
             }
-            if (_context.productTags.Any())
+            if (!_context.productTags.Any())
             {
                 var productTagsSeed = new List<ProductTag>()
                 {
@@ -1258,8 +1258,55 @@ namespace PrBeleBackend.Infrastructure.Seeder
                         TagId = 1,
                     },
                 };
+                _context.productTags.AddRange(productTagsSeed);
+                _context.SaveChanges();
             }
-            
+            if (!_context.orders.Any())
+            {
+                List<Order> ordersSeed = new List<Order>()
+                {
+                    new Order
+            {
+                UserId = 1,
+                FullName = "Nguyen Van A",
+                PhoneNumber = "0123456789",
+                Address = "123 Le Loi, Hanoi",
+                TotalMoney = 1000000,
+                PayMethod = "COD",
+                ShipDate = DateTime.Now,
+                ReceiveDate = DateTime.Now.AddDays(5),
+                Status = 3,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            },
+                    new Order
+                    {
+                        UserId = 2,
+                        FullName = "Tran Thi B",
+                        PhoneNumber = "0987654321",
+                        Address = "456 Tran Phu, Ho Chi Minh",
+                        TotalMoney = 1500000,
+                        PayMethod = "VNPAY",
+                        ShipDate = DateTime.Now,
+                        ReceiveDate = DateTime.Now.AddDays(3),
+                        Status = 3,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    }
+                };
+                _context.orders.AddRange(ordersSeed);
+                _context.SaveChanges();
+                var productOrder = new List<ProductOrder>()
+                {
+                    new ProductOrder { OrderId = 1, VariantId = 4, Quantity = 2 },
+                    new ProductOrder { OrderId = 1, VariantId = 5, Quantity = 1 },
+                    new ProductOrder { OrderId = 2, VariantId = 7, Quantity = 3 }
+                };
+           
+                _context.productOrders.AddRange(productOrder);
+                _context.SaveChanges();
+
+            }
             //if (!_context.settings.Any())
             //{
 

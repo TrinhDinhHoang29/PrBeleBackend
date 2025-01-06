@@ -148,7 +148,8 @@ namespace PrBeleBackend.Infrastructure.DbContexts
             modelBuilder.Entity<Order>()
                 .HasMany(p => p.ProductOrders)
                 .WithOne(po => po.Order)
-                .HasForeignKey(p => p.OrderId);
+                .HasForeignKey(p => p.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Variant>()
                 .HasMany(v => v.ProductOrders)
                 .WithOne(p => p.Variant)
