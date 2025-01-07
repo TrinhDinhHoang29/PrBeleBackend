@@ -64,7 +64,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
         public async Task<Rate?> GetRateById(int? Id)
         {
             Rate? rate = await _context.rates
-                 .Include(r => r.Product)
+                .Include(r => r.Product)
                 .Include(r => r.Account)
                 .Include(r => r.Customer)
                 .Where(r => r.Deleted == false)
@@ -80,6 +80,9 @@ namespace PrBeleBackend.Infrastructure.Repositories
         public async Task<List<Rate>> GetFilteredRate(Expression<Func<Rate, bool>> predicate)
         {
             List<Rate> rates = await _context.rates
+                .Include(r => r.Product)
+                .Include(r => r.Account)
+                .Include(r => r.Customer)
                 .Where(r => r.Deleted == false)
                 .Where(predicate)
                 .ToListAsync();

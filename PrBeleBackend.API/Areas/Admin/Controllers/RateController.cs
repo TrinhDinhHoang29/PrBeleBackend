@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.DTO.RateDTOs;
+using PrBeleBackend.Core.Enums;
 using PrBeleBackend.Core.ServiceContracts.RateContracts;
 using System.Security.Claims;
 
@@ -17,22 +16,64 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         private readonly IRateAdderService _rateAdderService;
         private readonly IRateDeleterService _rateDeleterService;
         private readonly IRateUpdaterService _rateUpdaterService;
+        private readonly IRateSortService _rateSortService;
         public RateController(
             IRateGetterService rateGetterService,
             IRateAdderService rateAdderService,
             IRateDeleterService rateDeleterService,
-            IRateUpdaterService rateUpdaterService)
+            IRateUpdaterService rateUpdaterService,
+            IRateSortService rateSortService)
         {
             _rateGetterService = rateGetterService;
             _rateAdderService = rateAdderService;
             _rateDeleterService = rateDeleterService;
             _rateUpdaterService = rateUpdaterService;
+            _rateSortService = rateSortService;
         }
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string? field,
+            string? query,
+            int? status,
+            string? sort,
+            SortOrderOptions? order = SortOrderOptions.ASC,
+            int page = 1,
+            int limit = 10
+            )
         {
-            List<RateResponse> rateResponses = await _rateGetterService.GetAllRate();
-            return Ok(rateResponses);
+
+            List<RateResponse> allRates = await _rateGetterService.GetAllRate();
+
+            allRates = allRates
+                .Where(a => status == 0 || status == 1 ? a.Status == status : true)
+                .ToList();
+
+            int totalRate= allRates.Count;
+
+            List<RateResponse> rates = await _rateGetterService.GetFilteredRate(field, query);
+
+            List<RateResponse> paginaRate = rates
+                .Where(a => status == 0 || status == 1 ? a.Status == status : true)
+                .Skip(limit * (page - 1)).Take(limit).ToList();
+
+            List<RateResponse> sortedRate = await _rateSortService.SortRate(paginaRate, sort, order.ToString());
+
+            return Ok(new
+            {
+                status = 200,
+                data = new
+                {
+                    Rates = rates,
+                    pagination = new
+                    {
+                        currentPage = page,
+                        totalPages = totalRate / limit,
+                        totalRecords = totalRate
+                    }
+                },
+                message = "Data fetched successfully."
+
+            });
 
         }
         [HttpPost]

@@ -19,6 +19,7 @@ using PrBeleBackend.Core.ServiceContracts.OrderContracts;
 using PrBeleBackend.Core.ServiceContracts.ProductContracts;
 using PrBeleBackend.Core.ServiceContracts.RateContracts;
 using PrBeleBackend.Core.ServiceContracts.RoleContracts;
+using PrBeleBackend.Core.ServiceContracts.SettingContracts;
 using PrBeleBackend.Core.ServiceContracts.VariantContracts;
 using PrBeleBackend.Core.Services;
 using PrBeleBackend.Core.Services.AccountServices;
@@ -33,6 +34,7 @@ using PrBeleBackend.Core.Services.OrderServices.cs;
 using PrBeleBackend.Core.Services.ProductServices;
 using PrBeleBackend.Core.Services.RateServices;
 using PrBeleBackend.Core.Services.RoleServices;
+using PrBeleBackend.Core.Services.SettingServices;
 using PrBeleBackend.Core.Services.VariantServices;
 using PrBeleBackend.Infrastructure.DbContexts;
 using PrBeleBackend.Infrastructure.Repositories;
@@ -194,7 +196,16 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IRateGetterService, RateGetterService>();
             Services.AddScoped<IRateAdderService, RateAdderService>();
             Services.AddScoped<IRateDeleterService, RateDeleterService>();
+            Services.AddScoped<IRateSortService, RateSorterService>();
             #endregion
+
+            #region DI Setting
+            Services.AddScoped<ISettingRepository,SettingRepository>();
+            Services.AddScoped<ISettingGetterService, SettingGetterService>();
+            Services.AddScoped<ISettingUpdaterService,SettingUpdaterService >();
+
+            #endregion
+
         }
     }
 }

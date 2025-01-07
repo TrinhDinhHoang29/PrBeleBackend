@@ -92,7 +92,9 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             return Ok(new
             {
                 status = 200,
-                data = accountResponse,
+                data = new {
+                    account = accountResponse,
+                },
                 message = "Data fetched successfully."
             });
         }

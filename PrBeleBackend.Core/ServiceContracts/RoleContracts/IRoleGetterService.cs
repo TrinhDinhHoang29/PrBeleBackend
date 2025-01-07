@@ -10,5 +10,6 @@ namespace PrBeleBackend.Core.ServiceContracts.RoleContracts
     public interface IRoleGetterService
     {
         public Task<List<RoleResponse>> GetAllRole();
+        public Task<RoleResponse> GetRoleById(int Id);
     }
 }

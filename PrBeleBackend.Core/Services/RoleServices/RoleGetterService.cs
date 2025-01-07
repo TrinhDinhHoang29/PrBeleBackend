@@ -22,5 +22,11 @@ namespace PrBeleBackend.Core.Services.RoleServices
             List<Role> roles = await _roleRepository.GetAllRole();
             return roles.Select(role => role.ToRoleResponse()).ToList();
         }
+
+        public async Task<RoleResponse> GetRoleById(int Id)
+        {
+            Role role = await _roleRepository.GetRoleById(Id);
+            return role.ToRoleResponse();
+        }
     }
 }
