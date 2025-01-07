@@ -10,6 +10,6 @@ namespace PrBeleBackend.Core.ServiceContracts.VariantContracts
 {
     public interface IVariantAdderService
     {
-        public Task<Variant> CreateVariant(VariantAdderRequest);
+        public Task<Variant> CreateVariant(VariantAdderRequest req);
     }
 }

@@ -12,8 +12,8 @@ using PrBeleBackend.Infrastructure.DbContexts;
 namespace PrBeleBackend.Infrastructure.Migrations
 {
     [DbContext(typeof(BeleStoreContext))]
-    [Migration("20250106120829_addfieee")]
-    partial class addfieee
+    [Migration("20250107073635_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -385,9 +385,6 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -415,9 +412,6 @@ namespace PrBeleBackend.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalMoney")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -557,6 +551,9 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("VariantId", "OrderId");
 
                     b.HasIndex("OrderId");
@@ -600,7 +597,7 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ReferenceRateId")
+                    b.Property<int>("ReferenceRateId")
                         .HasColumnType("int");
 
                     b.Property<int>("Star")
@@ -608,6 +605,9 @@ namespace PrBeleBackend.Infrastructure.Migrations
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

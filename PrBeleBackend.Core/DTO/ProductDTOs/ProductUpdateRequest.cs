@@ -29,7 +29,6 @@ namespace PrBeleBackend.Core.DTO.ProductDTOs
         [Required]
         public List<int> AttributeType { get; set; }
 
-        [Required]
         public IFormFile ProductFile { get; set; }
     }
 }

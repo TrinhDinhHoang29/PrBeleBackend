@@ -67,7 +67,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         [PermissionAuthorize("V-R")]
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetVariantDetail(int id)
         {
             try
@@ -125,7 +125,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         [PermissionAuthorize("V-U")]
-        [HttpPut("{Id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateVariant([FromBody] VariantUpdaterRequest req, [FromQuery] int id)
         {
             try
@@ -154,12 +154,12 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         [PermissionAuthorize("V-M")]
-        [HttpPatch("{Id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> ModifyVariant([FromBody] VariantModifierRequest req, [FromQuery] int id)
         {
             try
             {
-                Variant variant = await this._variantModifierService.UpdateVariant(req, id);
+                Variant variant = await this._variantModifierService.ModifyVariant(req, id);
 
                 return Ok(new
                 {
@@ -183,7 +183,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         [PermissionAuthorize("V-D")]
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVariant([FromQuery] int id)
         {
             try

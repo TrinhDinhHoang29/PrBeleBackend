@@ -67,7 +67,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         [PermissionAuthorize("A-C")]
-        [HttpPost("{Id}")]
+        [HttpPost("{id}")]
         public async Task<IActionResult> CreateAttributeValue([FromBody] AttributeValueAdderRequest req, int id)
         {
             try
@@ -95,7 +95,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         [PermissionAuthorize("A-U")]
-        [HttpPut("{Id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAttributeValue([FromBody] AttributeValueUpdaterRequest req, int id)
         {
             try
@@ -123,7 +123,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         [PermissionAuthorize("A-M")]
-        [HttpPatch("{Id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> ModifyAttributeValueStatus([FromBody] int status, int id)
         {
             try
@@ -151,7 +151,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         [PermissionAuthorize("A-D")]
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAttributeValue(int id)
         {
             try

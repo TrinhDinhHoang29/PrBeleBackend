@@ -14,7 +14,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductGetterService _productGetterService;
@@ -37,7 +37,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _productModifierService = productModifierService;
             _productDeleterService = productDeleterService;
         }
-        [PermissionAuthorize("P-R")]
+        //[PermissionAuthorize("P-R")]
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] ProductGetterRequest req)
         {
@@ -68,9 +68,9 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
-        [PermissionAuthorize("P-R")]
 
-        [HttpGet("{Id}")]
+        //[PermissionAuthorize("P-R")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Detail(int id)
         {
             ProductResponse product = await this._productGetterService.GetProductById(id);
@@ -86,7 +86,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             });
         }
 
-        [PermissionAuthorize("P-C")]
+        //[PermissionAuthorize("P-C")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ProductAddRequest req)
         {
@@ -113,9 +113,9 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
-        [PermissionAuthorize("P-U")]
-        [HttpPut("{Id}")]
-        public async Task<IActionResult> Update([FromBody] ProductUpdateRequest req, [FromQuery] int id)
+        //[PermissionAuthorize("P-U")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromBody] ProductUpdateRequest req, int id)
         {
             try
             {
@@ -141,8 +141,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        [PermissionAuthorize("P-U")]
-        [HttpPatch("{Id}")]
+        //[PermissionAuthorize("P-U")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> Modify([FromBody] ProductModifyRequest req, int id)
         {
             try
@@ -168,9 +168,9 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
-        [PermissionAuthorize("P-D")]
 
-        [HttpDelete("{Id}")]
+        //[PermissionAuthorize("P-D")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             try

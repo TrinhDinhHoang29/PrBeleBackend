@@ -156,7 +156,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
             {
                 case nameof(Product.Status):
                     {
-                        if(req.ModifyValue != "1" || req.ModifyValue != "0")
+                        if(req.ModifyValue != "1" && req.ModifyValue != "0")
                         {
                             throw new ArgumentNullException("Wrong value!");
                         }
