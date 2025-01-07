@@ -7,7 +7,7 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
     public interface ISettingRepository
     {
         public Task<Setting> GetSetting();
-        public Task<Setting> GetAllSetting();
+        public Task<Setting> UpdateSetting(Setting setting);
 
     }
 }
