@@ -102,5 +102,104 @@ namespace PrBeleBackend.Infrastructure.Repositories
                })
                .FirstOrDefaultAsync();
         }
+
+        public async Task<Variant> CreateVariant(Variant variant)
+        {
+            if(variant == null)
+            {
+                throw new ArgumentNullException(nameof(variant));
+            }
+
+            await this._context.variants.AddAsync(variant);
+
+            await this._context.SaveChangesAsync();
+
+            return variant;
+        }
+
+        public async Task<Variant> UpdateVariant(Variant variant, int id)
+        {
+            if (variant == null)
+            {
+                throw new ArgumentNullException(nameof(variant));
+            }
+
+            Variant? variantMatching = await this._context.variants
+                .Where(var => !var.Deleted)
+                .Where(var => var.Id == id)
+                .FirstOrDefaultAsync();
+
+            if(variantMatching == null)
+            {
+                throw new ArgumentNullException(nameof(variantMatching));
+            }
+
+            variantMatching.Price = variant.Price;
+            variantMatching.Stock = variant.Stock;
+            variantMatching.UpdatedAt = variant.UpdatedAt;
+            
+            if(variant.Thumbnail != null)
+            {
+                variantMatching.Thumbnail = variant.Thumbnail;
+            }
+
+            await this._context.variantAttributeValues
+                .Where(varAttVal => varAttVal.VariantId == id)
+                .ExecuteDeleteAsync();
+
+            await this._context.variantAttributeValues.AddRangeAsync(variantMatching.VariantAttributeValues);
+
+            return variant;
+        }
+
+        public async Task<Variant> ModifyVariant(VariantModifierRequest req, int id)
+        {
+            Variant? variantMatching = await this._context.variants
+                .Where(var => !var.Deleted)
+                .Where(var => var.Id == id)
+                .FirstOrDefaultAsync();
+
+            if(variantMatching == null)
+            {
+                throw new ArgumentNullException(nameof(variantMatching));
+            }
+
+            switch (req.ModifyField)
+            {
+                case nameof(Variant.Status):
+                    {
+                        variantMatching.Status = Convert.ToInt32(req.ModifyValue);
+
+                        break;
+                    }
+                default:
+                    {
+                        throw new ArgumentException(nameof(req.ModifyField));
+                    }
+            }
+
+            await this._context.SaveChangesAsync();
+
+            return variantMatching;
+        }
+
+        public async Task<Variant> DeleteVariant(int id)
+        {
+            Variant? variantMatching = await this._context.variants
+                .Where(var => !var.Deleted)
+                .Where(var => var.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (variantMatching == null)
+            {
+                throw new ArgumentNullException(nameof(variantMatching));
+            }
+
+            variantMatching.Deleted = true;
+
+            await this._context.SaveChangesAsync();
+
+            return variantMatching;
+        }
     }
 }

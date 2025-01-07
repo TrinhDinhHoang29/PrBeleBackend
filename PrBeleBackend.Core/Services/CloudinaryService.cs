@@ -34,7 +34,14 @@ namespace PrBeleBackend.Core.Services
 
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
-            return uploadResult.SecureUrl?.ToString();
+            if(uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return uploadResult.SecureUrl?.ToString();
+            }
+            else
+            {
+                throw new ArgumentNullException("Upload image fail!");
+            }
         }
     }
 }

@@ -2,11 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using PrBeleBackend.Core.ServiceContracts.AttributeContracts;
 using PrBeleBackend.Core.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
+using PrBeleBackend.API.Filters;
 
 namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
+    [Authorize]
     public class AttributeController : ControllerBase
     {
         private readonly IAttributeGetterService _attributeGetterService;
@@ -30,6 +33,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             this._attributeModifyService = attributeModifyService;   
         }
 
+        [PermissionAuthorize("A-R")]
         [HttpGet]
         public async Task<IActionResult> GetFilteredAttributeValue([FromBody] AttributeValueGetterRequest req)
         {
@@ -62,6 +66,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
+        [PermissionAuthorize("A-C")]
         [HttpPost("{Id}")]
         public async Task<IActionResult> CreateAttributeValue([FromBody] AttributeValueAdderRequest req, int id)
         {
@@ -89,6 +94,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
+        [PermissionAuthorize("A-U")]
         [HttpPut("{Id}")]
         public async Task<IActionResult> UpdateAttributeValue([FromBody] AttributeValueUpdaterRequest req, int id)
         {
@@ -116,6 +122,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
+        [PermissionAuthorize("A-M")]
         [HttpPatch("{Id}")]
         public async Task<IActionResult> ModifyAttributeValueStatus([FromBody] int status, int id)
         {
@@ -143,6 +150,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
+        [PermissionAuthorize("A-D")]
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteAttributeValue(int id)
         {

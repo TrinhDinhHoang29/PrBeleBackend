@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PrBeleBackend.Core.Domain.Entities;
+using PrBeleBackend.Core.DTO.VariantDTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,6 @@ namespace PrBeleBackend.Core.ServiceContracts.VariantContracts
 {
     public interface IVariantAdderService
     {
+        public Task<Variant> CreateVariant(VariantAdderRequest);
     }
 }

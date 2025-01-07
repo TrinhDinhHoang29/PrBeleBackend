@@ -17,5 +17,13 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
         public Task<List<VariantResponse>> GetFilteredVariant(PaginationResponse paginationResponse, Expression<Func<Variant, bool>> predicate, int productId);
 
         public Task<VariantResponse> GetVariantDetail(int id);
+
+        public Task<Variant> CreateVariant(Variant variant);
+
+        public Task<Variant> UpdateVariant(Variant variant, int id);
+
+        public Task<Variant> ModifyVariant(VariantModifierRequest req, int id);
+
+        public Task<Variant> DeleteVariant(int id);
     }
 }

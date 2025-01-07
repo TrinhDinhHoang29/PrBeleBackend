@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PrBeleBackend.Core.DTO.VariantDTOs;
+using PrBeleBackend.Core.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -33,7 +35,50 @@ namespace PrBeleBackend.Core.Domain.Entities
         public List<ProductCart> ProductCarts {  get; set; } 
         public List<ProductOrder> ProductOrders { get; set; }
         public List<VariantAttributeValue>? VariantAttributeValues { get; set; }
+    }
 
+    public static class VariantExtension
+    {
+        public static Variant ToVariant(this VariantAdderRequest req)
+        {
+            List<VariantAttributeValue> varAttVal = new List<VariantAttributeValue>();
 
+            foreach(int item in req.AttributeValueId)
+            {
+                varAttVal.Add(new VariantAttributeValue
+                {
+                    AttributeValueId = item
+                });
+            }
+
+            return new Variant
+            {
+                Price = req.Price,
+                Stock = req.Stock,
+                ProductId = req.ProductId,
+                Status = req.Status,
+                VariantAttributeValues = varAttVal
+            };
+        }
+
+        public static Variant ToVariant(this VariantUpdaterRequest req)
+        {
+            List<VariantAttributeValue> varAttVal = new List<VariantAttributeValue>();
+
+            foreach (int item in req.AttributeValueId)
+            {
+                varAttVal.Add(new VariantAttributeValue
+                {
+                    AttributeValueId = item
+                });
+            }
+
+            return new Variant
+            {
+                Price = req.Price,
+                Stock = req.Stock,
+                VariantAttributeValues = varAttVal
+            };
+        }
     }
 }

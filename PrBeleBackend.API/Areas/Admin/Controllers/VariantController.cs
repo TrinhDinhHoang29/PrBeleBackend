@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PrBeleBackend.Core.ServiceContracts.VariantContracts;
 using PrBeleBackend.Core.DTO.VariantDTOs;
+using PrBeleBackend.Core.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
+using PrBeleBackend.API.Filters;
 
 namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
+    [Authorize]
     public class VariantController : Controller
     {
         private readonly IVariantGetterService _variantGetterService;
@@ -29,6 +33,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             this._variantDeleterService = variantDeleterService;
         }
 
+        [PermissionAuthorize("V-R")]
         [HttpGet]
         public async Task<IActionResult> GetFilteredVariant([FromBody] VariantGetterRequest req)
         {
@@ -61,6 +66,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
+        [PermissionAuthorize("V-R")]
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetVariantDetail(int id)
         {
@@ -77,6 +83,122 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
                     },
                     message = "Get variant success!"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
+        [PermissionAuthorize("V-C")]
+        [HttpPost]
+        public async Task<IActionResult> CreateVariant([FromBody] VariantAdderRequest req)
+        {
+            try
+            {
+                Variant variant = await this._variantAdderService.CreateVariant(req);
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        variant = variant,
+
+                    },
+                    message = "Create variant success!"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
+        [PermissionAuthorize("V-U")]
+        [HttpPut("{Id}")]
+        public async Task<IActionResult> UpdateVariant([FromBody] VariantUpdaterRequest req, [FromQuery] int id)
+        {
+            try
+            {
+                Variant variant = await this._variantUpdaterService.UpdateVariant(req, id);
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        variant = variant,
+
+                    },
+                    message = "Update variant success!"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
+        [PermissionAuthorize("V-M")]
+        [HttpPatch("{Id}")]
+        public async Task<IActionResult> ModifyVariant([FromBody] VariantModifierRequest req, [FromQuery] int id)
+        {
+            try
+            {
+                Variant variant = await this._variantModifierService.UpdateVariant(req, id);
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        variant = variant,
+
+                    },
+                    message = "Modify variant success!"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
+        [PermissionAuthorize("V-D")]
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteVariant([FromQuery] int id)
+        {
+            try
+            {
+                Variant variant = await this._variantDeleterService.DeleteVariant(id);
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        variant = variant,
+
+                    },
+                    message = "Delete variant success!"
                 });
             }
             catch (Exception ex)

@@ -99,15 +99,6 @@ namespace PrBeleBackend.Infrastructure.Repositories
             await this._context.products.AddAsync(product);
             await this._context.SaveChangesAsync();
 
-            foreach(var proAttTyp in product.ProductAttributeTypes)
-            {
-                proAttTyp.ProductId = product.Id;
-
-                await this._context.productAttributeTypes.AddAsync(proAttTyp);
-            }
-
-            await this._context.SaveChangesAsync();
-
             return product;
         }
 
