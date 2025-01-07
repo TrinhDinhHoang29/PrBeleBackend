@@ -25,9 +25,14 @@ namespace PrBeleBackend.Core.Services.CustomerServices
             return customers.Select(c => c.ToCustomerResponse()).ToList();
         }
 
-        public Task<CustomerResponse?> GetCustomerById(int Id)
+        public async Task<CustomerResponse?> GetCustomerById(int Id)
         {
-            throw new NotImplementedException();
+            Customer customer = await _customerRepository.GetCustomerById(Id);
+            if(customer == null)
+            {
+                return null;
+            }
+            return customer.ToCustomerResponse();
         }
 
         public async Task<List<CustomerResponse>> GetFilteredCustomer(string searchBy, string? searchString)

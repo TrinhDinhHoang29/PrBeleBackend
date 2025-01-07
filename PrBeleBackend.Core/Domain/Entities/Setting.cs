@@ -23,8 +23,8 @@ namespace PrBeleBackend.Core.Domain.Entities
         {
             return new Setting
             {
-                mainLogo = settingUpdateRequest.mainLogo,
-                subLogo = settingUpdateRequest.subLogo,
+                mainLogo = settingUpdateRequest.MainLogo,
+                subLogo = settingUpdateRequest.SubLogo,
                 Slogan = settingUpdateRequest.Slogan,
                 Hotline = settingUpdateRequest.Hotline,
                 Email = settingUpdateRequest.Email,

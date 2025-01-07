@@ -47,14 +47,15 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             List<CategoryResponse> categories = await _categoryGetterService.GetFilteredCategory(field,query);
             categories = categories
                .Where(a => status == 0 || status == 1 ? a.Status == status : true)
-               .Skip(limit * (page - 1)).Take(limit).ToList();
+               .ToList();
 
-            categories = await _categorySorterService.SortCategories(categories,sort,order.ToString());
+            List<CategoryResponse> paginationResult = categories.Skip(limit * (page - 1)).Take(limit).ToList();
+
+            paginationResult = await _categorySorterService.SortCategories(paginationResult, sort,order.ToString());
 
             List<CategoryResponse> all = await _categoryGetterService.GetAllCategory();
-            int totalCategories = all.Count();
 
-            var data = categories.Select(category => new
+            var data = paginationResult.Select(category => new
             {
                 Id = category.Id,
                 Name = category.Name,
@@ -74,8 +75,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                     pagination = new
                     {
                         currentPage = page,
-                        totalPages = totalCategories / limit,
-                        totalRecords = totalCategories
+                        totalPage = Math.Ceiling((decimal)categories.Count / limit),
                     }
                 },
                 message = "Data fetched successfully."

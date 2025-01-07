@@ -27,7 +27,7 @@ namespace PrBeleBackend.Core.Domain.Entities
         [StringLength(255)]
         public string? Address { get; set; }
         [Required]
-        public bool? IsDefault { get; set; }
+        public bool IsDefault { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime UpdateAt { get; set; }
         public Customer? Customer { get; set; }

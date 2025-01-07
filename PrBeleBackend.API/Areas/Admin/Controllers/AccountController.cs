@@ -44,13 +44,6 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             int limit = 10
             )
         {
-            List<AccountResponse> allAccounts = await _accountGetterService.GetAllAccount();
-
-            allAccounts = allAccounts
-                .Where(a => status == 0 || status == 1 ? a.Status == status : true)
-                .ToList();
-
-            int totalAccount = allAccounts.Count;
 
             List<AccountResponse> accounts = await _accountGetterService.GetFilteredAccount(field, query);
 
@@ -69,8 +62,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                     pagination = new
                     {
                         currentPage = page,
-                        totalPages = totalAccount / limit,
-                        totalRecords = totalAccount
+                        totalPage = Math.Ceiling((decimal)accounts.Count / limit),
                     }
                 },
                 message = "Data fetched successfully."

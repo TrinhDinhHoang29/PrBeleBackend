@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using PrBeleBackend.API.StartupExtensions;
 using PrBeleBackend.Infrastructure.Seeder;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,9 +40,25 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ClockSkew = TimeSpan.Zero, // Loại bỏ thời gian lệch
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
+        {
+            var jwtHandler = new JwtSecurityTokenHandler();
+            var jwtToken = jwtHandler.ReadJwtToken(token);
+
+            // Lấy giá trị role từ claim
+            var roleClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            // Phân biệt secret key theo role
+            var secretKey = roleClaim == "Client"
+                ? builder.Configuration["Jwt:KeyClient"]
+                : builder.Configuration["Jwt:Key"];
+
+            // Trả về danh sách các SymmetricSecurityKey
+            return new[] { new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)) };
+        }
+
 
     };
+   
 
 });
 builder.Services.AddAuthorization();

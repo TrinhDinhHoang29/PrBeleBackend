@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PrBeleBackend.API.Filters;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.DTO.AccountDTOs;
@@ -28,6 +29,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _roleGetterService = roleGetterService;
         }
         [Authorize]
+        [PermissionAuthorize("Only Admin")]
         [HttpGet]
         public async Task<IActionResult> GetMe()
         {
