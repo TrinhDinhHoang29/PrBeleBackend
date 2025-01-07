@@ -8,7 +8,7 @@ using System.Net;
 
 namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/admin/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {

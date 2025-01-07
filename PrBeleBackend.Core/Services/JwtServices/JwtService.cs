@@ -37,7 +37,7 @@ namespace PrBeleBackend.Core.Services.JwtServices
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new List<Claim>
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub, account.Id.ToString().ToUpper()), //Subject (user id)
+                    new Claim(JwtRegisteredClaimNames.Sub, account.Id.ToString()), //Subject (user id)
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), //JWT unique ID
                     new Claim(JwtRegisteredClaimNames.Iat, new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString(),
                         ClaimValueTypes.Integer64),

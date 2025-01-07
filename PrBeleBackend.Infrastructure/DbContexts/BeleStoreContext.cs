@@ -171,6 +171,8 @@ namespace PrBeleBackend.Infrastructure.DbContexts
               .HasMany(a => a.Rates)
               .WithOne(r => r.Customer)
               .HasForeignKey(r => r.UserId);
+            modelBuilder.Entity<Rate>()
+            .Ignore(r => r.RateReference);
             //cart
             modelBuilder.Entity<Cart>()
                 .HasOne(c => c.Customer)
@@ -186,7 +188,7 @@ namespace PrBeleBackend.Infrastructure.DbContexts
                .HasMany(c => c.ProductCarts)
                .WithOne(c => c.Variant)
                .HasForeignKey(c => c.VariantId);
-
+  
 
 
 

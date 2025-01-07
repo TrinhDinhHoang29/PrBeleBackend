@@ -15,7 +15,6 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
         public Task<List<Discount>> GetFilteredDiscount(Expression<Func<Discount, bool>> predicate);
 
         public Task<Discount?> GetDiscountById(int? Id);
-        //public Task<Customer?> GetAccountByEmail(string? Email);
 
         public Task<Discount> AddDiscount(Discount discount);
 

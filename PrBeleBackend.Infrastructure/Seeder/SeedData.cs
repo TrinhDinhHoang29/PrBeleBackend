@@ -1307,6 +1307,41 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.SaveChanges();
 
             }
+            if (!_context.rates.Any())
+            {
+                List<Rate> ratesSeed = new List<Rate>()
+                {
+                    new Rate
+        {
+            ProductId = 1,
+            UserType = "Customer",
+            UserId = 1,
+            Star = 5,
+            Content = "Great product! Highly recommend.",
+            ReferenceRateId = 0,
+            Status = 1,
+            Deleted = false,
+            CreatedAt = DateTime.UtcNow.AddDays(-10),
+            UpdatedAt = DateTime.UtcNow.AddDays(-5)
+        },
+                    new Rate
+        {
+            ProductId = 1,
+            UserType = "Admin",
+            UserId = 2,
+            Star = 5,
+            Content = "Good quality, but shipping was slow.",
+            ReferenceRateId = 1,
+            Status = 1,
+            Deleted = false,
+            CreatedAt = DateTime.UtcNow.AddDays(-7),
+            UpdatedAt = DateTime.UtcNow.AddDays(-3)
+        }
+                };
+                _context.rates.AddRange(ratesSeed);
+                _context.SaveChanges();
+            }
+
             //if (!_context.settings.Any())
             //{
 
