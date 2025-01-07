@@ -148,7 +148,8 @@ namespace PrBeleBackend.Infrastructure.DbContexts
             modelBuilder.Entity<Order>()
                 .HasMany(p => p.ProductOrders)
                 .WithOne(po => po.Order)
-                .HasForeignKey(p => p.OrderId);
+                .HasForeignKey(p => p.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Variant>()
                 .HasMany(v => v.ProductOrders)
                 .WithOne(p => p.Variant)
@@ -170,6 +171,8 @@ namespace PrBeleBackend.Infrastructure.DbContexts
               .HasMany(a => a.Rates)
               .WithOne(r => r.Customer)
               .HasForeignKey(r => r.UserId);
+            modelBuilder.Entity<Rate>()
+            .Ignore(r => r.RateReference);
             //cart
             modelBuilder.Entity<Cart>()
                 .HasOne(c => c.Customer)
@@ -185,7 +188,7 @@ namespace PrBeleBackend.Infrastructure.DbContexts
                .HasMany(c => c.ProductCarts)
                .WithOne(c => c.Variant)
                .HasForeignKey(c => c.VariantId);
-
+  
 
 
 

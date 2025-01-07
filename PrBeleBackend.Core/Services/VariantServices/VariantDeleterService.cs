@@ -20,7 +20,7 @@ namespace PrBeleBackend.Core.Services.VariantServices
 
         public async Task<Variant> DeleteVariant(int id)
         {
-            return 
+            return await this._variantRepository.DeleteVariant(id);
         }
     }
 }

@@ -20,20 +20,19 @@ namespace PrBeleBackend.Core.Domain.Entities
         public string? PhoneNumber { get; set; }
         [Required, StringLength(255)]
         public string? Address { get; set; }
+        public string? Note { get; set; }
         [Required]
         [Column(TypeName = "decimal(18,2)")]
-
         public decimal TotalMoney { get; set; }
         [StringLength(32)]
         public string? PayMethod { get; set; }
         public DateTime ShipDate { get; set; }
         public DateTime ReceiveDate { get; set; }
         public int Status { get; set; }
-        public bool Deleted { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
-        public List<ProductOrder> ProductOrders { get; set; }
-        public Customer Customer { get; set; }
+        public List<ProductOrder>? ProductOrders { get; set; }
+        public Customer? Customer { get; set; }
     }
 }

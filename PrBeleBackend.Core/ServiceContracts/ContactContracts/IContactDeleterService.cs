@@ -9,6 +9,5 @@ namespace PrBeleBackend.Core.ServiceContracts.ContactContracts
     public interface IContactDeleterService
     {
         public Task<bool> DeleteContact(int Id);
-
     }
 }

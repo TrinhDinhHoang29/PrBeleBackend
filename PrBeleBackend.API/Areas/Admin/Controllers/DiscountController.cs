@@ -62,7 +62,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 status = 200,
                 data = new
                 {
-                    accounts = sortedDiscount,
+                    discounts = sortedDiscount,
                     pagination = new
                     {
                         currentPage = page,
@@ -80,9 +80,9 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             DiscountResponse? discountResponse = await _discountGetterService.GetDiscountById(Id);
             if (discountResponse == null)
             {
-                return BadRequest(new
+                return NotFound(new
                 {
-                    status = 400,
+                    status = 404,
                     message = "Discount not found !"
                 });
             }
