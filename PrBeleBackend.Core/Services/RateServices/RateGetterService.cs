@@ -1,5 +1,6 @@
 ﻿using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
+using PrBeleBackend.Core.DTO.DiscountDTOs;
 using PrBeleBackend.Core.DTO.RateDTOs;
 using PrBeleBackend.Core.ServiceContracts.RateContracts;
 using System;
@@ -23,14 +24,32 @@ namespace PrBeleBackend.Core.Services.RateServices
             return rates.Select(r => r.ToRateResponse()).ToList();
         }
 
-        public Task<List<RateResponse>> GetFilteredRate(string searchBy, string? searchString)
+        public async Task<List<RateResponse>> GetFilteredRate(string searchBy, string? searchString)
         {
-            throw new NotImplementedException();
+            List<Rate> rates = await _rateRepository.GetAllRate();
+
+            if (searchBy == string.Empty || searchString == string.Empty)
+            {
+                return rates.Select(c => c.ToRateResponse()).ToList();
+            }
+            switch (searchBy)
+            {
+                case nameof(Rate.Account.FullName):
+                    return rates.Where(a => a.Account.FullName.Contains(searchString))
+                        .Select(a => a.ToRateResponse()).ToList();
+                default:
+                    return rates.Select(a => a.ToRateResponse()).ToList();
+            }
         }
 
-        public Task<RateResponse?> GetRateById(int Id)
+        public async Task<RateResponse?> GetRateById(int Id)
         {
-            throw new NotImplementedException();
+            Rate? rate = await _rateRepository.GetRateById(Id);
+            if (rate == null)
+            {
+                return null;
+            }
+            return rate.ToRateResponse();
         }
     }
 }

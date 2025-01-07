@@ -194,6 +194,7 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IRateGetterService, RateGetterService>();
             Services.AddScoped<IRateAdderService, RateAdderService>();
             Services.AddScoped<IRateDeleterService, RateDeleterService>();
+            Services.AddScoped<IRateSortService, RateSorterService>();
             #endregion
         }
     }

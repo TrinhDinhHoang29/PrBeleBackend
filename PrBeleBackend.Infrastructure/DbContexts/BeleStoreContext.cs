@@ -34,7 +34,6 @@ namespace PrBeleBackend.Infrastructure.DbContexts
         public DbSet<ProductTag> productTags { get; set; }
         public DbSet<Order> orders { get; set; }
         public DbSet<ProductOrder> productOrders { get; set; }
-
         public DbSet<Rate> rates { get; set; }
         public DbSet<Cart> carts { get; set; }
         public DbSet<ProductCart> productCarts { get; set; }

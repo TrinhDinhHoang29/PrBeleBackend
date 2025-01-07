@@ -42,6 +42,8 @@ namespace PrBeleBackend.Core.Services.JwtServices
                     new Claim(JwtRegisteredClaimNames.Iat, new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString(),
                         ClaimValueTypes.Integer64),
                     new Claim(ClaimTypes.NameIdentifier, account.Email), //Unique name identifier of the user (Email)
+                    new Claim(ClaimTypes.Email, account.Email), //Unique name identifier of the user (Email)
+
                     new Claim(ClaimTypes.Role, account.Role.Name), //Unique name identifier of the user (Email)
                 };
 

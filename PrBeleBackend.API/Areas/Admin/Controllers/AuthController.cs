@@ -1,10 +1,15 @@
-﻿using Azure.Core;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PrBeleBackend.Core.Domain.Entities;
+using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.DTO.AccountDTOs;
 using PrBeleBackend.Core.DTO.AuthDTOs;
 using PrBeleBackend.Core.DTO.JwtDTOs;
+using PrBeleBackend.Core.DTO.RoleDTOs;
 using PrBeleBackend.Core.ServiceContracts.AccountContracts;
 using PrBeleBackend.Core.ServiceContracts.AuthContracts;
+using PrBeleBackend.Core.ServiceContracts.RoleContracts;
+using System.Security.Claims;
 
 namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
@@ -14,12 +19,32 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IAccountGetterService _accountGetterService;
-        public AuthController(IAuthService authService,IAccountGetterService accountGetterService)
+        private readonly IRoleGetterService _roleGetterService;
+
+        public AuthController(IAuthService authService,IAccountGetterService accountGetterService, IRoleGetterService roleGetterService)
         {
             _authService = authService;
             _accountGetterService = accountGetterService;
+            _roleGetterService = roleGetterService;
         }
-        
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetMe()
+        {
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
+            AccountResponse? accountResponse = await _accountGetterService.GetAccountByEmail(email);
+            RoleResponse role = await _roleGetterService.GetRoleById(accountResponse.Role.Id);
+            accountResponse.Role = role;
+            return Ok(new
+            {
+                status = 200,
+                data = new
+                {
+                    Account = accountResponse,
+                },
+                message = "Get account successful !"
+            });
+        }
         [HttpPost]       
         public async Task<IActionResult> Login(LoginRequest loginRequest)
         {

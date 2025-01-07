@@ -93,7 +93,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                     status = 200,
                     data = new
                     {
-                        categories = categories,
+                        categorie = categories,
                     },
                     message = "Successful !"
                 });
