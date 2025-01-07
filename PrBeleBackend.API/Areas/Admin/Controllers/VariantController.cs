@@ -9,7 +9,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class VariantController : Controller
     {
         private readonly IVariantGetterService _variantGetterService;
@@ -33,7 +33,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             this._variantDeleterService = variantDeleterService;
         }
 
-        [PermissionAuthorize("V-R")]
+        //[PermissionAuthorize("V-R")]
         [HttpGet]
         public async Task<IActionResult> GetFilteredVariant([FromBody] VariantGetterRequest req)
         {
@@ -66,7 +66,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        [PermissionAuthorize("V-R")]
+        //[PermissionAuthorize("V-R")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVariantDetail(int id)
         {
@@ -95,7 +95,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        [PermissionAuthorize("V-C")]
+        //[PermissionAuthorize("V-C")]
         [HttpPost]
         public async Task<IActionResult> CreateVariant([FromBody] VariantAdderRequest req)
         {
@@ -124,9 +124,9 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        [PermissionAuthorize("V-U")]
+        //[PermissionAuthorize("V-U")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVariant([FromBody] VariantUpdaterRequest req, [FromQuery] int id)
+        public async Task<IActionResult> UpdateVariant([FromBody] VariantUpdaterRequest req, int id)
         {
             try
             {
@@ -153,9 +153,9 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        [PermissionAuthorize("V-M")]
+        //[PermissionAuthorize("V-M")]
         [HttpPatch("{id}")]
-        public async Task<IActionResult> ModifyVariant([FromBody] VariantModifierRequest req, [FromQuery] int id)
+        public async Task<IActionResult> ModifyVariant([FromBody] VariantModifierRequest req, int id)
         {
             try
             {
@@ -182,9 +182,9 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        [PermissionAuthorize("V-D")]
+        //[PermissionAuthorize("V-D")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVariant([FromQuery] int id)
+        public async Task<IActionResult> DeleteVariant(int id)
         {
             try
             {

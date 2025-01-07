@@ -10,7 +10,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class RateController : ControllerBase
     {
         private readonly IRateGetterService _rateGetterService;
