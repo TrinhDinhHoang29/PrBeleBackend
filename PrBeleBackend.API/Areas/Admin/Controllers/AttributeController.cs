@@ -4,6 +4,7 @@ using PrBeleBackend.Core.ServiceContracts.AttributeContracts;
 using PrBeleBackend.Core.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using PrBeleBackend.API.Filters;
+using PrBeleBackend.Core.Enums;
 
 namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
@@ -17,13 +18,15 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         private readonly IAttributeDeleterService _attributeDeleterService;
         private readonly IAttributeUpdaterService _attributeUpdaterService;
         private readonly IAttributeModifyService _attributeModifyService;
+        private readonly IAttributeSorterService _attributeSorterService;
 
         public AttributeController(
             IAttributeGetterService attributeGetterService, 
             IAttributeAdderService attributeAdderService,
             IAttributeDeleterService attributeDeleterService,
             IAttributeUpdaterService attributeUpdaterService,
-            IAttributeModifyService attributeModifyService
+            IAttributeModifyService attributeModifyService,
+            IAttributeSorterService attributeSorterService
         )
         {
             this._attributeGetterService = attributeGetterService;
@@ -31,26 +34,39 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             this._attributeDeleterService = attributeDeleterService;
             this._attributeUpdaterService = attributeUpdaterService;
             this._attributeModifyService = attributeModifyService;   
+            this._attributeSorterService = attributeSorterService;
         }
 
         //[PermissionAuthorize("A-R")]
         [HttpGet]
-        public async Task<IActionResult> GetFilteredAttributeValue([FromBody] AttributeValueGetterRequest req)
+        public async Task<IActionResult> GetFilteredAttributeValue(
+            string? field,
+            string? query,
+            int? status,
+            string? sort,
+            SortOrderOptions? order = SortOrderOptions.ASC,
+            int page = 1,
+            int limit = 10
+        )
         {
             try
             {
-                IEnumerable<AttributeValueResponse> attributeValues = await _attributeGetterService.GetFilteredAttributValue(req);
+                IEnumerable<AttributeValueResponse> attributeValues = await _attributeGetterService.GetFilteredAttributValue(field, query, status);
+
+                IEnumerable<AttributeValueResponse> attributeValuesPagination = attributeValues.Skip(limit * (page - 1)).Take(limit).ToList();
+    
+                IEnumerable<AttributeValueResponse> attributeValuesSort = await this._attributeSorterService.SortAttributeValue(attributeValuesPagination, sort, order);
 
                 return Ok(new
                 {
                     status = 200,
                     data = new
                     {
-                        attributeValues = attributeValues,
+                        attributeValues = attributeValuesSort,
                         pagination = new
                         {
-                            skip = req.Skip,
-                            limit = req.Limit
+                            currentPage = page,
+                            totalPage = Math.Ceiling(Convert.ToDecimal(attributeValues) / limit)
                         }
                     },
                     message = "Get atribute value list success !"

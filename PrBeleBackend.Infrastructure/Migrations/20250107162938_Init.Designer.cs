@@ -12,7 +12,7 @@ using PrBeleBackend.Infrastructure.DbContexts;
 namespace PrBeleBackend.Infrastructure.Migrations
 {
     [DbContext(typeof(BeleStoreContext))]
-    [Migration("20250107073635_Init")]
+    [Migration("20250107162938_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -691,6 +691,12 @@ namespace PrBeleBackend.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZaloLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("mainLogo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("subLogo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

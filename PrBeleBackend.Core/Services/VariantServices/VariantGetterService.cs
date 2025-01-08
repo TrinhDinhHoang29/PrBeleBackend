@@ -21,6 +21,11 @@ namespace PrBeleBackend.Core.Services.VariantServices
             this._variantRepository = variantRepository;
         }
 
+        public async Task<decimal> GetVariantCount(int id)
+        {
+            return await this._variantRepository.GetVariantCountByProductId(id);
+        }
+
         public async Task<List<VariantResponse>> GetFilteredVariant(VariantGetterRequest req)
         {
             if(req == null)
@@ -30,7 +35,7 @@ namespace PrBeleBackend.Core.Services.VariantServices
 
             ValidationHelper.ModelValidation(req);
 
-            PaginationResponse pagRes = await PaginationHelper.Handle(req.Skip, req.Limit, await this._variantRepository.GetVariantCountByProductId(req.ProductId));
+            PaginationResponse pagRes = await PaginationHelper.Handle(req.Page, req.Limit, await this._variantRepository.GetVariantCountByProductId(req.ProductId));
 
             switch (req.SearchBy)
             {

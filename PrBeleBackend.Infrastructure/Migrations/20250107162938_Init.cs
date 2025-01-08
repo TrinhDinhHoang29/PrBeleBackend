@@ -140,6 +140,8 @@ namespace PrBeleBackend.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    mainLogo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    subLogo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Slogan = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Hotline = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),

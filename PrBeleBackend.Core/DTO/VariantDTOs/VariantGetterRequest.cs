@@ -11,7 +11,7 @@ namespace PrBeleBackend.Core.DTO.VariantDTOs
     public class VariantGetterRequest
     {
         [DefaultValue(1)]
-        public int Skip { get; set; }
+        public int Page { get; set; }
 
         [DefaultValue(4)]
         public int Limit { get; set; }

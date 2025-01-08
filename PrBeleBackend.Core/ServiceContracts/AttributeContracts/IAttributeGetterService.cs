@@ -9,6 +9,7 @@ namespace PrBeleBackend.Core.ServiceContracts.AttributeContracts
 {
     public interface IAttributeGetterService
     {
-        public Task<List<AttributeValueResponse>> GetFilteredAttributValue(AttributeValueGetterRequest req);
+        public Task<decimal> GetAttributeValueCount();
+        public Task<List<AttributeValueResponse>> GetFilteredAttributValue(string? searchBy, string? searchStr, int? status);
     }
 }

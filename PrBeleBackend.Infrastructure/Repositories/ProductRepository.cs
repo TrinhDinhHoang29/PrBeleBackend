@@ -28,11 +28,12 @@ namespace PrBeleBackend.Infrastructure.Repositories
             return await _context.products.CountAsync();
         }
 
-        public async Task<List<ProductResponse>> GetFilteredProduct(PaginationResponse paginationResponse, Expression<Func<Product, bool>> predicate)
+        public async Task<List<ProductResponse>> GetFilteredProduct(Expression<Func<Product, bool>> predicate, int? status = 0)
         {
             return await _context.products
                 .Where(product => product.Deleted == false)
                 .Where(predicate)
+                .Where(product => product.Status == status)
                 .Select(p => new ProductResponse
                 {
                     Id = p.Id,
@@ -57,9 +58,6 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     ).Where(res => res.pat.ProductId == p.Id)
                     .Select(res => res.at).ToList()
                 })
-                .OrderBy(p => p.Id)
-                .Skip(paginationResponse.PageIndex * paginationResponse.PageSize)
-                .Take(paginationResponse.PageSize)
                 .ToListAsync();
         }
 

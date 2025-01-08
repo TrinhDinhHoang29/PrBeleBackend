@@ -10,7 +10,7 @@ namespace PrBeleBackend.Core.DTO.AttributeDTOs
     public class AttributeValueGetterRequest
     {
         [DefaultValue(1)]
-        public int Skip { get; set; }
+        public int Page { get; set; }
 
         [DefaultValue(4)]
         public int Limit { get; set; }

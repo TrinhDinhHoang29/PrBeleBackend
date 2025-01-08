@@ -22,31 +22,32 @@ namespace PrBeleBackend.Core.Services.AttributeServices
             _attributeRepository = attributeGetterService;
         }
 
-        public async Task<List<AttributeValueResponse>> GetFilteredAttributValue(AttributeValueGetterRequest req)
+        public async Task<decimal> GetAttributeValueCount()
         {
-            if(req == null)
-            {
-                throw new ArgumentNullException(nameof(req));
-            }
+            return await this._attributeRepository.GetAttributeValueCount();
+        }
 
-            ValidationHelper.ModelValidation(req);
-
-            PaginationResponse paginationResponse = await PaginationHelper.Handle(req.Skip, req.Limit, await this._attributeRepository.GetAttributeValueCount());
-
-            switch (req.SearchBy)
+        public async Task<List<AttributeValueResponse>> GetFilteredAttributValue(string? searchBy = "", string? searchStr = "", int? status = 0)
+        {
+            switch (searchBy)
             {
                 case nameof(AttributeValue.Name):
-                    List<AttributeValueResponse> attributeValueByName = await this._attributeRepository.GetFilteredAttributeValue(paginationResponse, attributeValue => attributeValue.Name.Contains(req.SearchStr));
+                    List<AttributeValueResponse> attributeValueByName = await this._attributeRepository.GetFilteredAttributeValue(attributeValue => attributeValue.Name.Contains(searchStr), status);
 
                     return attributeValueByName;
 
                 case nameof(AttributeValue.Value):
-                    List<AttributeValueResponse> attributeValueByValue = await this._attributeRepository.GetFilteredAttributeValue(paginationResponse, attributeValue => attributeValue.Value.Contains(req.SearchStr));
+                    List<AttributeValueResponse> attributeValueByValue = await this._attributeRepository.GetFilteredAttributeValue(attributeValue => attributeValue.Value.Contains(searchStr), status);
 
                     return attributeValueByValue;
 
+                case nameof(AttributeValue.AttributeTypeId):
+                    List<AttributeValueResponse> attributeValueByAttTypId = await this._attributeRepository.GetFilteredAttributeValue(attributeValue => attributeValue.AttributeTypeId == Convert.ToInt32(searchStr), status);
+
+                    return attributeValueByAttTypId;
+
                 default:
-                    List<AttributeValueResponse> attributeValue = await this._attributeRepository.GetFilteredAttributeValue(paginationResponse, attributeValue => true);
+                    List<AttributeValueResponse> attributeValue = await this._attributeRepository.GetFilteredAttributeValue(attributeValue => true, status);
 
                     return attributeValue;
             }

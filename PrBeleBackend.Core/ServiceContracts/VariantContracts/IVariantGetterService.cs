@@ -10,6 +10,8 @@ namespace PrBeleBackend.Core.ServiceContracts.VariantContracts
 {
     public interface IVariantGetterService
     {
+        public Task<decimal> GetVariantCount(int id);
+
         public Task<List<VariantResponse>> GetFilteredVariant(VariantGetterRequest req);
 
         public Task<VariantResponse> GetVariantDetail(int id);

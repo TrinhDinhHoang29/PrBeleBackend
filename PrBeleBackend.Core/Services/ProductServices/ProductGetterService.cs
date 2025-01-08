@@ -21,31 +21,27 @@ namespace PrBeleBackend.Core.Services.ProductServices
             this._productRepository = productRepository;
         }
 
-        public async Task<List<ProductResponse>> GetFilteredProduct(ProductGetterRequest req)
+        public async Task<int> GetProductCount()
         {
-            if (req == null)
-            {
-                throw new ArgumentNullException(nameof(req));
-            }
+            return await this._productRepository.GetProductCount();
+        }
 
-            ValidationHelper.ModelValidation(req);
-
-            PaginationResponse paginationResponse = await PaginationHelper.Handle(req.Skip, req.Limit, await this._productRepository.GetProductCount());
-
-            switch (req.SearchBy)
+        public async Task<List<ProductResponse>> GetFilteredProduct(string? searchBy, string? searchStr, int? status)
+        {
+            switch (searchBy)
             {
                 case nameof(Product.Name):
-                    List<ProductResponse> productsByName = await this._productRepository.GetFilteredProduct(paginationResponse, product => product.Name.Contains(req.SearchStr));
+                    List<ProductResponse> productsByName = await this._productRepository.GetFilteredProduct(product => product.Name.Contains(searchStr), status);
 
                     return productsByName;
 
                 case nameof(Product.Status):
-                    List<ProductResponse> productsByStatus = await this._productRepository.GetFilteredProduct(paginationResponse, product => product.Status == Convert.ToInt32(req.SearchStr));
+                    List<ProductResponse> productsByStatus = await this._productRepository.GetFilteredProduct(product => product.Status == Convert.ToInt32(searchStr), status);
 
                     return productsByStatus;
 
                 default:
-                    List<ProductResponse> products = await this._productRepository.GetFilteredProduct(paginationResponse, product => true);
+                    List<ProductResponse> products = await this._productRepository.GetFilteredProduct(product => true, status);
 
                     return products;
             }

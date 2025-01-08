@@ -17,6 +17,7 @@ namespace PrBeleBackend.Core.Domain.Entities
         public string? Value { get; set; }
         public int AttributeTypeId { get; set; }
         public AttributeType? AttributeType {  get; set; } 
+        public int Status { get; set; }
         public bool Deleted { get; set; } = false;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

@@ -35,11 +35,13 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
         //[PermissionAuthorize("V-R")]
         [HttpGet]
-        public async Task<IActionResult> GetFilteredVariant([FromBody] VariantGetterRequest req)
+        public async Task<IActionResult> GetFilteredVariant([FromQuery] VariantGetterRequest req)
         {
             try
             {
                 IEnumerable<VariantResponse> variants = await this._variantGetterService.GetFilteredVariant(req);
+
+                decimal totalVariant = await this._variantGetterService.GetVariantCount(req.ProductId);
 
                 return Ok(new
                 {
@@ -49,8 +51,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                         variants = variants,
                         pagination = new
                         {
-                            skip = req.Skip,
-                            limit = req.Limit,
+                            currentPage = req.Page,
+                            totalPage = Math.Ceiling(totalVariant / req.Limit),
                         }
                     },
                     message = "Get variants success!"

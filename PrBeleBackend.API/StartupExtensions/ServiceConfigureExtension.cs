@@ -149,6 +149,7 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IProductUpdaterService, ProductUpdaterService>();
             Services.AddScoped<IProductModifierService, ProductModifierService>();
             Services.AddScoped<IProductDeleterService, ProductDeleterService>();
+            Services.AddScoped<IProductSorterService, ProductSorterService>();
             #endregion
 
             #region DI Attribute
@@ -157,6 +158,8 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IAttributeAdderService, AttributeAdderService>();
             Services.AddScoped<IAttributeDeleterService, AttributeDeleterService>();
             Services.AddScoped<IAttributeModifyService, AttributeModifyService>();
+            Services.AddScoped<IAttributeSorterService, AttributeSorterService>();
+            Services.AddScoped<IAttributeUpdaterService, AttributeUpdaterService>();
             #endregion
 
             #region DI Variant

@@ -690,6 +690,12 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Property<string>("ZaloLink")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("mainLogo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("subLogo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Setting", (string)null);

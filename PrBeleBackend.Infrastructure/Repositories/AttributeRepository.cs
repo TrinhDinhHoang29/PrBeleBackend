@@ -27,11 +27,12 @@ namespace PrBeleBackend.Infrastructure.Repositories
             return await this._context.attributeValues.CountAsync();
         }
 
-        public async Task<List<AttributeValueResponse>> GetFilteredAttributeValue(PaginationResponse paginationResponse, Expression<Func<AttributeValue, bool>> predicate)
+        public async Task<List<AttributeValueResponse>> GetFilteredAttributeValue(Expression<Func<AttributeValue, bool>> predicate, int? status = 0)
         {
             return await this._context.attributeValues
                 .Where(predicate)
                 .Where(attributeValue => !attributeValue.Deleted)
+                .Where(attributeValue => attributeValue.Status == status)
                 .Select(attVal => new AttributeValueResponse
                 {
                     Id = attVal.Id,

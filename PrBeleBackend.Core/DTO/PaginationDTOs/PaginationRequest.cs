@@ -11,7 +11,7 @@ namespace PrBeleBackend.Core.DTO.Pagination
     public class PaginationRequest
     {
         [DefaultValue(1)]
-        public int Skip { get; set; }
+        public int Page { get; set; }
 
         [DefaultValue(4)]
         //[Required]

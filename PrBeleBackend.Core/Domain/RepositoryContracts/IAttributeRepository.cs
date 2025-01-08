@@ -14,7 +14,7 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
     {
         public Task<int> GetAttributeValueCount();
 
-        public Task<List<AttributeValueResponse>> GetFilteredAttributeValue(PaginationResponse paginationResponse, Expression<Func<AttributeValue, bool>> predicate);
+        public Task<List<AttributeValueResponse>> GetFilteredAttributeValue(Expression<Func<AttributeValue, bool>> predicate, int? status);
 
         public Task<AttributeValue> AddAttributeValue(AttributeValue attrVal);
 
