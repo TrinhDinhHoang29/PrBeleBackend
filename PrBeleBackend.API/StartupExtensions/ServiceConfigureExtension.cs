@@ -169,6 +169,7 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IVariantUpdaterService, VariantUpdaterService>();
             Services.AddScoped<IVariantDeleterService, VariantDeleterService>();
             Services.AddScoped<IVariantModifierService, VariantModifierService>();
+            Services.AddScoped<IVariantSorterService, VariantSorterService>();
 
             #endregion
 

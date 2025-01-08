@@ -28,7 +28,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
             return await _context.products.CountAsync();
         }
 
-        public async Task<List<ProductResponse>> GetFilteredProduct(Expression<Func<Product, bool>> predicate, int? status = 0)
+        public async Task<List<ProductResponse>> GetFilteredProduct(Expression<Func<Product, bool>> predicate, int? status = 1)
         {
             return await _context.products
                 .Where(product => product.Deleted == false)

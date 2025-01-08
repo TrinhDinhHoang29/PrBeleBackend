@@ -26,44 +26,35 @@ namespace PrBeleBackend.Core.Services.VariantServices
             return await this._variantRepository.GetVariantCountByProductId(id);
         }
 
-        public async Task<List<VariantResponse>> GetFilteredVariant(VariantGetterRequest req)
+        public async Task<List<VariantResponse>> GetFilteredVariant(string? searchBy = "", string? searchStr = "", int? status = 1, int productId = 0)
         {
-            if(req == null)
-            {
-                throw new ArgumentNullException(nameof(req));
-            }
-
-            ValidationHelper.ModelValidation(req);
-
-            PaginationResponse pagRes = await PaginationHelper.Handle(req.Page, req.Limit, await this._variantRepository.GetVariantCountByProductId(req.ProductId));
-
-            switch (req.SearchBy)
+            switch (searchBy)
             {
                 case nameof(Variant.Status):
                     {
-                        List<VariantResponse> variantByStatus = await this._variantRepository.GetFilteredVariant(pagRes, var => var.Status == Convert.ToInt32(req.SearchStr), req.ProductId);
+                        List<VariantResponse> variantByStatus = await this._variantRepository.GetFilteredVariant(var => var.Status == Convert.ToInt32(searchStr), productId);
                         
                         return variantByStatus;
                     }
 
                 case nameof(Variant.Stock):
                     {
-                        if (req.SearchStr == "InStock")
+                        if (searchStr == "InStock")
                         {
-                            List<VariantResponse> variantByStock = await this._variantRepository.GetFilteredVariant(pagRes, var => var.Stock > 0, req.ProductId);
+                            List<VariantResponse> variantByStock = await this._variantRepository.GetFilteredVariant(var => var.Stock > 0, productId);
 
                             return variantByStock;
                         }
                         else
                         {
-                            List<VariantResponse> variantByStock = await this._variantRepository.GetFilteredVariant(pagRes, var => var.Stock < 0, req.ProductId);
+                            List<VariantResponse> variantByStock = await this._variantRepository.GetFilteredVariant(var => var.Stock < 0, productId);
 
                             return variantByStock;
                         }
                     }
                 default:
                     {
-                        List<VariantResponse> variant = await this._variantRepository.GetFilteredVariant(pagRes, var => true, req.ProductId);
+                        List<VariantResponse> variant = await this._variantRepository.GetFilteredVariant(var => true, productId);
 
                         return variant;
                     }

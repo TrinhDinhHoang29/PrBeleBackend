@@ -26,7 +26,7 @@ namespace PrBeleBackend.Core.Services.ProductServices
             return await this._productRepository.GetProductCount();
         }
 
-        public async Task<List<ProductResponse>> GetFilteredProduct(string? searchBy, string? searchStr, int? status)
+        public async Task<List<ProductResponse>> GetFilteredProduct(string? searchBy, string? searchStr, int? status = 1)
         {
             switch (searchBy)
             {

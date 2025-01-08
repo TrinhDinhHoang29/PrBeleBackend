@@ -17,6 +17,6 @@ namespace PrBeleBackend.Core.Services.TagServices
             this._tagRepository = tagRepository;
         }
 
-        public async Task<List<ProductResponse>> GetProductByTagId
+        //public async Task<List<ProductResponse>> GetProductByTagId
     }
 }

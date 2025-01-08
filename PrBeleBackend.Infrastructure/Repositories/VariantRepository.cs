@@ -31,11 +31,12 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .CountAsync();
         }
 
-        public async Task<List<VariantResponse>> GetFilteredVariant(PaginationResponse paginationResponse, Expression<Func<Variant, bool>> predicate, int productId)
+        public async Task<List<VariantResponse>> GetFilteredVariant(Expression<Func<Variant, bool>> predicate, int productId, int? status = 1)
         {
             return await this._context.variants
                 .Where(predicate)
                 .Where(var => !var.Deleted)
+                .Where(var => var.Status == status)
                 .Where(var => var.ProductId == productId)
                 .Select(var => new VariantResponse
                 {
@@ -63,9 +64,6 @@ namespace PrBeleBackend.Infrastructure.Repositories
                         .Select(res => res.attVal)
                         .ToList()
                 })
-                .OrderBy(var => var.Id)
-                .Skip(paginationResponse.PageIndex * paginationResponse.PageSize)
-                .Take(paginationResponse.PageSize)
                 .ToListAsync();
         }
 

@@ -4,6 +4,7 @@ using PrBeleBackend.Core.DTO.VariantDTOs;
 using PrBeleBackend.Core.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using PrBeleBackend.API.Filters;
+using PrBeleBackend.Core.Enums;
 
 namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
@@ -35,13 +36,22 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
         //[PermissionAuthorize("V-R")]
         [HttpGet]
-        public async Task<IActionResult> GetFilteredVariant([FromQuery] VariantGetterRequest req)
+        public async Task<IActionResult> GetFilteredVariant(
+            string? field,
+            string? query,
+            int? status,
+            string? sort,
+            int id,
+            SortOrderOptions? order = SortOrderOptions.ASC,
+            int page = 1,
+            int limit = 10
+        )
         {
             try
             {
-                IEnumerable<VariantResponse> variants = await this._variantGetterService.GetFilteredVariant(req);
+                IEnumerable<VariantResponse> variants = await this._variantGetterService.GetFilteredVariant(field, query, status, id);
 
-                decimal totalVariant = await this._variantGetterService.GetVariantCount(req.ProductId);
+                IEnumerable<VariantResponse> variantsPagination = variants.Skip(limit * (page - 1)).Take(limit).ToList();
 
                 return Ok(new
                 {
@@ -51,8 +61,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                         variants = variants,
                         pagination = new
                         {
-                            currentPage = req.Page,
-                            totalPage = Math.Ceiling(totalVariant / req.Limit),
+                            currentPage = page,
+                            totalPage = Math.Ceiling(Convert.ToDecimal(variants) / limit),
                         }
                     },
                     message = "Get variants success!"

@@ -14,7 +14,7 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
     {
         public Task<int> GetVariantCountByProductId(int productId);
 
-        public Task<List<VariantResponse>> GetFilteredVariant(PaginationResponse paginationResponse, Expression<Func<Variant, bool>> predicate, int productId);
+        public Task<List<VariantResponse>> GetFilteredVariant(Expression<Func<Variant, bool>> predicate, int productId, int? status = 1);
 
         public Task<VariantResponse> GetVariantDetail(int id);
 
