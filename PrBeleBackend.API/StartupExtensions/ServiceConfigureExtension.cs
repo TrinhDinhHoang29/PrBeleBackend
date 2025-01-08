@@ -8,6 +8,7 @@ using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.DTO.Cloudinary;
 using PrBeleBackend.Core.ServiceContracts;
 using PrBeleBackend.Core.ServiceContracts.AccountContracts;
+using PrBeleBackend.Core.ServiceContracts.AddressContracts;
 using PrBeleBackend.Core.ServiceContracts.AttributeContracts;
 using PrBeleBackend.Core.ServiceContracts.AuthContracts;
 using PrBeleBackend.Core.ServiceContracts.CategoryContracts;
@@ -23,6 +24,7 @@ using PrBeleBackend.Core.ServiceContracts.SettingContracts;
 using PrBeleBackend.Core.ServiceContracts.VariantContracts;
 using PrBeleBackend.Core.Services;
 using PrBeleBackend.Core.Services.AccountServices;
+using PrBeleBackend.Core.Services.AddressServices;
 using PrBeleBackend.Core.Services.AttributeServices;
 using PrBeleBackend.Core.Services.AuthServices;
 using PrBeleBackend.Core.Services.CategoryServices;
@@ -204,6 +206,12 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<ISettingGetterService, SettingGetterService>();
             Services.AddScoped<ISettingUpdaterService,SettingUpdaterService >();
 
+            #endregion
+
+            #region DI Address 
+            Services.AddScoped<IAddressRepository, AddressRepository>();
+            Services.AddScoped<IAddressGetterService,AddressGetterService>();
+            Services.AddScoped<IAddressAdderSerivce, AddressAdderService>();
             #endregion
 
         }

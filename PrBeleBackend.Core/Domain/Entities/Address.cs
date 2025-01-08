@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrBeleBackend.Core.DTO.AddressDTOs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -32,5 +33,18 @@ namespace PrBeleBackend.Core.Domain.Entities
         public DateTime UpdateAt { get; set; }
         public Customer? Customer { get; set; }
 
+    }
+    public static class AddressExtension
+    {
+        public static AddressCustomer ToAddressCustomer(this AddressAddRequest addressAddRequest)
+        {
+            return new AddressCustomer
+            {
+                FullName = addressAddRequest.Name,
+                Phone = addressAddRequest.PhoneNumber,
+                Address = addressAddRequest.Address,
+                IsDefault = addressAddRequest.IsDefault,
+            };
+        }
     }
 }

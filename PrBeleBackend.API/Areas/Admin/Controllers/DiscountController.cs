@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.DiscountDTOs;
 using PrBeleBackend.Core.Enums;
 using PrBeleBackend.Core.ServiceContracts.DiscountContracts;
@@ -41,18 +42,11 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
            int limit = 10
            )
         {
-            List<DiscountResponse> allDiscounts = await _discountGetterService.GetAllDiscount();
-
-            allDiscounts = allDiscounts
-                .Where(a => status == 0 || status == 1 ? a.Status == status : true)
-                .ToList();
-
-            int totalAccount = allDiscounts.Count;
-
+           
             List<DiscountResponse> discounts = await _discountGetterService.GetFilteredDiscount(field, query);
+            discounts= discounts.Where(a => status == 0 || status == 1 ? a.Status == status : true).ToList();
 
             List<DiscountResponse> paginaDiscount = discounts
-                .Where(a => status == 0 || status == 1 ? a.Status == status : true)
                 .Skip(limit * (page - 1)).Take(limit).ToList();
 
             List<DiscountResponse> sortedDiscount = await _discountSorterService.SortDiscounts(paginaDiscount, sort, order.ToString());
@@ -66,8 +60,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                     pagination = new
                     {
                         currentPage = page,
-                        totalPages = totalAccount / limit,
-                        totalRecords = totalAccount
+                        totalPage = Math.Ceiling((decimal)discounts.Count / limit),
+
                     }
                 },
                 message = "Data fetched successfully."

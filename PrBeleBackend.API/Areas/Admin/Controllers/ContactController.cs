@@ -37,18 +37,13 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             int limit = 10
             )
         {
-            List<ContactResponse> allContact= await _contactGetterSerivce.GetAllContact();
+  
 
-            allContact = allContact
-                .Where(a => status == 0 || status == 1 ? a.Status == status : true)
-                .ToList();
-
-            int totalCustomer = allContact.Count;
 
             List<ContactResponse> contacts = await _contactGetterSerivce.GetFilteredContact(field, query);
+            contacts = contacts.Where(a => status == 0 || status == 1 ? a.Status == status : true).ToList();
 
             List<ContactResponse> paginaContact= contacts
-                .Where(a => status == 0 || status == 1 ? a.Status == status : true)
                 .Skip(limit * (page - 1)).Take(limit).ToList();
 
             List<ContactResponse> sortedConact= await _contactSorterService.SortCustomers(paginaContact, sort, order.ToString());
@@ -62,8 +57,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                     pagination = new
                     {
                         currentPage = page,
-                        totalPages = totalCustomer / limit,
-                        totalRecords = totalCustomer
+                        totalPage = Math.Ceiling((decimal)contacts.Count / limit),
+
                     }
                 },
                 message = "Data fetched successfully."
