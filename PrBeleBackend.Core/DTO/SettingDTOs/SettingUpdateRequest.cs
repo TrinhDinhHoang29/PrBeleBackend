@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace PrBeleBackend.Core.DTO.SettingDTOs
     public class SettingUpdateRequest
     {
         [Required]
-        public string? mainLogo { get; set; }
+        public string? MainLogo { get; set; }
         [Required]
-        public string? subLogo { get; set; }
+        public string? SubLogo { get; set; }
         [Required]
 
         public string? Slogan { get; set; }
@@ -40,6 +41,11 @@ namespace PrBeleBackend.Core.DTO.SettingDTOs
         [Required]
 
         public string? YoutubeLink { get; set; }
+
+        public IFormFile MainLogoFile { get; set; }
+        public IFormFile SubLogoFile { get; set; }
+        public IFormFile SloganFile { get; set; }
+
 
     }
 }

@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CloudinaryDotNet;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PrBeleBackend.Core.Domain.Entities;
+using PrBeleBackend.Core.DTO.SettingDTOs;
+using PrBeleBackend.Core.ServiceContracts;
 using PrBeleBackend.Core.ServiceContracts.SettingContracts;
 
 namespace PrBeleBackend.API.Areas.Admin.Controllers
@@ -11,10 +14,16 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
     {
         private readonly ISettingGetterService _settingGetterService;
         private readonly ISettingUpdaterService _settingUpdaterService;
-        public SettingController(ISettingGetterService settingGetterService, ISettingUpdaterService settingUpdaterService)
+        private readonly ICloudinaryContract _cloudinaryContract;
+        public SettingController(
+            ISettingGetterService settingGetterService,
+            ISettingUpdaterService settingUpdaterService,
+            ICloudinaryContract cloudinaryContract
+            )
         {
             _settingGetterService = settingGetterService;
             _settingUpdaterService = settingUpdaterService;
+            _cloudinaryContract = cloudinaryContract;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -30,17 +39,29 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             });
         }
         [HttpPut]
-        public async Task<IActionResult> Update()
+        public async Task<IActionResult> Update(SettingUpdateRequest settingUpdateRequest)
         {
-            Setting setting = await _settingGetterService.GetSetting();
-            return Ok(new
+            try
             {
-                status = 200,
-                data = new
+                Setting setting = await _settingUpdaterService.UpdateSetting(settingUpdateRequest);
+                return Ok(new
                 {
-                    setting = setting
-                }
-            });
+                    status = 200,
+                    data = new
+                    {
+                        setting = setting
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+           
         }
     }
 }
