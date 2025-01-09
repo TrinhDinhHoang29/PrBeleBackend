@@ -39,8 +39,6 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
            int limit = 10
             )
         {
-            
-
 
             List<OrderResponse> orders = await _orderGetterService.GetFilteredOrder(field, query);
             orders = orders.Where(a => status >= -1 || status <= 4 ? a.Status == status : true).ToList();
@@ -55,7 +53,20 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 status = 200,
                 data = new
                 {
-                    orders = sortedOrder,
+                    orders = sortedOrder.Select(orderResponses => new
+                    {
+                        id = orderResponses.Id,
+                        name = orderResponses.FullName,
+                        phoneNumber = orderResponses.PhoneNumber,
+                        address = orderResponses.Address,
+                        note = orderResponses.Note,
+                        payMethod = orderResponses.PayMethod,
+                        shipDate = orderResponses.ShipDate,
+                        receiveDate = orderResponses.ReceiveDate,
+                        status = orderResponses.Status,
+                        totalMoney = orderResponses.TotalMoney,
+                        createdAt = orderResponses.CreatedAt,
+                    }),
                     pagination = new
                     {
                         currentPage = page,
@@ -106,6 +117,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                         receiveDate = orderResponses.ReceiveDate,
                         status = orderResponses.Status,
                         totalMoney = orderResponses.TotalMoney,
+                        createdAt = orderResponses.CreatedAt,
                         variants = variants,
                     },
                     message = "Data fetched successfully."

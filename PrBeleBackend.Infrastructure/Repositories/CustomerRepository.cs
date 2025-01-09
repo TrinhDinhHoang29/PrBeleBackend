@@ -18,9 +18,20 @@ namespace PrBeleBackend.Infrastructure.Repositories
         {
             _context = context;
         }
-        public Task<Customer> AddCustomer(Customer customer)
+        public async Task<Customer> AddCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            Customer? emailExist = await _context.customers.FirstOrDefaultAsync(a => a.Email == customer.Email);
+            if (emailExist != null)
+            {
+                throw new Exception("Email is exist. !");
+            }
+            customer.Status = 1;
+            customer.CreatedAt = DateTime.Now;
+            customer.UpdatedAt = DateTime.Now;
+            customer.Deleted = false;
+            await _context.customers.AddAsync(customer);
+            await _context.SaveChangesAsync();
+            return customer;
         }
 
         public async Task<bool> DeleteCustomerById(int Id)
@@ -43,9 +54,19 @@ namespace PrBeleBackend.Infrastructure.Repositories
             return customers;
         }
 
+        public async Task<Customer?> GetCustomerByEmail(string? Email)
+        {
+            Customer? customer = await _context.customers
+                .Where(c => c.Deleted == false)
+                .FirstOrDefaultAsync(c => c.Email == Email);
+
+            return customer;
+        }
+
         public async Task<Customer?> GetCustomerById(int? Id)
         {
             Customer? customer = await _context.customers
+                .Where(c => c.Deleted == false)
                 .FirstOrDefaultAsync(c => c.Id == Id);
 
             return customer;
@@ -75,6 +96,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
             matchingCustomer.TotalSpending = customer.TotalSpending;
             matchingCustomer.Status = customer.Status;
             matchingCustomer.UpdatedAt = DateTime.Now;
+            matchingCustomer.RefreshToken = customer.RefreshToken;
+            matchingCustomer.RefreshTokenExpirationDateTime = customer.RefreshTokenExpirationDateTime;
 
             await _context.SaveChangesAsync();
 

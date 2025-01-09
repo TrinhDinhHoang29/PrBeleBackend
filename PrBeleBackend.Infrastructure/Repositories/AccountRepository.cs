@@ -103,6 +103,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
             matchingAccount.Sex = account.Sex;
             matchingAccount.Password = account.Password;
             matchingAccount.UpdatedAt = account.UpdatedAt;
+            matchingAccount.RefreshToken = account.RefreshToken;
+            matchingAccount.RefreshTokenExpirationDateTime = account.RefreshTokenExpirationDateTime;
 
             await _context.SaveChangesAsync();
 

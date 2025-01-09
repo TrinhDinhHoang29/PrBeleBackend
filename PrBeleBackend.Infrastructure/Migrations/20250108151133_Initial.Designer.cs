@@ -12,8 +12,8 @@ using PrBeleBackend.Infrastructure.DbContexts;
 namespace PrBeleBackend.Infrastructure.Migrations
 {
     [DbContext(typeof(BeleStoreContext))]
-    [Migration("20250107073635_Init")]
-    partial class Init
+    [Migration("20250108151133_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -316,6 +316,12 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExpirationDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Sex")
                         .HasMaxLength(10)
@@ -691,6 +697,12 @@ namespace PrBeleBackend.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZaloLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("mainLogo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("subLogo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

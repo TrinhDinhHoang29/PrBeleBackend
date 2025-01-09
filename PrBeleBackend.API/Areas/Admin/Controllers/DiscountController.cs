@@ -33,10 +33,10 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Index(
-           string? field,
-           string? query,
-           int? status,
-           string? sort,
+                       int? status,
+            string? sort,
+            string field = "",
+            string query = "",
            SortOrderOptions? order = SortOrderOptions.ASC,
            int page = 1,
            int limit = 10
@@ -150,7 +150,12 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 return Ok(new
                 {
                     status = 200,
-                    data = discountResponse,
+                    data = new
+                    {
+                        Id = discountResponse.Id,
+                        Status = discountResponse.Status,
+                        UpdatedAt = discountResponse.UpdatedAt
+                    },
                     message = "Discount status updated successfully."
                 });
             }

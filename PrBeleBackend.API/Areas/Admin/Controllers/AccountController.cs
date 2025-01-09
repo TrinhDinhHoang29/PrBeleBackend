@@ -11,7 +11,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountGetterService _accountGetterService;
@@ -32,13 +32,13 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _accountUpdaterService = accountUpdaterService;
             _accountDeleterService = accountDeleterService;
         }
-        [PermissionAuthorize("A-R")]
+        //[PermissionAuthorize("A-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
-            string? field,
-            string? query,
             int? status,
             string? sort,
+            string field = "",
+            string query = "",
             SortOrderOptions? order = SortOrderOptions.ASC,
             int page = 1,
             int limit = 10

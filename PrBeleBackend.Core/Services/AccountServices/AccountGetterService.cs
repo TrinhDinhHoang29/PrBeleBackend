@@ -40,7 +40,7 @@ namespace PrBeleBackend.Core.Services.AccountServices
             return accounts.Select(a => a.ToAccountResponse()).ToList();
         }
 
-        public async Task<List<AccountResponse>> GetFilteredAccount(string searchBy, string? searchString)
+        public async Task<List<AccountResponse>> GetFilteredAccount(string searchBy, string searchString)
         {
             List<Account> accounts = await _accountRepository.GetAllAccount();
 
@@ -51,10 +51,10 @@ namespace PrBeleBackend.Core.Services.AccountServices
             switch (searchBy)
             {
                 case nameof(Account.FullName):
-                    return accounts.Where(a => a.FullName.Contains(searchString))
+                    return accounts.Where(a => a.FullName.ToLower().Contains(searchString.ToLower()))
                         .Select(a => a.ToAccountResponse()).ToList();
                 case nameof(Account.Email):
-                    return accounts.Where(a => a.Email.Contains(searchString))
+                    return accounts.Where(a => a.Email.ToLower().Contains(searchString.ToLower()))
                         .Select(a => a.ToAccountResponse()).ToList();
                 case nameof(Account.PhoneNumber):
                     return accounts.Where(a => a.PhoneNumber.Contains(searchString))

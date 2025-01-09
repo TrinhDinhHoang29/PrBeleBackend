@@ -314,6 +314,12 @@ namespace PrBeleBackend.Infrastructure.Migrations
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
 
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExpirationDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Sex")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
@@ -688,6 +694,12 @@ namespace PrBeleBackend.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZaloLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("mainLogo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("subLogo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

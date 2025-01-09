@@ -15,7 +15,7 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
         public Task<List<Customer>> GetFilteredCustomer(Expression<Func<Customer, bool>> predicate);
 
         public Task<Customer?> GetCustomerById(int? Id);
-        //public Task<Customer?> GetAccountByEmail(string? Email);
+        public Task<Customer?> GetCustomerByEmail(string? Email);
 
         public Task<Customer> AddCustomer(Customer customer);
 

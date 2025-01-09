@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PrBeleBackend.Core.ServiceContracts.AddressContracts
 {
-    internal class IAddressDeleterService
+    public interface IAddressDeleterService
     {
+        public Task<bool> DeleteAddress(int AddressId);
     }
 }

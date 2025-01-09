@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrBeleBackend.Core.DTO.AuthDTOs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -34,6 +35,23 @@ namespace PrBeleBackend.Core.Domain.Entities
         public List<Order> Orders { get; set; }
         public List<Rate> Rates { get; set; }
         public Cart Cart { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime RefreshTokenExpirationDateTime { get; set; }
 
+    }
+    public static class CustomerExtension
+    {
+        public static Customer ToCustomer(this CliRegisterRequest cliRegisterRequest)
+        {
+            return new Customer()
+            {
+                FullName = cliRegisterRequest.FullName,
+                Email = cliRegisterRequest.Emaiil,
+                Password = cliRegisterRequest.Password,
+                PhoneNumber = cliRegisterRequest.PhoneNumber,
+                Birthday = cliRegisterRequest.Birthday,
+                Sex = cliRegisterRequest.Sex.ToString(),
+            };
+        }
     }
 }

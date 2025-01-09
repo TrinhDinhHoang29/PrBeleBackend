@@ -125,6 +125,7 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<ICustomerSorterService, CustomerSorterService>();
             Services.AddScoped<ICustomerUpdaterService, CustomerUpdaterService>();
             Services.AddScoped<ICustomerDeleterService, CustomerDeleterService>();
+            Services.AddScoped<ICustomerAdderService, CustomerAdderService>();
 
             #endregion
 
@@ -212,6 +213,9 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IAddressRepository, AddressRepository>();
             Services.AddScoped<IAddressGetterService,AddressGetterService>();
             Services.AddScoped<IAddressAdderSerivce, AddressAdderService>();
+            Services.AddScoped<IAddressUpdaterService,AddressUpdaterService>();
+            Services.AddScoped<IAddressDeleterService,AddressDeleterService>();
+
             #endregion
 
         }
