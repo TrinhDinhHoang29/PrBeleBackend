@@ -39,9 +39,9 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         public async Task<IActionResult> GetFilteredVariant(
             string? field,
             string? query,
-            int? status,
             string? sort,
             int id,
+            int? status = 1,
             SortOrderOptions? order = SortOrderOptions.ASC,
             int page = 1,
             int limit = 10

@@ -31,7 +31,6 @@ namespace PrBeleBackend.Core.Domain.Entities
         public int Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-
         public List<ProductOrder>? ProductOrders { get; set; }
         public Customer? Customer { get; set; }
     }

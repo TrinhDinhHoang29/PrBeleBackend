@@ -32,28 +32,22 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
         [HttpGet]
         public async Task<IActionResult> Index(
-            string? field,
-            string? query,
-            int? status,
+                        int? status,
             string? sort,
+            string field = "",
+            string query = "",
             SortOrderOptions? order = SortOrderOptions.ASC,
             int page = 1,
             int limit = 10
             )
         {
 
-            List<RateResponse> allRates = await _rateGetterService.GetAllRate();
-
-            allRates = allRates
-                .Where(a => status == 0 || status == 1 ? a.Status == status : true)
-                .ToList();
-
-            int totalRate= allRates.Count;
+            
 
             List<RateResponse> rates = await _rateGetterService.GetFilteredRate(field, query);
+            rates= rates.Where(a => status == 0 || status == 1 ? a.Status == status : true).ToList();
 
             List<RateResponse> paginaRate = rates
-                .Where(a => status == 0 || status == 1 ? a.Status == status : true)
                 .Skip(limit * (page - 1)).Take(limit).ToList();
 
             List<RateResponse> sortedRate = await _rateSortService.SortRate(paginaRate, sort, order.ToString());
@@ -67,8 +61,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                     pagination = new
                     {
                         currentPage = page,
-                        totalPages = totalRate / limit,
-                        totalRecords = totalRate
+                        totalPage = Math.Ceiling((decimal)rates.Count / limit),
                     }
                 },
                 message = "Data fetched successfully."

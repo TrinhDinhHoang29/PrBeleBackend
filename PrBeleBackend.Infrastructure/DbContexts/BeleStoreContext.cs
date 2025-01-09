@@ -37,8 +37,8 @@ namespace PrBeleBackend.Infrastructure.DbContexts
         public DbSet<Rate> rates { get; set; }
         public DbSet<Cart> carts { get; set; }
         public DbSet<ProductCart> productCarts { get; set; }
-        //public DbSet<Keyword> keywords { get; set; }
-        //public DbSet<ProductKeyword> productKeywords { get; set; }
+        public DbSet<Keyword> keywords { get; set; }
+        public DbSet<ProductKeyword> productKeywords { get; set; }
 
 
         protected override void  OnModelCreating(ModelBuilder modelBuilder)
@@ -67,23 +67,22 @@ namespace PrBeleBackend.Infrastructure.DbContexts
             modelBuilder.Entity<Rate>().ToTable("Rate");
             modelBuilder.Entity<Cart>().ToTable("Cart");
             modelBuilder.Entity<ProductCart>().ToTable("ProductCart");
-            //modelBuilder.Entity<Keyword>().ToTable("Keyword");
-            //modelBuilder.Entity<ProductKeyword>().ToTable("ProductKeyword");
+            modelBuilder.Entity<Keyword>().ToTable("Keyword");
+            modelBuilder.Entity<ProductKeyword>().ToTable("ProductKeyword");
 
-            ////product keyword start
-            //modelBuilder.Entity<Product>()
-            //    .HasMany(p => p.Keywords)
-            //    .WithOne(pt => pt.Product)
-            //    .HasForeignKey(pt => pt.KeywordId);
+            //product keyword start
+            modelBuilder.Entity<Product>()
+                .HasMany(p => p.Keywords)
+                .WithOne(pt => pt.Product)
+                .HasForeignKey(pt => pt.KeywordId);
 
-            //modelBuilder.Entity<Keyword>()
-            //    .HasMany(key => key.ProductKeywords)
-            //    .WithOne(key => key.Keyword)
-            //    .HasForeignKey(key => key.ProductId);
+            modelBuilder.Entity<Keyword>()
+                .HasMany(key => key.ProductKeywords)
+                .WithOne(key => key.Keyword)
+                .HasForeignKey(key => key.ProductId);
 
-            //modelBuilder.Entity<ProductKeyword>()
-            //    .HasKey(pk => new { pk.ProductId, pk.KeywordId });
-            ////product keyword end
+            modelBuilder.Entity<ProductKeyword>()
+                .HasKey(pk => new { pk.ProductId, pk.KeywordId });
 
             modelBuilder.Entity<Product>()
             .HasOne(p => p.Category)          // Product có 1 Category

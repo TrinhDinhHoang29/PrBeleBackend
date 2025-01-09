@@ -81,6 +81,10 @@ namespace PrBeleBackend.Infrastructure.Repositories
             {
                 return false;
             }
+            if(matchingCategory.ReferenceCategoryId == 0)
+            {
+                throw new ArgumentException("This is parent category !");
+            }
             matchingCategory.Deleted = true;
             await _context.SaveChangesAsync();
             return true;

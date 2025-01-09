@@ -12,8 +12,8 @@ using PrBeleBackend.Infrastructure.DbContexts;
 namespace PrBeleBackend.Infrastructure.Migrations
 {
     [DbContext(typeof(BeleStoreContext))]
-    [Migration("20250107162938_Init")]
-    partial class Init
+    [Migration("20250109075109_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,6 +166,9 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -317,6 +320,12 @@ namespace PrBeleBackend.Infrastructure.Migrations
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
 
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExpirationDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Sex")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
@@ -367,6 +376,27 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Discount", (string)null);
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Keyword", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedAt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Keyword", (string)null);
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Order", b =>
@@ -471,11 +501,11 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DescriptionPlainText")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("DiscountId")
                         .HasColumnType("int");
+
+                    b.Property<string>("KeyWord")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Like")
                         .HasColumnType("int");
@@ -538,6 +568,21 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.HasIndex("CartId");
 
                     b.ToTable("ProductCart", (string)null);
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.ProductKeyword", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("KeywordId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "KeywordId");
+
+                    b.HasIndex("KeywordId");
+
+                    b.ToTable("ProductKeyword", (string)null);
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.ProductOrder", b =>
@@ -888,6 +933,25 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("Variant");
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.ProductKeyword", b =>
+                {
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Product", "Product")
+                        .WithMany("Keywords")
+                        .HasForeignKey("KeywordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Keyword", "Keyword")
+                        .WithMany("ProductKeywords")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Keyword");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.ProductOrder", b =>
                 {
                     b.HasOne("PrBeleBackend.Core.Domain.Entities.Order", "Order")
@@ -1046,6 +1110,11 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("products");
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Keyword", b =>
+                {
+                    b.Navigation("ProductKeywords");
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Order", b =>
                 {
                     b.Navigation("ProductOrders");
@@ -1058,6 +1127,8 @@ namespace PrBeleBackend.Infrastructure.Migrations
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Product", b =>
                 {
+                    b.Navigation("Keywords");
+
                     b.Navigation("ProductAttributeTypes");
 
                     b.Navigation("ProductTags");

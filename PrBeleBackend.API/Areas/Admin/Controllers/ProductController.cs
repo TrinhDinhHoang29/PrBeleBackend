@@ -46,8 +46,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         public async Task<IActionResult> Index(
             string? field,
             string? query,
-            int? status,
             string? sort,
+             int? status = 1,
             SortOrderOptions? order = SortOrderOptions.ASC,
             int page = 1,
             int limit = 10

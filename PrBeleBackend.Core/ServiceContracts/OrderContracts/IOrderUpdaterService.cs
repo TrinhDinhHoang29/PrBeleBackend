@@ -11,6 +11,6 @@ namespace PrBeleBackend.Core.ServiceContracts.OrderContracts
     public interface IOrderUpdaterService
     {
         public Task<OrderResponse> UpdateStatusOrder(int OrderId);
-        public Task<OrderResponse> CancelOrder(int OrderId);
+        public Task<OrderResponse> CancelOrder(int OrderId,int CustomerId);
     }
 }

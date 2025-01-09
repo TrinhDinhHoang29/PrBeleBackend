@@ -230,6 +230,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
             }
             if (!_context.products.Any() && !_context.attributeValues.Any() && !_context.variantAttributeValues.Any() && !_context.attributeTypes.Any() && !_context.variants.Any() && !_context.keywords.Any())
             {
+
                 var productsSeed = new List<Product>{
                              new Product
 {

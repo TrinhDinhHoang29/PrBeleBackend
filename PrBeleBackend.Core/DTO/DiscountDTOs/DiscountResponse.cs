@@ -30,6 +30,7 @@ namespace PrBeleBackend.Core.DTO.DiscountDTOs
             return new DiscountResponse { 
                 Id = discount.Id,
                 Name = discount.Name,
+                ExpireDate = discount.ExpireDate,
                 DiscountValue = discount.DiscountValue,
                 Status = discount.Status,
                 CreatedAt = discount.CreatedAt,

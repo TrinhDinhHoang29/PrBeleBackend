@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.DiscountDTOs;
 using PrBeleBackend.Core.DTO.OrderDTOs;
 using PrBeleBackend.Core.Enums;
@@ -38,18 +39,11 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
            int limit = 10
             )
         {
-            List<OrderResponse> allOrders = await _orderGetterService.GetAllOrder();
-
-            allOrders = allOrders
-                .Where(a => status >= -1 || status <= 4 ? a.Status == status : true)
-                .ToList();
-
-            int totalOrder= allOrders.Count;
 
             List<OrderResponse> orders = await _orderGetterService.GetFilteredOrder(field, query);
+            orders = orders.Where(a => status >= -1 || status <= 4 ? a.Status == status : true).ToList();
 
             List<OrderResponse> paginaOrder = orders
-                .Where(a => status >= -1 || status <= 4 ? a.Status == status : true)
                 .Skip(limit * (page - 1)).Take(limit).ToList();
 
             List<OrderResponse> sortedOrder = await _orderSorterService.SortOrders(paginaOrder, sort, order.ToString());
@@ -59,12 +53,25 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 status = 200,
                 data = new
                 {
-                    orders = sortedOrder,
+                    orders = sortedOrder.Select(orderResponses => new
+                    {
+                        id = orderResponses.Id,
+                        name = orderResponses.FullName,
+                        phoneNumber = orderResponses.PhoneNumber,
+                        address = orderResponses.Address,
+                        note = orderResponses.Note,
+                        payMethod = orderResponses.PayMethod,
+                        shipDate = orderResponses.ShipDate,
+                        receiveDate = orderResponses.ReceiveDate,
+                        status = orderResponses.Status,
+                        totalMoney = orderResponses.TotalMoney,
+                        createdAt = orderResponses.CreatedAt,
+                    }),
                     pagination = new
                     {
                         currentPage = page,
-                        totalPages = totalOrder / limit,
-                        totalRecords = totalOrder
+                        totalPage = Math.Ceiling((decimal)orders.Count / limit),
+
                     }
                 },
                 message = "Data fetched successfully."
@@ -110,6 +117,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                         receiveDate = orderResponses.ReceiveDate,
                         status = orderResponses.Status,
                         totalMoney = orderResponses.TotalMoney,
+                        createdAt = orderResponses.CreatedAt,
                         variants = variants,
                     },
                     message = "Data fetched successfully."

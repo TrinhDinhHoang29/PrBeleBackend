@@ -50,7 +50,7 @@ namespace PrBeleBackend.Core.Services.CategoryServices
             {
                 case nameof(Category.Name):
                     List<Category> resultFilteredCategoryByName = await _categoryRepository
-                        .GetFilteredCategory(category => category.Name.Contains(searchString));
+                        .GetFilteredCategory(category => category.Name.ToLower().Contains(searchString.ToLower()));
                     return resultFilteredCategoryByName
                         .Select(cate=>cate.ToCategoryResponse())
                         .ToList();

@@ -3,6 +3,7 @@ using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.DTO.AccountDTOs;
 using PrBeleBackend.Core.DTO.AuthDTOs;
+using PrBeleBackend.Core.DTO.CustomerDTOs;
 using PrBeleBackend.Core.DTO.JwtDTOs;
 using PrBeleBackend.Core.Helpers;
 using PrBeleBackend.Core.ServiceContracts.AuthContracts;
@@ -20,11 +21,18 @@ namespace PrBeleBackend.Core.Services.AuthServices
         private readonly IAccountRepository _accountRepository;
         private readonly IJwtService _jwtService;
         private readonly IRoleRepository _roleRepository;
-        public AuthService(IAccountRepository accountRepository,IJwtService jwtService,IRoleRepository roleRepository)
+        private readonly ICustomerRepository _customerRepository;
+        public AuthService(
+            IAccountRepository accountRepository,
+            IJwtService jwtService,
+            IRoleRepository roleRepository,
+            ICustomerRepository customerRepository
+            )
         {
             _accountRepository = accountRepository;
             _jwtService = jwtService;
             _roleRepository = roleRepository;
+            _customerRepository = customerRepository;
         }
         public async Task<JwtResponse> Login(LoginRequest loginRequest)
         {
@@ -57,6 +65,35 @@ namespace PrBeleBackend.Core.Services.AuthServices
 
             return jwtResponse;
         }
+
+
+        public async Task<JwtResponse> CliLogin(LoginRequest loginRequest)
+        {
+            ValidationHelper.ModelValidation(loginRequest);
+            Customer? existCustomer = await _customerRepository.GetCustomerByEmail(loginRequest.Email);
+            if (existCustomer == null)
+            {
+                throw new ArgumentException(message: "Can't find Account !!");
+            };
+            var passwordHasher = new PasswordHasher<string>();
+
+            if (existCustomer.Status == 0)
+            {
+                throw new ArgumentException(message: "Account don't active !!");
+
+            }
+            var result = passwordHasher.VerifyHashedPassword(null, existCustomer.Password, loginRequest.Password);
+
+            if (result == PasswordVerificationResult.Failed)
+            {
+                throw new ArgumentException(message: "Invalid Password !!");
+            }
+            JwtResponse jwtResponse = await _jwtService.GenarateJwtClient(existCustomer.ToCustomerResponse());
+            existCustomer.RefreshToken = jwtResponse.RefreshToken;
+            existCustomer.RefreshTokenExpirationDateTime = jwtResponse.RefreshTokenExpirationDateTime;
+            await _customerRepository.UpdateCustomer(existCustomer);
+            return jwtResponse;
+        }
         public async Task<JwtResponse> RefreshToken(RefrestTokenRequest refrestTokenRequest)
         {
             Account? account = await _accountRepository.GetAccountByRefreshToken(refrestTokenRequest.RefreshToken);
@@ -76,6 +113,16 @@ namespace PrBeleBackend.Core.Services.AuthServices
             return jwtResponse;
         }
 
+        public async Task<bool> CliLogout(int Id)
+        {
+            Customer? customer = await _customerRepository.GetCustomerById(Id);
+            if (customer == null) { 
+                return false;
+            }
+            customer.RefreshToken = null;
+            await _customerRepository.UpdateCustomer(customer);
+            return true;
 
+        }
     }
 }
