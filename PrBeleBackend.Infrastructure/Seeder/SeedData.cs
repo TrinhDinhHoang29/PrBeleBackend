@@ -230,12 +230,13 @@ namespace PrBeleBackend.Infrastructure.Seeder
             }
             if (!_context.products.Any() && !_context.attributeValues.Any() && !_context.variantAttributeValues.Any() && !_context.attributeTypes.Any() && !_context.variants.Any())
             {
+
                 var productsSeed = new List<Product>{
                              new Product
 {
     Name = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ cao",
     Description = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ cao cho mùa đông ấm áp.",
-    DescriptionPlainText = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ cao.",
+    //DescriptionPlainText = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ cao.",
     CategoryId = 4,
     Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
     BasePrice = 209000M,
@@ -244,6 +245,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
     Like = 50,
     Slug = "ao-giu-nhiet-ex-warm-modal-co-cao",
     Status = 1,
+    KeyWord = "ao,giu nhiet,ex-warm,lenzing modal,co cao,mua dong,am ap",
     Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -252,7 +254,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Áo giữ nhiệt Essential Brush Poly cổ thấp",
                                 Description = "Áo giữ nhiệt Essential Brush Poly cổ thấp, chất liệu mềm mại và giữ ấm tốt.",
-                                DescriptionPlainText = "Áo giữ nhiệt Essential Brush Poly cổ thấp.",
+                                //DescriptionPlainText = "Áo giữ nhiệt Essential Brush Poly cổ thấp.",
                                 CategoryId = 4,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
                                 BasePrice = 127000M,
@@ -261,6 +263,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 40,
                                 Slug = "ao-giu-nhiet-brush-poly-co-thap",
                                 Status = 1,
+                                KeyWord = "ao,giunhiet,essential,brushpoly,cothap,muadong,amap,memmai",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -269,7 +272,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Áo giữ nhiệt Essential Brush Poly cổ trung",
                                 Description = "Áo giữ nhiệt Essential Brush Poly cổ trung, thiết kế đơn giản và hiệu quả giữ ấm.",
-                                DescriptionPlainText = "Áo giữ nhiệt Essential Brush Poly cổ trung.",
+                                //DescriptionPlainText = "Áo giữ nhiệt Essential Brush Poly cổ trung.",
                                 CategoryId = 4,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
                                 BasePrice = 127000M,
@@ -278,6 +281,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 45,
                                 Slug = "ao-giu-nhiet-brush-poly-co-trung",
                                 Status = 1,
+                                  KeyWord = "ao,giunhiet,essential,brushpoly,cotrung,muadong,amap,memmai",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -286,7 +290,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ trung",
                                 Description = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ trung, lựa chọn hoàn hảo cho mùa lạnh.",
-                                DescriptionPlainText = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ trung.",
+                                //DescriptionPlainText = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ trung.",
                                 CategoryId = 4,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
                                 BasePrice = 209000M,
@@ -295,6 +299,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 60,
                                 Slug = "ao-giu-nhiet-ex-warm-modal-co-trung",
                                 Status = 1,
+                                 KeyWord = "ao,giunhiet,ex-warm,lenzingmodal,cotrung,muadong,amap",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -303,7 +308,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Áo thun Relaxed Fit 84RISING Venom Signature",
                                 Description = "Áo thun Relaxed Fit 84RISING Venom Signature phong cách trẻ trung, nổi bật.",
-                                DescriptionPlainText = "Áo thun Relaxed Fit 84RISING Venom Signature.",
+                                //DescriptionPlainText = "Áo thun Relaxed Fit 84RISING Venom Signature.",
                                 CategoryId = 4,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
                                 BasePrice = 399000M,
@@ -312,6 +317,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 70,
                                 Slug = "ao-thun-relaxed-fit-84rising-venom-signature",
                                 Status = 1,
+                                 KeyWord = "ao,aothun,relaxedfit,84rising,venom,signature,phongcach,tretrung,noibat",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -320,7 +326,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Áo thun Relaxed Fit 84RISING HEHEHE",
                                 Description = "Áo thun Relaxed Fit 84RISING HEHEHE năng động, thoải mái khi sử dụng.",
-                                DescriptionPlainText = "Áo thun Relaxed Fit 84RISING HEHEHE.",
+                                //DescriptionPlainText = "Áo thun Relaxed Fit 84RISING HEHEHE.",
                                 CategoryId = 4,
                                     DiscountId = 1,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
@@ -329,6 +335,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 65,
                                 Slug = "ao-thun-relaxed-fit-84rising-hehehe",
                                 Status = 1,
+                                KeyWord = "ao,aothun,relaxedfit,84rising,nangdong,thoaimai",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -337,7 +344,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ ngắn",
                                 Description = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ ngắn, lựa chọn tiện lợi cho mùa lạnh.",
-                                DescriptionPlainText = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ ngắn.",
+                                //DescriptionPlainText = "Áo giữ nhiệt Ex-Warm Lenzing Modal cổ ngắn.",
                                 CategoryId = 4,
                                     DiscountId = 1,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
@@ -346,6 +353,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 50,
                                 Slug = "ao-giu-nhiet-ex-warm-lenzing-modal-co-ngan",
                                 Status = 1,
+                                KeyWord = "ao,giunhiet,ex-warm,lenzingmodal,congan,thoaimai,mualanh,muadong,amap,tienloi",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -354,7 +362,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Áo Thun Nam Chạy Bộ Graphic Dot",
                                 Description = "Áo Thun Nam Chạy Bộ Graphic Dot, thiết kế thể thao với phong cách hiện đại.",
-                                DescriptionPlainText = "Áo Thun Nam Chạy Bộ Graphic Dot.",
+                                //DescriptionPlainText = "Áo Thun Nam Chạy Bộ Graphic Dot.",
                                 CategoryId = 4,
                                     DiscountId = 2,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMHU.GN003_-TRANG.jpg",
@@ -363,6 +371,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 55,
                                 Slug = "ao-thun-nam-chay-bo-graphic-dot",
                                 Status = 1,
+                                KeyWord = "ao,aothun,nam,chaybo,graphicdot,thethao,phongcach,hiendai",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -371,7 +380,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
 {
     Name = "Quần shorts ECC Ripstop",
     Description = "Quần shorts ECC Ripstop thiết kế thoải mái, chất liệu bền bỉ phù hợp với hoạt động thể thao.",
-    DescriptionPlainText = "Quần shorts ECC Ripstop.",
+    //DescriptionPlainText = "Quần shorts ECC Ripstop.",
     CategoryId = 11,
         DiscountId = 3,
     Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
@@ -380,6 +389,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
     Like = 60,
     Slug = "quan-shorts-ecc-ripstop",
     Status = 1,
+    KeyWord = "quan,quanshort,eccripstop,thoaimai,benbi,thethao",
     Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -388,7 +398,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Quần shorts 6 inch Racquet Sports",
                                 Description = "Quần shorts 6 inch Racquet Sports, thiết kế chuyên dụng cho các môn thể thao vợt.",
-                                DescriptionPlainText = "Quần shorts 6 inch Racquet Sports.",
+                                //DescriptionPlainText = "Quần shorts 6 inch Racquet Sports.",
                                 CategoryId = 11,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
                                 BasePrice = 189000M,
@@ -397,6 +407,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 55,
                                 Slug = "quan-shorts-6-inch-racquet-sports",
                                 Status = 1,
+                                 KeyWord = "quan,quanshort,6inch,racquetsports,chuyendung,thethao,thethaovot",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -405,7 +416,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Quần Shorts chạy bộ Advanced Vent Tech",
                                 Description = "Quần Shorts chạy bộ Advanced Vent Tech, thoáng khí và thoải mái cho người chạy.",
-                                DescriptionPlainText = "Quần Shorts chạy bộ Advanced Vent Tech.",
+                                //DescriptionPlainText = "Quần Shorts chạy bộ Advanced Vent Tech.",
                                 CategoryId = 11,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
                                 BasePrice = 209000M,
@@ -414,6 +425,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                     DiscountId = 1,
                                 Slug = "quan-shorts-chay-bo-advanced-vent-tech",
                                 Status = 1,
+                                 KeyWord = "quan,quanshort,chaybo,advanceventtech",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -422,7 +434,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Quần shorts nam chạy bộ CoolFast 3.5 inch",
                                 Description = "Quần shorts nam chạy bộ CoolFast 3.5 inch với thiết kế nhẹ và công nghệ CoolFast.",
-                                DescriptionPlainText = "Quần shorts nam chạy bộ CoolFast 3.5 inch.",
+                                //DescriptionPlainText = "Quần shorts nam chạy bộ CoolFast 3.5 inch.",
                                 CategoryId = 11,
                                     DiscountId = 3,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
@@ -431,6 +443,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 65,
                                 Slug = "quan-shorts-nam-coolfast-3-5-inch",
                                 Status = 1,
+                                KeyWord = "quan,quanshort,quanshortnam,chaybo,coolfast,3.5,3.5inch,thietkenhe,congnghecoolfast",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -439,7 +452,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Quần shorts nam chạy bộ CoolFast 5 inch",
                                 Description = "Quần shorts nam chạy bộ CoolFast 5 inch với thiết kế thoáng khí và công nghệ CoolFast.",
-                                DescriptionPlainText = "Quần shorts nam chạy bộ CoolFast 5 inch.",
+                                //DescriptionPlainText = "Quần shorts nam chạy bộ CoolFast 5 inch.",
                                 CategoryId = 11,
                                     DiscountId = 4,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
@@ -448,6 +461,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 75,
                                 Slug = "quan-shorts-nam-coolfast-5-inch",
                                 Status = 1,
+                                 KeyWord = "quan,quanshort,quanshortnam,chaybo,coolfast,5,5inch,thietkenhe,congnghecoolfast",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -456,7 +470,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Quần Shorts Chạy Bộ 2 lớp Fast & Free III",
                                 Description = "Quần Shorts Chạy Bộ 2 lớp Fast & Free III, thiết kế năng động và linh hoạt khi tập luyện.",
-                                DescriptionPlainText = "Quần Shorts Chạy Bộ 2 lớp Fast & Free III.",
+                                //DescriptionPlainText = "Quần Shorts Chạy Bộ 2 lớp Fast & Free III.",
                                 CategoryId = 11,
                                     DiscountId = 1,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
@@ -465,6 +479,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 80,
                                 Slug = "quan-shorts-chay-bo-2-lop-fast-free-iii",
                                 Status = 1,
+                                 KeyWord = "quan,quanshort,chaybo,2lop,fast,free3,nangdong,linhhoat,tapluyen",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -473,7 +488,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Quần Shorts thể thao 7 inch đa năng",
                                 Description = "Quần Shorts thể thao 7 inch đa năng, tiện lợi cho nhiều hoạt động thể thao.",
-                                DescriptionPlainText = "Quần Shorts thể thao 7 inch đa năng.",
+                                //DescriptionPlainText = "Quần Shorts thể thao 7 inch đa năng.",
                                 CategoryId = 11,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
                                 BasePrice = 179000M,
@@ -482,6 +497,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 65,
                                 Slug = "quan-shorts-the-thao-7-inch-da-nang",
                                 Status = 1,
+                                 KeyWord = "quan,quanshort,thethao,7,7inch,danang,tienloi,hoatdong",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -490,7 +506,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Quần Shorts Chạy Bộ 7 inch Essentials",
                                 Description = "Quần Shorts Chạy Bộ 7 inch Essentials, thiết kế đơn giản và hiệu quả cho việc chạy bộ.",
-                                DescriptionPlainText = "Quần Shorts Chạy Bộ 7 inch Essentials.",
+                                //DescriptionPlainText = "Quần Shorts Chạy Bộ 7 inch Essentials.",
                                 CategoryId = 11,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/July2024/24CMAW.QS022.36_70.jpg",
                                 BasePrice = 174000M,
@@ -499,6 +515,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                     DiscountId = 1,
                                 Slug = "quan-shorts-chay-bo-7-inch-essentials",
                                 Status = 1,
+                                 KeyWord = "quan,quanshort,chaybo,7,7inch,essential,dongian,hieuqua",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -507,7 +524,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
 {
     Name = "Pack 3 Tất Active cổ trung",
     Description = "Pack 3 đôi tất Active cổ trung thoải mái, phù hợp cho mọi hoạt động thể thao và hàng ngày.",
-    DescriptionPlainText = "Pack 3 Tất Active cổ trung.",
+    //DescriptionPlainText = "Pack 3 Tất Active cổ trung.",
     CategoryId = 17,
     Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
     BasePrice = 99000M,
@@ -515,6 +532,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
     Like = 45,
     Slug = "pack-3-tat-active-co-trung",
     Status = 1,
+     KeyWord = "pack,3tat,tat,3,active,cotrung,thoaimai,thethao,hangngay",
         DiscountId = 1,
     Deleted = false,
     CreatedAt = DateTime.Now,
@@ -524,7 +542,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Pack 3 Tất Active cổ ngắn",
                                 Description = "Pack 3 đôi tất Active cổ ngắn mềm mại, tiện dụng và thoáng khí.",
-                                DescriptionPlainText = "Pack 3 Tất Active cổ ngắn.",
+                                //DescriptionPlainText = "Pack 3 Tất Active cổ ngắn.",
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 99000M,
@@ -533,6 +551,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 40,
                                 Slug = "pack-3-tat-active-co-ngan",
                                 Status = 1,
+                                     KeyWord = "pack,3tat,tat,3,active,congan,memmmai,tiendung,thoangkhi",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -541,7 +560,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Combo 2 đôi Tất cổ trung Cotton Ribbed Coolmate",
                                 Description = "Combo 2 đôi tất cổ trung làm từ Cotton Ribbed Coolmate, mang lại cảm giác mềm mại và bền bỉ.",
-                                DescriptionPlainText = "Combo 2 đôi Tất cổ trung Cotton Ribbed Coolmate.",
+                                //DescriptionPlainText = "Combo 2 đôi Tất cổ trung Cotton Ribbed Coolmate.",
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 109000M,
@@ -550,6 +569,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 50,
                                 Slug = "combo-2-doi-tat-co-trung-cotton-ribbed",
                                 Status = 1,
+                                KeyWord = "combo,2doitat,2,cotrung,ribbeb,coolmate,memmai,benbi",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -558,7 +578,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Combo 2 đôi Tất cổ dài Cotton Ribbed Coolmate",
                                 Description = "Combo 2 đôi tất cổ dài Cotton Ribbed Coolmate, thiết kế thời trang và thoáng khí.",
-                                DescriptionPlainText = "Combo 2 đôi Tất cổ dài Cotton Ribbed Coolmate.",
+                                //DescriptionPlainText = "Combo 2 đôi Tất cổ dài Cotton Ribbed Coolmate.",
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 129000M,
@@ -567,6 +587,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 55,
                                 Slug = "combo-2-doi-tat-co-dai-cotton-ribbed",
                                 Status = 1,
+                                 KeyWord = "combo,2doitat,2,codai,cotton,ribbeb,coolmate,thoitrang,thoangkhi",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -575,7 +596,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Tất bóng đá cổ cao",
                                 Description = "Tất bóng đá cổ cao, thiết kế chuyên dụng và thoáng khí cho các hoạt động thể thao.",
-                                DescriptionPlainText = "Tất bóng đá cổ cao.",
+                                //DescriptionPlainText = "Tất bóng đá cổ cao.",
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 55000M,
@@ -584,6 +605,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 40,
                                 Slug = "tat-bong-da-co-cao",
                                 Status = 1,
+                                 KeyWord = "tat,bongda,cocao,chuyendung,thoangkhi,thethao",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -592,7 +614,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Tất Nam Cổ Trung Tập Gym Essentials",
                                 Description = "Tất Nam cổ trung Tập Gym Essentials, mềm mại, thoải mái khi tập luyện.",
-                                DescriptionPlainText = "Tất Nam Cổ Trung Tập Gym Essentials.",
+                                //DescriptionPlainText = "Tất Nam Cổ Trung Tập Gym Essentials.",
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 69000M,
@@ -601,6 +623,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 45,
                                 Slug = "tat-nam-co-trung-tap-gym-essentials",
                                 Status = 1,
+                                 KeyWord = "tat,tatnam,cotrung,tapgym,essential,memmai,thoaimai,tapluyen",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -609,7 +632,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Tất Thể Thao Seamless Cổ Dài",
                                 Description = "Tất thể thao Seamless cổ dài, mang lại cảm giác thoải mái và bền bỉ.",
-                                DescriptionPlainText = "Tất Thể Thao Seamless Cổ Dài.",
+                                //DescriptionPlainText = "Tất Thể Thao Seamless Cổ Dài.",
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 59000M,
@@ -618,6 +641,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 50,
                                 Slug = "tat-the-thao-seamless-co-dai",
                                 Status = 1,
+                                 KeyWord = "tat,thethao,seamless,codai,thoaimai,benbi",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -626,7 +650,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                             {
                                 Name = "Combo 10 Đôi Tất Nam Basics",
                                 Description = "Combo 10 đôi tất nam Basics, lựa chọn kinh tế và tiện lợi cho sử dụng hàng ngày.",
-                                DescriptionPlainText = "Combo 10 Đôi Tất Nam Basics.",
+                                //DescriptionPlainText = "Combo 10 Đôi Tất Nam Basics.",
                                 CategoryId = 17,
                                 Thumbnail = "https://media3.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/November2024/TCTCRIBCM_IMG_4300_TRANG_4_36.jpg",
                                 BasePrice = 149000M,
@@ -635,6 +659,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 70,
                                 Slug = "combo-10-doi-tat-nam-basics",
                                 Status = 1,
+                                 KeyWord = "combo,10,doitat,tatnam,bacsics,kinhte,tienloi,hangngay",
                                 Deleted = false,
                                 CreatedAt = DateTime.Now,
                                 UpdatedAt = DateTime.Now

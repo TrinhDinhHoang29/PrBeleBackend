@@ -65,7 +65,22 @@ namespace PrBeleBackend.Infrastructure.DbContexts
             modelBuilder.Entity<Rate>().ToTable("Rate");
             modelBuilder.Entity<Cart>().ToTable("Cart");
             modelBuilder.Entity<ProductCart>().ToTable("ProductCart");
+            modelBuilder.Entity<Keyword>().ToTable("Keyword");
+            modelBuilder.Entity<ProductKeyword>().ToTable("ProductKeyword");
 
+            //product keyword start
+            modelBuilder.Entity<Product>()
+                .HasMany(p => p.Keywords)
+                .WithOne(pt => pt.Product)
+                .HasForeignKey(pt => pt.KeywordId);
+
+            modelBuilder.Entity<Keyword>()
+                .HasMany(key => key.ProductKeywords)
+                .WithOne(key => key.Keyword)
+                .HasForeignKey(key => key.ProductId);
+
+            modelBuilder.Entity<ProductKeyword>()
+                .HasKey(pk => new { pk.ProductId, pk.KeywordId });
 
             modelBuilder.Entity<Product>()
             .HasOne(p => p.Category)          // Product có 1 Category
