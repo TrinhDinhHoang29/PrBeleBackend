@@ -26,7 +26,7 @@ namespace PrBeleBackend.Core.Services.VariantServices
             return await this._variantRepository.GetVariantCountByProductId(id);
         }
 
-        public async Task<List<VariantResponse>> GetFilteredVariant(string? searchBy = "", string? searchStr = "", int? status = 1, int productId = 0)
+        public async Task<List<VariantResponse>> GetFilteredVariant(int productId = 0, string? searchBy = "", string? searchStr = "", int? status = 1)
         {
             switch (searchBy)
             {

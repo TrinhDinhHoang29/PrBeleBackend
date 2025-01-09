@@ -49,7 +49,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         {
             try
             {
-                IEnumerable<VariantResponse> variants = await this._variantGetterService.GetFilteredVariant(field, query, status, id);
+                IEnumerable<VariantResponse> variants = await this._variantGetterService.GetFilteredVariant(id, field, query, status);
 
                 IEnumerable<VariantResponse> variantsPagination = variants.Skip(limit * (page - 1)).Take(limit).ToList();
 

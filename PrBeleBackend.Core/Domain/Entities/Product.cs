@@ -15,7 +15,7 @@ namespace PrBeleBackend.Core.Domain.Entities
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public string? DescriptionPlainText { get; set; }
+        //public string? DescriptionPlainText { get; set; }
         public int CategoryId { get; set; }
         public string? Thumbnail { get; set; }
 
@@ -30,6 +30,8 @@ namespace PrBeleBackend.Core.Domain.Entities
 
         public string? Slug { get; set; }
 
+        public string? KeyWord { get; set; }
+
         public int Status { get; set; }
 
         public bool Deleted { get; set; } = false;
@@ -40,9 +42,10 @@ namespace PrBeleBackend.Core.Domain.Entities
 
         public Category? Category { get; set; }
 
+        public List<ProductKeyword>? Keywords { get; set; }
         public List<ProductAttributeType>? ProductAttributeTypes { get; set; }
         public Discount? Discount { get; set; }
-        public List<ProductTag> ProductTags { get; set; }
+        public List<ProductTag>? ProductTags { get; set; }
         public List<Variant>? Variants { get; set; }
         public List<Rate>? Rates { get; set; }
     }
