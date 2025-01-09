@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Infrastructure.DbContexts;
+using static System.Net.WebRequestMethods;
 
 
 namespace PrBeleBackend.Infrastructure.Seeder
@@ -1367,10 +1368,41 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.SaveChanges();
             }
 
-            //if (!_context.settings.Any())
-            //{
-
-            //}
+            if (!_context.settings.Any())
+            {
+                var settings = new Setting
+                {
+                    MainLogo = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411156/bele/Settings/wvwhol9ag1xn6jc5dhjy.png",
+                    SloganLogo = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411158/bele/Settings/tayvoazxyd0kqjyjcnon.png",
+                    Slogan = "Best Choice For Good Styles",
+                    Hotline = "0306221498",
+                    Email = "bele@gmail.com",
+                    BranchName1 = "Văn phòng Hà Nội",
+                    BranchAddress1 = "Tầng 3 Tòa nhà BMM, KM2, Đường Phùng Hưng, Phường Phúc La, Quận Hà Đông, TP Hà Nội",
+                    BranchName2 = "Văn phòng và Trung tâm vận hành TP. HCM",
+                    BranchAddress2 = "Lô C3, đường D2, KCN Cát Lái, Thạnh Mỹ Lợi, TP. Thủ Đức, TP. Hồ Chí Minh",
+                    FacebookLink = "https://www.facebook.com/trung.kien.302814",
+                    InstagramLink = "https://www.instagram.com/cutchienbotoi/",
+                    YoutubeLink = "https://www.youtube.com/@NOOB-zl8os",
+                    MainBanner = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411159/bele/Settings/ahsquh48itwoxo6n6a7t.png",
+                    SubBanner1 =  "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411160/bele/Settings/pma1cpwotnw5c1dxxyio.png",
+                    SubBanner2 = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411161/bele/Settings/d4v112vxzjzarvmistwz.png",
+                    SlideshowBanner1 = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411162/bele/Settings/c4ufjs0jp6fos7gylg1y.webp",
+                    SlideshowBanner2 = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411163/bele/Settings/cjkscbypev8vb6h7tdjb.webp",
+                    SlideshowBanner3 = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411165/bele/Settings/neosvdg0k87bfffqw6dq.webp",
+                    Description = "Bele là thương hiệu thời trang tiên phong, cung cấp các sản phẩm thời trang nam chất lượng cao, hiện đại và phong cách. Được thành lập từ 1989, Bele nhanh chóng trở thành lựa chọn hàng đầu cho những tín đồ thời trang yêu thích sự đơn giản, tiện lợi và tinh tế.",
+                    ServiceTitle1 = "Miễn phí giao hàng",
+                    ServiceInfo1 = "Đảm bảo chất lượng đã được kiểm tra",
+                    ServiceTitle2 = "Thanh toán khi nhận hàng",
+                    ServiceInfo2 = "Nhanh chóng, an toàn và tiện lợi",
+                    ServiceTitle3 = "Đổi trả trong 45 ngày",
+                    ServiceInfo3 = "Cam kết hoàn tiền hoặc đổi sản phẩm dễ dàng",
+                    ServiceTitle4 = "Mở cửa cả tuần",
+                    ServiceInfo4 = "Sẵn sàng phục vụ mọi ngày trong tuần"
+                };
+                _context.settings.AddRange(settings);
+                _context.SaveChanges();
+            }
         }
     }
 }

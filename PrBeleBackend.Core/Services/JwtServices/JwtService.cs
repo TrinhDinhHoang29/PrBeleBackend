@@ -74,6 +74,46 @@ namespace PrBeleBackend.Core.Services.JwtServices
 
         public async Task<JwtResponse> GenarateJwtClient(CustomerResponse customer)
         {
+            DateTime expiresF = DateTime.UtcNow.AddMinutes(5);
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:KeyClient"]));
+
+
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var claims = new List<Claim>
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub, customer.Id.ToString()), //Subject (user id)
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), //JWT unique ID
+                    new Claim(JwtRegisteredClaimNames.Iat, new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString(),
+                        ClaimValueTypes.Integer64),
+                    new Claim(ClaimTypes.NameIdentifier, customer.Email), //Unique name identifier of the user (Email)
+                    new Claim(ClaimTypes.Email, customer.Email), //Unique name identifier of the user (Email)
+
+                    new Claim(ClaimTypes.Role, "Client"), //Unique name identifier of the user (Email)
+                };
+            claims.Add(new Claim("Permission", "Forgot password"));
+
+            var tokenGenerator = new JwtSecurityToken(_configuration["Jwt:Issuer"],
+               _configuration["Jwt:Audience"],
+               claims,
+               expires: expiresF,
+               signingCredentials: credentials);
+            DateTime timeLifeRefreshToken = DateTime.Now.AddDays(1);
+
+            string token = new JwtSecurityTokenHandler().WriteToken(tokenGenerator);
+
+            return new JwtResponse()
+            {
+                JwtToken = token,
+                Email = customer.Email,
+                ExpirationJwtToken = expiresF,
+                RefreshTokenExpirationDateTime = timeLifeRefreshToken,
+                RefreshToken = GenerateRefreshToken()
+            };
+        }
+
+        public async Task<JwtResponse> GenarateJwtForgotPasswordClient(CustomerResponse customer)
+        {
             DateTime expiresF = DateTime.UtcNow.AddMinutes(int.Parse(_configuration["Jwt:EXPIRATION_MINUTES"]));
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:KeyClient"]));
@@ -110,8 +150,6 @@ namespace PrBeleBackend.Core.Services.JwtServices
                 RefreshToken = GenerateRefreshToken()
             };
         }
-
-
         private string GenerateRefreshToken()
         {
             byte[] bytes = new byte[64];

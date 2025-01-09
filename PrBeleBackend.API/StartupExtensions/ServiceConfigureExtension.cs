@@ -15,6 +15,7 @@ using PrBeleBackend.Core.ServiceContracts.CategoryContracts;
 using PrBeleBackend.Core.ServiceContracts.ContactContracts;
 using PrBeleBackend.Core.ServiceContracts.CustomerContracts;
 using PrBeleBackend.Core.ServiceContracts.DiscountContracts;
+using PrBeleBackend.Core.ServiceContracts.EmailContracts;
 using PrBeleBackend.Core.ServiceContracts.JwtContracts;
 using PrBeleBackend.Core.ServiceContracts.OrderContracts;
 using PrBeleBackend.Core.ServiceContracts.ProductContracts;
@@ -31,6 +32,7 @@ using PrBeleBackend.Core.Services.CategoryServices;
 using PrBeleBackend.Core.Services.ContactServices;
 using PrBeleBackend.Core.Services.CustomerServices;
 using PrBeleBackend.Core.Services.DiscountServices;
+using PrBeleBackend.Core.Services.EmailServices;
 using PrBeleBackend.Core.Services.JwtServices;
 using PrBeleBackend.Core.Services.OrderServices.cs;
 using PrBeleBackend.Core.Services.ProductServices;
@@ -204,6 +206,7 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IRateAdderService, RateAdderService>();
             Services.AddScoped<IRateDeleterService, RateDeleterService>();
             Services.AddScoped<IRateSortService, RateSorterService>();
+            Services.AddScoped<IRateUpdaterService, RateUpdaterService>();
             #endregion
 
             #region DI Setting
@@ -220,6 +223,10 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IAddressUpdaterService,AddressUpdaterService>();
             Services.AddScoped<IAddressDeleterService,AddressDeleterService>();
 
+            #endregion
+
+            #region DI SendEmail
+            Services.AddSingleton<IEmailService,EmailService>();
             #endregion
 
         }
