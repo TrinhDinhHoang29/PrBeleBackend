@@ -35,7 +35,7 @@ namespace PrBeleBackend.Core.Services.RateServices
             switch (searchBy)
             {
                 case nameof(Rate.Account.FullName):
-                    return rates.Where(a => a.Account.FullName.Contains(searchString))
+                    return rates.Where(a => a.Account.FullName.ToLower().Contains(searchString.ToLower()))
                         .Select(a => a.ToRateResponse()).ToList();
                 default:
                     return rates.Select(a => a.ToRateResponse()).ToList();

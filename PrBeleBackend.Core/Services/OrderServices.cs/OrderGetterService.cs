@@ -39,13 +39,13 @@ namespace PrBeleBackend.Core.Services.OrderServices.cs
             {
                 case nameof(Order.FullName):
                     List<Order> resultFilteredOrderByName = await _orderRepository
-                        .GetFilteredOrder(order => order.FullName.Contains(searchString));
+                        .GetFilteredOrder(order => order.FullName.ToLower().Contains(searchString.ToLower()));
                     return resultFilteredOrderByName
                         .Select(order => order.ToOrderResponse())
                         .ToList();
                 case nameof(Order.PhoneNumber):
                     List<Order> resultFilteredOrderByPhone = await _orderRepository
-                        .GetFilteredOrder(order => order.PhoneNumber.Contains(searchString));
+                        .GetFilteredOrder(order => order.PhoneNumber.ToLower().Contains(searchString.ToLower()));
                     return resultFilteredOrderByPhone
                         .Select(order => order.ToOrderResponse())
                         .ToList();

@@ -1,4 +1,6 @@
-﻿using PrBeleBackend.Core.DTO.AddressDTOs;
+﻿using PrBeleBackend.Core.Domain.Entities;
+using PrBeleBackend.Core.Domain.RepositoryContracts;
+using PrBeleBackend.Core.DTO.AddressDTOs;
 using PrBeleBackend.Core.ServiceContracts.AddressContracts;
 using System;
 using System.Collections.Generic;
@@ -10,9 +12,15 @@ namespace PrBeleBackend.Core.Services.AddressServices
 {
     public class AddressGetterService : IAddressGetterService
     {
-        public Task<List<AddressResponse>> GetAllAddressByCustomerId(int customerId)
+        private readonly IAddressRepository _addressRepository;
+        public AddressGetterService(IAddressRepository addressRepository)
         {
-            throw new NotImplementedException();
+            _addressRepository = addressRepository;
+        }
+        public async Task<List<AddressResponse>> GetAllAddressByCustomerId(int customerId)
+        {
+            List<AddressCustomer> addressCustomer = await _addressRepository.GetAllAddressById(customerId);
+            return addressCustomer.Select(add => add.ToAddressResponse()).ToList();
         }
     }
 }

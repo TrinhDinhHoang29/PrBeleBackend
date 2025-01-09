@@ -25,9 +25,19 @@ namespace PrBeleBackend.Core.Services.CustomerServices
             return customers.Select(c => c.ToCustomerResponse()).ToList();
         }
 
+        public async Task<CustomerResponse?> GetCustomerByEmail(string Email)
+        {
+            Customer? customer = await _customerRepository.GetCustomerByEmail(Email);
+            if (customer == null)
+            {
+                return null;
+            }
+            return customer.ToCustomerResponse();
+        }
+
         public async Task<CustomerResponse?> GetCustomerById(int Id)
         {
-            Customer customer = await _customerRepository.GetCustomerById(Id);
+            Customer? customer = await _customerRepository.GetCustomerById(Id);
             if(customer == null)
             {
                 return null;

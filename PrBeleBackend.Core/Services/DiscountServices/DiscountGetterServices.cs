@@ -42,7 +42,7 @@ namespace PrBeleBackend.Core.Services.DiscountServices
             switch (searchBy)
             {
                 case nameof(Discount.Name):
-                    return discounts.Where(a => a.Name.Contains(searchString))
+                    return discounts.Where(a => a.Name.ToLower().Contains(searchString.ToLower()))
                         .Select(a => a.ToDiscountResponse()).ToList();
                 default:
                     return discounts.Select(a => a.ToDiscountResponse()).ToList();

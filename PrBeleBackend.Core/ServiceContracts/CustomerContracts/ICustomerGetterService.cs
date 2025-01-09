@@ -13,6 +13,8 @@ namespace PrBeleBackend.Core.ServiceContracts.CustomerContracts
         public Task<List<CustomerResponse>> GetAllCustomer();
 
         public Task<CustomerResponse?> GetCustomerById(int Id);
+        public Task<CustomerResponse?> GetCustomerByEmail(string Email);
+
 
         public Task<List<CustomerResponse>> GetFilteredCustomer(string searchBy, string? searchString);
     }

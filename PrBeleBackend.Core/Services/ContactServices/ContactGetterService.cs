@@ -45,10 +45,10 @@ namespace PrBeleBackend.Core.Services.ContactServices
             switch (searchBy)
             {
                 case nameof(Contact.FullName):
-                    return contacts.Where(a => a.FullName.Contains(searchString))
+                    return contacts.Where(a => a.FullName.ToLower().Contains(searchString.ToLower()))
                         .Select(a => a.ToContactResponse()).ToList();
                 case nameof(Contact.Email):
-                    return contacts.Where(a => a.Email.Contains(searchString))
+                    return contacts.Where(a => a.Email.ToLower().Contains(searchString.ToLower()))
                         .Select(a => a.ToContactResponse()).ToList();
                 case nameof(Contact.PhoneNumber):
                     return contacts.Where(a => a.PhoneNumber.Contains(searchString))

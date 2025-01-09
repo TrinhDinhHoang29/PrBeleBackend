@@ -19,11 +19,11 @@ namespace PrBeleBackend.Core.Services.OrderServices.cs
         {
             _orderRepository = orderRepository;
         }
-        public async Task<OrderResponse> CancelOrder(int OrderId)
+        public async Task<OrderResponse> CancelOrder(int OrderId,int CustomerId)
         {
             Order? orderExist = await _orderRepository.GetOrderById(OrderId);
 
-            if (orderExist == null)
+            if (orderExist == null || orderExist.UserId != CustomerId)
             {
                 throw new ArgumentNullException("Order not found !");
             }

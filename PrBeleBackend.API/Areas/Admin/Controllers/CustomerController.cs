@@ -31,10 +31,10 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         //[PermissionAuthorize("CU-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
-            string? field,
-            string? query,
-            int? status,
+                        int? status,
             string? sort,
+            string field = "",
+            string query = "",
             SortOrderOptions? order = SortOrderOptions.ASC,
             int page = 1,
             int limit = 10
