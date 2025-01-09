@@ -30,10 +30,10 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
         [HttpGet]
         public async Task<IActionResult> Index(
-            string? field,
-           string? query,
-           int? status,
-           string? sort,
+                       int? status,
+            string? sort,
+            string field = "",
+            string query = "",
            SortOrderOptions? order = SortOrderOptions.ASC,
            int page = 1,
            int limit = 10
@@ -127,11 +127,11 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         [HttpPatch("{Id}")]
-        public async Task<IActionResult> UpdateStatusOrder(int Id)
+        public async Task<IActionResult> UpdateStatusOrder(int Id, OrderUpdatePatchRequest StatusRequest)
         {
             try
             {
-                OrderResponse orderResponse = await _orderUpdaterService.UpdateStatusOrder(Id);
+                OrderResponse orderResponse = await _orderUpdaterService.UpdateStatusOrder(Id, StatusRequest);
                 return Ok(new
                 {
                     status = 200,

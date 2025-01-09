@@ -13,6 +13,8 @@ namespace PrBeleBackend.Core.ServiceContracts.JwtContracts
     {
         public Task<JwtResponse> GenarateJwt(AccountResponse account,List<string> permissions);
         public Task<JwtResponse> GenarateJwtClient(CustomerResponse customer);
+        public Task<JwtResponse> GenarateJwtForgotPasswordClient(CustomerResponse customer);
+
 
     }
 }

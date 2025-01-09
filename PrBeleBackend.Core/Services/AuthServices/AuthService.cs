@@ -39,13 +39,13 @@ namespace PrBeleBackend.Core.Services.AuthServices
             ValidationHelper.ModelValidation(loginRequest);
             Account? existAccount = await _accountRepository.GetAccountByEmail(loginRequest.Email);
             if (existAccount == null) { 
-                throw new ArgumentException(message:"Can't find Account !!");
+                throw new Exception(message:"Can't find Account !!");
             };
             var passwordHasher = new PasswordHasher<string>();
             
             if(existAccount.Status == 0)
             {
-                throw new ArgumentException(message: "Account don't active !!");
+                throw new Exception(message: "Account don't active !!");
 
             }
 
@@ -53,7 +53,7 @@ namespace PrBeleBackend.Core.Services.AuthServices
 
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new ArgumentException(message: "Invalid Password !!");
+                throw new Exception(message: "Invalid Password !!");
             }
 
             var role = await _roleRepository.GetRoleById(existAccount.RoleId);
@@ -66,27 +66,26 @@ namespace PrBeleBackend.Core.Services.AuthServices
             return jwtResponse;
         }
 
-
         public async Task<JwtResponse> CliLogin(LoginRequest loginRequest)
         {
             ValidationHelper.ModelValidation(loginRequest);
             Customer? existCustomer = await _customerRepository.GetCustomerByEmail(loginRequest.Email);
             if (existCustomer == null)
             {
-                throw new ArgumentException(message: "Can't find Account !!");
+                throw new Exception(message: "Can't find Account !!");
             };
             var passwordHasher = new PasswordHasher<string>();
 
             if (existCustomer.Status == 0)
             {
-                throw new ArgumentException(message: "Account don't active !!");
+                throw new Exception(message: "Account don't active !!");
 
             }
             var result = passwordHasher.VerifyHashedPassword(null, existCustomer.Password, loginRequest.Password);
 
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new ArgumentException(message: "Invalid Password !!");
+                throw new Exception(message: "Invalid Password !!");
             }
             JwtResponse jwtResponse = await _jwtService.GenarateJwtClient(existCustomer.ToCustomerResponse());
             existCustomer.RefreshToken = jwtResponse.RefreshToken;
@@ -98,11 +97,11 @@ namespace PrBeleBackend.Core.Services.AuthServices
         {
             Account? account = await _accountRepository.GetAccountByRefreshToken(refrestTokenRequest.RefreshToken);
             if (account == null) {
-                throw new ArgumentException(message: "Can't find token !!");
+                throw new Exception(message: "Can't find token !!");
             }
             if(account.RefreshTokenExpirationDateTime <= DateTime.Now)
             {
-                throw new UnauthorizedAccessException("Refresh token has expired. Please log in again.");
+                throw new Exception("Refresh token has expired. Please log in again.");
             }
             var role = await _roleRepository.GetRoleById(account.RoleId);
             List<string> permissions = role.RolePermissions.Select(p => p.Permission.Code).ToList();

@@ -1,4 +1,5 @@
 ﻿using PrBeleBackend.Core.DTO.AccountDTOs;
+using PrBeleBackend.Core.DTO.AuthDTOs;
 using PrBeleBackend.Core.DTO.CustomerDTOs;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace PrBeleBackend.Core.ServiceContracts.CustomerContracts
         public Task<CustomerResponse> CliUpdateCustomer(int Id, CliCustomerUpdateRequest? customerUpdateRequest);
         public Task<CustomerResponse> CliUpdatePasswordCustomer(int Id, CliCustomerChangePasswordRequest? customerUpdateRequest);
 
+        public Task<CustomerResponse> CliUpdatePasswordFromForgotCustomer(int Id, CliForgotPasswordRequest? cliForgotPasswordRequest);
 
     }
 }

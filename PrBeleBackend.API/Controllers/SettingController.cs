@@ -22,6 +22,7 @@ namespace PrBeleBackend.API.Controllers
             return Ok(new
             {
                 status = 200,
+                message = "Settings retrieved successfully.",
                 data = new
                 {
                     setting = setting
