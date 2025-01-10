@@ -17,7 +17,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllTag(int id)
+        public async Task<IActionResult> GetAllTag()
         {
             try
             {

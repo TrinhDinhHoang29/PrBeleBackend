@@ -15,5 +15,7 @@ namespace PrBeleBackend.Core.ServiceContracts.AttributeContracts
         public Task<decimal> GetAttributeValueCount();
 
         public Task<List<AttributeValueResponse>> GetFilteredAttributeValue(string? searchBy = "", string? searchStr = "", int? status = 1);
+
+        public Task<AttributeValueResponse> GetDetailAttributeValue(int id);
     }
 }

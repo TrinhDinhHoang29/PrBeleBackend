@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PrBeleBackend.Core.Helpers;
 using PrBeleBackend.Core.DTO.Pagination;
+using PrBeleBackend.Core.DTO.ProductDTOs;
 
 namespace PrBeleBackend.Core.Services.VariantServices
 {
@@ -26,8 +27,20 @@ namespace PrBeleBackend.Core.Services.VariantServices
             return await this._variantRepository.GetVariantCountByProductId(id);
         }
 
-        public async Task<List<VariantResponse>> GetFilteredVariant(int productId = 0, string? searchBy = "", string? searchStr = "", int? status = 1)
+        public async Task<List<VariantSizeResponse>> GetVariantByProductIdAndColorId(int productId, int colorId)
         {
+            return await this._variantRepository.GetVariantByProductIdAndColor(productId, colorId);
+        }
+
+        public async Task<List<VariantResponse>> GetFilteredVariant(int productId = 0, string? searchBy = "", string? searchStr = "")
+        {
+            if(searchBy == "" || searchStr == "")
+            {
+                List<VariantResponse> variant = await this._variantRepository.GetFilteredVariant(var => true, productId);
+
+                return variant;
+            }
+
             switch (searchBy)
             {
                 case nameof(Variant.Status):

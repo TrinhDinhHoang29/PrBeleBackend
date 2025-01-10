@@ -21,7 +21,7 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
 
         public bool IsHaveAttributeValue(int productId, string value);
 
-        public Task<List<ProductResponse>> GetAllProduct(int? status = 1);
+        public Task<List<ProductResponse>> GetAllProduct();
 
         public Task<List<ProductResponse>> FilterProduct(List<ProductResponse> products, Func<ProductResponse, bool> predicate);
 

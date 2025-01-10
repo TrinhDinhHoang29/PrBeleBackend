@@ -47,7 +47,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             string? field,
             string? query,
             string? sort,
-             int? status = 1,
+            int? status,
             SortOrderOptions? order = SortOrderOptions.ASC,
             int page = 1,
             int limit = 10
@@ -55,7 +55,12 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         {
             try
             {
-                IEnumerable<ProductResponse> products = await _productGetterService.GetFilteredProduct(await this._productGetterService.GetAllproduct(status), field, query);   
+                IEnumerable<ProductResponse> products = await _productGetterService.GetFilteredProduct(await this._productGetterService.GetAllproduct(), field, query);
+                
+                if(status != null)
+                {
+                    products = products.Where(x => x.Status == status);
+                }
 
                 IEnumerable<ProductResponse> productPagination = products.Skip(limit * (page - 1)).Take(limit).ToList();
 

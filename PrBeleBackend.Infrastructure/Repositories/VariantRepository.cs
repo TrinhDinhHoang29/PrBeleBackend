@@ -31,12 +31,26 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .CountAsync();
         }
 
-        public async Task<List<VariantResponse>> GetFilteredVariant(Expression<Func<Variant, bool>> predicate, int productId, int? status = 1)
+        public async Task<List<VariantSizeResponse>> GetVariantByProductIdAndColor(int productId, int colorId)
+        {
+            return await this._context.variantAttributeValues
+                .Include(vav => vav.Variant)
+                 .Include(vav => vav.AttributeValue)
+                 .Where(vav => vav.Variant.ProductId == productId)
+                 .Select(vav => new VariantSizeResponse
+                 {
+                     VariantId = vav.VariantId,
+                     SizeId = vav.AttributeValueId,
+                     Size = vav.AttributeValue.Value
+                 })
+                 .ToListAsync();
+        }
+
+        public async Task<List<VariantResponse>> GetFilteredVariant(Expression<Func<Variant, bool>> predicate, int productId)
         {
             return await this._context.variants
                 .Where(predicate)
                 .Where(var => var.Deleted == false)
-                .Where(var => var.Status == status)
                 .Where(var => var.ProductId == productId)
                 .Select(var => new VariantResponse
                 {

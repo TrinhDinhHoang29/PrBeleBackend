@@ -4,6 +4,7 @@ using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.DTO.CategoryDTOs;
 using PrBeleBackend.Core.DTO.Pagination;
 using PrBeleBackend.Core.DTO.ProductDTOs;
+using PrBeleBackend.Core.DTO.VariantDTOs;
 using PrBeleBackend.Infrastructure.DbContexts;
 using System;
 using System.Collections.Generic;
@@ -47,11 +48,10 @@ namespace PrBeleBackend.Infrastructure.Repositories
             return await _context.products.CountAsync();
         }
 
-        public async Task<List<ProductResponse>> GetAllProduct(int? status = 1)
+        public async Task<List<ProductResponse>> GetAllProduct()
         {
             return await _context.products
             .Where(product => product.Deleted == false)
-            .Where(product => product.Status == status)
             .Select(p => new ProductResponse
             {
                 Id = p.Id,
@@ -69,6 +69,17 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 Status = p.Status,
                 UpdatedAt = p.UpdatedAt,
                 CreatedAt = p.CreatedAt,
+                VariantColors = _context.variantAttributeValues
+                    .Include(varAttVal => varAttVal.Variant)
+                    .Include(varAttVal => varAttVal.AttributeValue)
+                    .ThenInclude(attVal => attVal.AttributeType)
+                    .Where(varAttVal => varAttVal.Variant.ProductId == p.Id && varAttVal.AttributeValue.AttributeType.Name == "Color")
+                    .Select(varAttVal => new VariantColorReponse
+                    {
+                        VariantId = varAttVal.VariantId,
+                        Color = varAttVal.AttributeValue.Value,
+                        ColorId = varAttVal.AttributeValueId
+                    }).ToList(),
                 Tags = _context.tags.Join(
                     _context.productTags,
                     t => t.Id,
@@ -154,6 +165,17 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     Status = p.Status,
                     UpdatedAt = p.UpdatedAt,
                     CreatedAt = p.CreatedAt,
+                    VariantColors = _context.variantAttributeValues
+                    .Include(varAttVal => varAttVal.Variant)
+                    .Include(varAttVal => varAttVal.AttributeValue)
+                    .ThenInclude(attVal => attVal.AttributeType)
+                    .Where(varAttVal => varAttVal.Variant.ProductId == p.Id && varAttVal.AttributeValue.AttributeType.Name == "Color")
+                    .Select(varAttVal => new VariantColorReponse
+                    {
+                        VariantId = varAttVal.VariantId,
+                        Color = varAttVal.AttributeValue.Value,
+                        ColorId = varAttVal.AttributeValueId
+                    }).ToList(),
                     Tags = _context.tags.Join(
                         _context.productTags,
                         t => t.Id,

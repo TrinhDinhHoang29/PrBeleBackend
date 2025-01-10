@@ -26,9 +26,9 @@ namespace PrBeleBackend.Core.Services.ProductServices
             return await this._productRepository.GetProductCount();
         }
 
-        public async Task<List<ProductResponse>> GetAllproduct(int? status = 1)
+        public async Task<List<ProductResponse>> GetAllproduct()
         {
-            return await this._productRepository.GetAllProduct(status);
+            return await this._productRepository.GetAllProduct();
         }
 
         //public async Task<List<ProductResponse>> FilterProduct
@@ -67,6 +67,13 @@ namespace PrBeleBackend.Core.Services.ProductServices
 
         public async Task<List<ProductResponse>> GetFilteredProduct(List<ProductResponse> products, string? searchBy, string? searchStr)
         {
+            if(searchStr == "" || searchBy == "")
+            {
+                List<ProductResponse> productsById = await this._productRepository.FilterProduct(products, product => true);
+
+                return productsById;
+            }
+
             switch (searchBy)
             {
                 case nameof(Product.Name):
@@ -89,11 +96,12 @@ namespace PrBeleBackend.Core.Services.ProductServices
                     List<ProductResponse> productsByAttValId = await this._productRepository.FilterProduct(products, product => this._productRepository.IsHaveAttributeValue(product.Id, searchStr));
 
                     return productsByAttValId;
-
                 default:
-                    List<ProductResponse> productsById = await this._productRepository.FilterProduct(products, product => true);
+                    {
+                        List<ProductResponse> productsById = await this._productRepository.FilterProduct(products, product => true);
 
-                    return productsById;
+                        return productsById;
+                    }
             }
         }
 

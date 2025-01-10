@@ -113,8 +113,35 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
+        [HttpGet("value/{id}")]
+        public async Task<IActionResult> GetDetailAttibuteValue(int id)
+        {
+            try
+            {
+                AttributeValueResponse attributeValue = await this._attributeGetterService.GetDetailAttributeValue(id);
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        attributeValue = attributeValue,
+                    },
+                    message = "Get atribute value success !"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
         //[PermissionAuthorize("PA-C")]
-        [HttpPost("{id}")]
+        [HttpPost("value/{id}")]
         public async Task<IActionResult> CreateAttributeValue([FromBody] AttributeValueAdderRequest req, int id)
         {
             try
@@ -142,7 +169,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         //[PermissionAuthorize("PA-U")]
-        [HttpPut("{id}")]
+        [HttpPut("value/{id}")]
         public async Task<IActionResult> UpdateAttributeValue([FromBody] AttributeValueUpdaterRequest req, int id)
         {
             try
@@ -170,7 +197,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         //[PermissionAuthorize("PA-U")]
-        [HttpPatch("{id}")]
+        [HttpPatch("value/{id}")]
         public async Task<IActionResult> ModifyAttributeValueStatus([FromBody] int status, int id)
         {
             try
@@ -198,7 +225,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         //[PermissionAuthorize("PA-D")]
-        [HttpDelete("{id}")]
+        [HttpDelete("value/{id}")]
         public async Task<IActionResult> DeleteAttributeValue(int id)
         {
             try

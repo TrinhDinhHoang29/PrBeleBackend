@@ -25,9 +25,11 @@ namespace PrBeleBackend.API.Controllers
         {
             try
             {
-                List<ProductResponse> products = await this._productGetterService.GetAllproduct(1);
+                List<ProductResponse> products = await this._productGetterService.GetAllproduct();
 
-                if(filter != null)
+                products = products.Where(p => p.Status == 1).ToList();
+
+                if (filter != null)
                 {
                     foreach (var set in filter)
                     {

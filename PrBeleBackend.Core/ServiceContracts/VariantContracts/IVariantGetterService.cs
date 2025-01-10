@@ -12,7 +12,9 @@ namespace PrBeleBackend.Core.ServiceContracts.VariantContracts
     {
         public Task<decimal> GetVariantCount(int id);
 
-        public Task<List<VariantResponse>> GetFilteredVariant(int productId, string? searchBy = "", string? searchStr = "", int? status = 1);
+        public Task<List<VariantSizeResponse>> GetVariantByProductIdAndColorId(int productId, int colorId);
+
+        public Task<List<VariantResponse>> GetFilteredVariant(int productId, string? searchBy = "", string? searchStr = "");
 
         public Task<VariantResponse> GetVariantDetail(int id);
     }

@@ -18,6 +18,8 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
 
         public Task<List<AttributeValueResponse>> GetFilteredAttributeValue(Expression<Func<AttributeValue, bool>> predicate, int? status);
 
+        public Task<AttributeValueResponse> GetDetailAttributeValue(int id);
+
         public Task<AttributeValue> AddAttributeValue(AttributeValue attrVal);
 
         public Task<AttributeValue> UpdateAttributeValue(AttributeValue attrVal, int id);

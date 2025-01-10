@@ -60,6 +60,28 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<AttributeValueResponse> GetDetailAttributeValue(int id)
+        {
+            return await this._context.attributeValues
+                .Where(attributeValue => attributeValue.Deleted == false)
+                .Where(attributeValue => attributeValue.Id == id)
+                .Select(attVal => new AttributeValueResponse
+                {
+                    Id = attVal.Id,
+                    Name = attVal.Name,
+                    Value = attVal.Value,
+                    //Deleted = attVal.Deleted,
+                    Status = attVal.Status,
+                    CreatedAt = attVal.CreatedAt,
+                    UpdatedAt = attVal.UpdatedAt,
+                    AttributeTypeName = this._context.attributeTypes
+                        .Where(attTyp => attTyp.Id == attVal.AttributeTypeId)
+                        .Select(attTyp => attTyp.Name)
+                        .FirstOrDefault()
+                })
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<AttributeValue> AddAttributeValue(AttributeValue attrVal)
         {
             await this._context.attributeValues.AddAsync(attrVal);
@@ -101,7 +123,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(attrValMatching));
             }
 
-            //attrValMatching.Status = status;
+            attrValMatching.Status = status;
 
             await this._context.SaveChangesAsync();
 

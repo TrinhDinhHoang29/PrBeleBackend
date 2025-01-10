@@ -1,5 +1,6 @@
 ﻿using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.CategoryDTOs;
+using PrBeleBackend.Core.DTO.VariantDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace PrBeleBackend.Core.DTO.ProductDTOs
         public int Status { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime CreatedAt { get; set; }
+        public List<VariantColorReponse> VariantColors { get; set; }
         public List<AttributeType> AttributeTypes { get; set; }
         public List<Tag> Tags { get; set; }
     }

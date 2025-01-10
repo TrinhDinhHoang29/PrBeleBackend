@@ -14,7 +14,7 @@ namespace PrBeleBackend.Core.ServiceContracts.ProductContracts
     {
         public Task<int> GetProductCount();
 
-        public Task<List<ProductResponse>> GetAllproduct(int? status = 1);
+        public Task<List<ProductResponse>> GetAllproduct();
 
         public Task<List<ProductResponse>> GetFilteredProduct(List<ProductResponse> products, string? searchBy, string? searchStr);
 

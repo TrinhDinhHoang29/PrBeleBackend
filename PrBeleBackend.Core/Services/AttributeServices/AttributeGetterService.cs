@@ -34,6 +34,13 @@ namespace PrBeleBackend.Core.Services.AttributeServices
 
         public async Task<List<AttributeValueResponse>> GetFilteredAttributeValue(string? searchBy = "", string? searchStr = "", int? status = 1)
         {
+            if(searchStr == "" || searchBy == "")
+            {
+                List<AttributeValueResponse> attributeValue = await this._attributeRepository.GetFilteredAttributeValue(attributeValue => true, status);
+
+                return attributeValue;
+            }
+
             switch (searchBy)
             {
                 case nameof(AttributeValue.Name):
@@ -50,12 +57,18 @@ namespace PrBeleBackend.Core.Services.AttributeServices
                     List<AttributeValueResponse> attributeValueByAttTypId = await this._attributeRepository.GetFilteredAttributeValue(attributeValue => attributeValue.AttributeTypeId == Convert.ToInt32(searchStr), status);
 
                     return attributeValueByAttTypId;
-
                 default:
-                    List<AttributeValueResponse> attributeValue = await this._attributeRepository.GetFilteredAttributeValue(attributeValue => true, status);
+                    {
+                        List<AttributeValueResponse> attributeValue = await this._attributeRepository.GetFilteredAttributeValue(attributeValue => true, status);
 
-                    return attributeValue;
+                        return attributeValue;
+                    }
             }
+        }
+
+        public async Task<AttributeValueResponse> GetDetailAttributeValue(int id)
+        {
+            return await this._attributeRepository.GetDetailAttributeValue(id);
         }
     }
 }
