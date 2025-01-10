@@ -87,9 +87,10 @@ namespace PrBeleBackend.Core.Services.CustomerServices
             {
                 throw new ArgumentNullException("Customer not found !");
             }
+            ValidationHelper.ModelValidation(customerUpdateRequest);
+
             customerExist.Status = customerUpdateRequest.Status;
             customerExist.UpdatedAt = DateTime.Now;
-            ValidationHelper.ModelValidation(customerExist);
 
             Customer result = await _customerRepository.UpdateCustomer(customerExist);
             return result.ToCustomerResponse();

@@ -1,7 +1,9 @@
 ﻿using CloudinaryDotNet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Configuration;
+using PrBeleBackend.API.Filters;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.SettingDTOs;
 using PrBeleBackend.Core.ServiceContracts;
@@ -12,6 +14,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
+    [Authorize]
     public class SettingController : ControllerBase
     {
         private readonly ISettingGetterService _settingGetterService;
@@ -27,6 +30,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _settingUpdaterService = settingUpdaterService;
             _cloudinaryContract = cloudinaryContract;
         }
+        [PermissionAuthorize("S-R")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -41,6 +45,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 }
             });
         }
+        [PermissionAuthorize("S-U")]
+
         [HttpPut]
         public async Task<IActionResult> Update(SettingUpdateRequest settingUpdateRequest)
         {

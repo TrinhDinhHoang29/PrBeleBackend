@@ -27,8 +27,9 @@ namespace PrBeleBackend.Core.DTO.ContactDTOs
             {
                 Id = contact.Id,
                 Title = contact.Title,
+                Email = contact.Email,
                 Message = contact.Message,
-                FullName = contact.Email,
+                FullName = contact.FullName,
                 PhoneNumber = contact.PhoneNumber,
                 Status = contact.Status,
                 CreatedAt = contact.CreatedAt,

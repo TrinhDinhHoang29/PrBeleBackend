@@ -23,12 +23,6 @@ namespace PrBeleBackend.Core.DTO.AccountDTOs
         public string? Email { get; set; }
         public SexOptions? Sex { get; set; }
 
-        [Required, StringLength(255)]
-        public string? Password { get; set; }
-
-        [Required, StringLength(255), Compare("Password")]
-        public string? RePassword { get; set; }
-
         [Required]
         [Range(0, 1, ErrorMessage = "Status must be either 0 or 1.")]
         public int Status { get; set; }

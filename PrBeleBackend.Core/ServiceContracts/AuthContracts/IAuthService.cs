@@ -12,6 +12,8 @@ namespace PrBeleBackend.Core.ServiceContracts.AuthContracts
     {
         public Task<JwtResponse> Login(LoginRequest loginRequest);
         public Task<JwtResponse> CliLogin(LoginRequest loginRequest);
+        public Task<bool> Logout(int Id);
+
         public Task<bool> CliLogout(int Id);
         public Task<JwtResponse> RefreshToken(RefrestTokenRequest refrestTokenRequest);
 
