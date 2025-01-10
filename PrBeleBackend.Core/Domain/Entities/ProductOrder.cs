@@ -14,7 +14,12 @@ namespace PrBeleBackend.Core.Domain.Entities
         public int Quantity { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal UnitPrice { get; set; } // Giá sản phẩm (sau giảm giá)
+        public decimal OriginalPrice { get; set; } // Giá gốc
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal DiscountValue { get; set; } // Giá trị giảm giá
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal FinalPrice { get; set; }    // Giá sau giảm
+        public bool IsRating {  get; set; } = false;
         public Order? Order { get; set; }
         public Variant? Variant { get; set; }
     }

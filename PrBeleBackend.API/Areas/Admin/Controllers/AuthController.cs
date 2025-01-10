@@ -47,6 +47,29 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 message = "Get account successful !"
             });
         }
+        [Authorize]
+        [PermissionAuthorize("Only Admin")]
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            bool result = await _authService.Logout(int.Parse(accountId));
+            if (!result)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = "Logout is fail !"
+                });
+            }
+            return Ok(new
+            {
+                status = 200,
+                message = "Logout success !"
+
+            });
+        }
         [HttpPost]       
         public async Task<IActionResult> Login(LoginRequest loginRequest)
         {

@@ -304,5 +304,6 @@ namespace PrBeleBackend.Infrastructure.Repositories
 
             return product;
         }
+
     }
 }

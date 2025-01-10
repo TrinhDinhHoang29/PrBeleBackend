@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using PrBeleBackend.API.Filters;
 using PrBeleBackend.Core.DTO.ContactDTOs;
 using PrBeleBackend.Core.Enums;
 using PrBeleBackend.Core.ServiceContracts.ContactContracts;
@@ -7,6 +9,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class ContactController : ControllerBase
     {
         private readonly IContactGetterSerivce _contactGetterSerivce;
@@ -25,7 +29,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _contactUpdaterService = contactUpdaterService;
             _contactDeleterService = contactDeleterService;
         }
-
+        [PermissionAuthorize("CT-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
             int? status,
@@ -65,6 +69,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
             });
         }
+        [PermissionAuthorize("CT-U")]
 
         [HttpPatch("{Id}")]
         public async Task<IActionResult> Edit(int Id, ContactUpdatePatchRequest contactUpdateRequest)
@@ -91,6 +96,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
+        [PermissionAuthorize("CT-D")]
 
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)

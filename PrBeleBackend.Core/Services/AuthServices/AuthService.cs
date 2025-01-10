@@ -112,6 +112,18 @@ namespace PrBeleBackend.Core.Services.AuthServices
             return jwtResponse;
         }
 
+        public async Task<bool> Logout(int Id)
+        {
+            Account? account = await _accountRepository.GetAccountById(Id);
+            if (account == null)
+            {
+                return false;
+            }
+            account.RefreshToken = null;
+            await _accountRepository.UpdateAccount(account);
+            return true;
+
+        }
         public async Task<bool> CliLogout(int Id)
         {
             Customer? customer = await _customerRepository.GetCustomerById(Id);

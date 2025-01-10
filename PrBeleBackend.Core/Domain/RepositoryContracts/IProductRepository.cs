@@ -35,6 +35,7 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
 
         public Task<Product> ModifyProduct(ProductModifyRequest req, int id);
 
+
         public Task<Product> DeleteProduct(int id);
     }
 }

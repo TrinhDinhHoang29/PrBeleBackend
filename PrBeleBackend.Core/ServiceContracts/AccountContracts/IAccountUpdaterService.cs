@@ -11,6 +11,8 @@ namespace PrBeleBackend.Core.ServiceContracts.AccountContracts
     public interface IAccountUpdaterService
     {
         public Task<AccountResponse> UpdateAccount(int Id, AccountUpdateRequest? accountUpdateRequest);
+        public Task<AccountResponse> UpdatePasswordAccount(int Id, AccountUpdatePasswordRequest? accountUpdateRequest);
+
         public Task<AccountResponse> UpdateAccountPatch(int Id, AccountUpdatePatchRequest? accountUpdateRequest);
 
     }

@@ -22,25 +22,25 @@ namespace PrBeleBackend.Infrastructure.Seeder
             {
                 var categoriesSeed = new List<Category>(){
                    new Category {
-                    Name = "Tất cả Áo Nam",
+                    Name = "Áo Nam",
                     Status = 1,
-                    Slug = "tat-ca-ao-nam",
+                    Slug = "ao-nam",
                     Deleted = false,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                 },
                           new Category {
-                    Name = "Tất cả Quần Nam",
+                    Name = "Quần Nam",
                     Status = 1,
-                    Slug = "tat-ca-quan-nam",
+                    Slug = "quan-nam",
                     Deleted = false,
                         CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                 },
                           new Category {
-                    Name = "Tất cả phụ kiện",
+                    Name = "Phụ kiện",
                     Status = 1,
-                    Slug = "tat-ca-phu-kien",
+                    Slug = "phu-kien",
                     Deleted = false,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
@@ -925,6 +925,19 @@ namespace PrBeleBackend.Infrastructure.Seeder
                     new Account()
                     {
                         RoleId = 1,
+                        FullName = "Bele Admin",
+                        PhoneNumber = "1234567890",
+                        Email = "bele@gmail.com",
+                        Sex = "Male",
+                        Password = "AQAAAAIAAYagAAAAEA1cyOY5Og1rZ8/WmW28h13EWVwjRW0nnmt4d2TB0cP8xqjKczVOYsuyvDBAX50YCg==",
+                        Status = 1,
+                        Deleted = false,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Account()
+                    {
+                        RoleId = 1,
                         FullName = "John Doe",
                         PhoneNumber = "1234567890",
                         Email = "johndoe@example.com",
@@ -1018,6 +1031,17 @@ namespace PrBeleBackend.Infrastructure.Seeder
     new Permission { Name = "Category Read", Code = "C-R" },
     new Permission { Name = "Category Update", Code = "C-U" },
     new Permission { Name = "Category Delete", Code = "C-D" },
+    // Quản lý liên hệ
+    new Permission { Name = "Contact Read", Code = "CT-R" },
+    new Permission { Name = "Contact Update", Code = "CT-U" },
+    new Permission { Name = "Contact Delete", Code = "CT-D" },
+    //Quản lý Dashborad
+        new Permission { Name = "Dashboard Read", Code = "D-R" },
+        //Quản lý giảm giá
+        new Permission { Name = "Discount Create", Code = "DC-C" },
+        new Permission { Name = "Discount Read", Code = "DC-R" },
+        new Permission { Name = "Discount Update", Code = "DC-U" },
+        new Permission { Name = "Discount Delete", Code = "DC-D" },
 
     // Quản lý nhân viên
     new Permission { Name = "Account Create", Code = "A-C" },
@@ -1026,10 +1050,12 @@ namespace PrBeleBackend.Infrastructure.Seeder
     new Permission { Name = "Account Delete", Code = "A-D" },
 
     // Quản lý đánh giá
-    new Permission { Name = "Review Create", Code = "R-C" },
-    new Permission { Name = "Review Read", Code = "R-R" },
-    new Permission { Name = "Review Update", Code = "R-U" },
-    new Permission { Name = "Review Delete", Code = "R-D" },
+    new Permission { Name = "Rate Reply", Code = "R-C" },
+   new Permission { Name = "Rate Read", Code = "R-R" },
+      new Permission { Name = "Rate Update", Code = "R-U" },
+
+     new Permission { Name = "Rate Delete", Code = "R-D" },
+
 
     // Quản lý đơn hàng
     new Permission { Name = "Order Read", Code = "O-R" },
@@ -1042,7 +1068,11 @@ namespace PrBeleBackend.Infrastructure.Seeder
     new Permission { Name = "Customer Delete", Code = "CU-D" },
 
     // Quản lý quyền
-    new Permission { Name = "Permission Management", Code = "P-M" }
+    new Permission { Name = "Permission Management", Code = "P-M" },
+    // Quản lý quyền
+    new Permission { Name = "Setting Read", Code = "S-R" },
+        new Permission { Name = "Setting Update", Code = "S-U" },
+
 };
 
 
@@ -1084,7 +1114,19 @@ namespace PrBeleBackend.Infrastructure.Seeder
                     new RolePermission { RoleId = 1, PermissionId = 28 },
                     new RolePermission { RoleId = 1, PermissionId = 29 },
                     new RolePermission { RoleId = 1, PermissionId = 30 },
-                    new RolePermission { RoleId = 1, PermissionId = 31 }
+                    new RolePermission { RoleId = 1, PermissionId = 31 },
+                                        new RolePermission { RoleId = 1, PermissionId = 32 },
+                    new RolePermission { RoleId = 1, PermissionId = 33 },
+                    new RolePermission { RoleId = 1, PermissionId = 34 },
+                    new RolePermission { RoleId = 1, PermissionId = 35 },
+                    new RolePermission { RoleId = 1, PermissionId = 36 },
+                    new RolePermission { RoleId = 1, PermissionId = 37 },
+                    new RolePermission { RoleId = 1, PermissionId = 38 },
+                    new RolePermission { RoleId = 1, PermissionId = 39 },
+                    new RolePermission { RoleId = 1, PermissionId = 40 },
+                                        new RolePermission { RoleId = 1, PermissionId = 41 },
+
+
 
                     //tới 31 
                 };
@@ -1291,42 +1333,177 @@ namespace PrBeleBackend.Infrastructure.Seeder
             {
                 List<Order> ordersSeed = new List<Order>()
                 {
-                    new Order
-            {
-                UserId = 1,
-                FullName = "Nguyen Van A",
-                PhoneNumber = "0123456789",
-                Address = "123 Le Loi, Hanoi",
-                TotalMoney = 1000000,
-                PayMethod = "COD",
-                ShipDate = DateTime.Now,
-                ReceiveDate = DateTime.Now.AddDays(5),
-                Status = 3,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
-            },
-                    new Order
-                    {
-                        UserId = 2,
-                        FullName = "Tran Thi B",
-                        PhoneNumber = "0987654321",
-                        Address = "456 Tran Phu, Ho Chi Minh",
-                        TotalMoney = 1500000,
-                        PayMethod = "VNPAY",
-                        ShipDate = DateTime.Now,
-                        ReceiveDate = DateTime.Now.AddDays(3),
-                        Status = 3,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
-                    }
+                   new Order
+        {
+            UserId = 6,
+            FullName = "Nguyễn Văn A",
+            PhoneNumber = "0123456789",
+            Address = "123 Đường ABC, TP.HCM",
+            Note = "Giao hàng nhanh",
+            TotalMoney = 500000,
+            PayMethod = "COD",
+            ShipDate = DateTime.Now.AddDays(2),
+            ReceiveDate = DateTime.Now.AddDays(4),
+            Status = 1,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now
+        },
+        new Order
+        {
+            UserId = 6,
+            FullName = "Trần Thị B",
+            PhoneNumber = "0987654321",
+            Address = "456 Đường XYZ, Hà Nội",
+            Note = "Gói hàng cẩn thận",
+            TotalMoney = 300000,
+            PayMethod = "VNPAY",
+            ShipDate = DateTime.Now.AddDays(1),
+            ReceiveDate = DateTime.Now.AddDays(3),
+            Status = 1,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now
+        },
+        new Order
+        {
+            UserId = 6,
+            FullName = "Lê Văn C",
+            PhoneNumber = "0345678901",
+            Address = "789 Đường DEF, Đà Nẵng",
+            Note = "Giao hàng vào buổi sáng",
+            TotalMoney = 200000,
+            PayMethod = "COD",
+            ShipDate = DateTime.Now.AddDays(3),
+            ReceiveDate = DateTime.Now.AddDays(5),
+            Status = 1,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now
+        },
+        new Order
+        {
+            UserId = 6,
+            FullName = "Phạm Thị D",
+            PhoneNumber = "0567890123",
+            Address = "321 Đường GHI, Cần Thơ",
+            Note = "Không gọi điện trước",
+            TotalMoney = 400000,
+            PayMethod = "VNPAY",
+            ShipDate = DateTime.Now.AddDays(2),
+            ReceiveDate = DateTime.Now.AddDays(4),
+            Status = 1,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now
+        }
                 };
                 _context.orders.AddRange(ordersSeed);
                 _context.SaveChanges();
                 var productOrder = new List<ProductOrder>()
                 {
-                    new ProductOrder { OrderId = 1, VariantId = 4, Quantity = 2 },
-                    new ProductOrder { OrderId = 1, VariantId = 5, Quantity = 1 },
-                    new ProductOrder { OrderId = 2, VariantId = 7, Quantity = 3 }
+                     new ProductOrder
+        {
+            OrderId = 1,
+            VariantId = 1,
+            Quantity = 2,
+            OriginalPrice = 150000,
+            DiscountValue = 10,
+            FinalPrice = 135000,
+            IsRating = false
+        },
+        new ProductOrder
+        {
+            OrderId = 1,
+            VariantId = 2,
+            Quantity = 1,
+            OriginalPrice = 230000,
+            DiscountValue = 5,
+            FinalPrice = 218500,
+            IsRating = false
+        },
+
+        // Hóa đơn 2: 1 sản phẩm
+        new ProductOrder
+        {
+            OrderId = 2,
+            VariantId = 3,
+            Quantity = 3,
+            OriginalPrice = 100000,
+            DiscountValue = 0,
+            FinalPrice = 100000,
+            IsRating = false
+        },
+
+        // Hóa đơn 3: 4 sản phẩm
+        new ProductOrder
+        {
+            OrderId = 3,
+            VariantId = 4,
+            Quantity = 1,
+            OriginalPrice = 50000,
+            DiscountValue = 20,
+            FinalPrice = 40000,
+            IsRating = false
+        },
+        new ProductOrder
+        {
+            OrderId = 3,
+            VariantId = 5,
+            Quantity = 2,
+            OriginalPrice = 75000,
+            DiscountValue = 10,
+            FinalPrice = 67500,
+            IsRating = false
+        },
+        new ProductOrder
+        {
+            OrderId = 3,
+            VariantId = 6,
+            Quantity = 1,
+            OriginalPrice = 120000,
+            DiscountValue = 15,
+            FinalPrice = 102000,
+            IsRating = false
+        },
+        new ProductOrder
+        {
+            OrderId = 3,
+            VariantId = 7,
+            Quantity = 1,
+            OriginalPrice = 80000,
+            DiscountValue = 5,
+            FinalPrice = 76000,
+            IsRating = false
+        },
+
+        // Hóa đơn 4: 3 sản phẩm
+        new ProductOrder
+        {
+            OrderId = 4,
+            VariantId = 8,
+            Quantity = 2,
+            OriginalPrice = 90000,
+            DiscountValue = 10,
+            FinalPrice = 81000,
+            IsRating = false
+        },
+        new ProductOrder
+        {
+            OrderId = 4,
+            VariantId = 9,
+            Quantity = 1,
+            OriginalPrice = 150000,
+            DiscountValue = 0,
+            FinalPrice = 150000,
+            IsRating = false
+        },
+        new ProductOrder
+        {
+            OrderId = 4,
+            VariantId = 10,
+            Quantity = 1,
+            OriginalPrice = 250000,
+            DiscountValue = 20,
+            FinalPrice = 200000,
+            IsRating = false
+        }
                 };
            
                 _context.productOrders.AddRange(productOrder);

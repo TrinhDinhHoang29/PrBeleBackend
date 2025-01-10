@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using PrBeleBackend.API.Filters;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.DiscountDTOs;
 using PrBeleBackend.Core.Enums;
@@ -9,6 +11,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
     [Route("api/admin/[controller]")]
     [ApiController]
+    [Authorize]
     public class DiscountController : ControllerBase
     {
         private readonly IDiscountAdderService _discountAdderService;
@@ -30,7 +33,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _discountSorterService = discountSorterService;
             _discountUpdaterService = discountUpdaterService;
         }
-
+        [PermissionAuthorize("DC-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
                        int? status,
@@ -68,6 +71,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
             });
         }
+        [PermissionAuthorize("DC-R")]
+
         [HttpGet("{Id}")]
         public async Task<IActionResult> Detail(int Id)
         {
@@ -87,6 +92,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 message = "Data fetched successfully."
             });
         }
+        [PermissionAuthorize("DC-C")]
 
         [HttpPost]
         public async Task<IActionResult> Create(DiscountAddRequest discountAddRequest)
@@ -112,6 +118,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
+        [PermissionAuthorize("DC-U")]
 
         [HttpPut("{Id}")]
         public async Task<IActionResult> Update(int Id, DiscountUpdateRequest discountUpdateRequest)
@@ -139,6 +146,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
 
         }
+        [PermissionAuthorize("DC-U")]
 
         [HttpPatch("{Id}")]
         public async Task<IActionResult> Edit(int Id, DiscountUpdatePatchRequest discountUpdateRequest)
@@ -170,6 +178,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
+        [PermissionAuthorize("DC-D")]
 
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
