@@ -32,9 +32,10 @@ namespace PrBeleBackend.Core.Services.ContactServices
             {
                 throw new ArgumentNullException("Contact not found !");
             }
+            ValidationHelper.ModelValidation(contactUpdateRequest);
+
             contactExist.Status = contactUpdateRequest.Status;
 
-            ValidationHelper.ModelValidation(contactExist);
 
             Contact result = await _contactRepository.UpdateContact(contactExist);
             return result.ToContactResponse();

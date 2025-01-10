@@ -22,8 +22,9 @@ namespace PrBeleBackend.Core.Services.DiscountServices
             {
                 throw new ArgumentNullException("Discount not found !");
             }
-            Discount discountRequest = discountUpdateRequest.ToDiscount();
             ValidationHelper.ModelValidation(discountUpdateRequest);
+
+            Discount discountRequest = discountUpdateRequest.ToDiscount();
             if (discountUpdateRequest.ExpireDate < DateTime.Now)
             {
                 throw new ArgumentException("ExpireDate is error !");
@@ -43,10 +44,11 @@ namespace PrBeleBackend.Core.Services.DiscountServices
             {
                 throw new ArgumentNullException("Discount not found !");
             }
+            ValidationHelper.ModelValidation(discountUpdateRequest);
+
             discountExist.Status = discountUpdateRequest.Status;
             discountExist.UpdatedAt = DateTime.Now;
 
-            ValidationHelper.ModelValidation(discountExist);
 
 
             Discount result = await _discountRepository.UpdateDiscount(discountExist);

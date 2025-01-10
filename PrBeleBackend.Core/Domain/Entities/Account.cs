@@ -62,7 +62,7 @@ namespace PrBeleBackend.Core.Domain.Entities
                 RoleId = accountUpdatRequest.RoleId,
                 PhoneNumber = accountUpdatRequest.PhoneNumber,
                 Email = accountUpdatRequest.Email,
-                Password = accountUpdatRequest.Password,
+                //Password = accountUpdatRequest.Password,
                 Status = accountUpdatRequest.Status,
                 Sex = accountUpdatRequest.Sex.ToString()
             };

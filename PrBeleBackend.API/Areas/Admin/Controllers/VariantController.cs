@@ -10,7 +10,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class VariantController : Controller
     {
         private readonly IVariantGetterService _variantGetterService;
@@ -34,7 +34,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             this._variantDeleterService = variantDeleterService;
         }
 
-        //[PermissionAuthorize("V-R")]
+        [PermissionAuthorize("PV-R")]
         [HttpGet]
         public async Task<IActionResult> GetFilteredVariant(
             string? field,
@@ -78,7 +78,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        //[PermissionAuthorize("V-R")]
+        [PermissionAuthorize("PV-R")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVariantDetail(int id)
         {
@@ -107,7 +107,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        //[PermissionAuthorize("V-C")]
+        [PermissionAuthorize("PV-C")]
         [HttpPost]
         public async Task<IActionResult> CreateVariant([FromBody] VariantAdderRequest req)
         {
@@ -136,7 +136,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        //[PermissionAuthorize("V-U")]
+        [PermissionAuthorize("PV-U")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateVariant([FromBody] VariantUpdaterRequest req, int id)
         {
@@ -165,7 +165,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        //[PermissionAuthorize("V-M")]
+        [PermissionAuthorize("PV-U")]
         [HttpPatch("{id}")]
         public async Task<IActionResult> ModifyVariant([FromBody] VariantModifierRequest req, int id)
         {
@@ -194,7 +194,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        //[PermissionAuthorize("V-D")]
+        [PermissionAuthorize("PV-D")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVariant(int id)
         {

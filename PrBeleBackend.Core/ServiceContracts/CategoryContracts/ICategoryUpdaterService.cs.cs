@@ -10,6 +10,7 @@ namespace PrBeleBackend.Core.ServiceContracts.CategoryContracts
     public interface ICategoryUpdaterService
     {
         public Task<CategoryResponse> UpdateCategory(int Id,CategoryUpdateRequest? categoryUpdateRequest);
+        public Task<CategoryResponse> UpdatePatch(int Id, CategoryUpdatePatchRequest? categoryUpdateRequest);
 
     }
 }

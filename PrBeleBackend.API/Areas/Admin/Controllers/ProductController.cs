@@ -41,7 +41,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _productDeleterService = productDeleterService;
             _productSorterService = productSorterService;
         }
-        //[PermissionAuthorize("P-R")]
+        [PermissionAuthorize("P-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
             string? field,
@@ -85,7 +85,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        //[PermissionAuthorize("P-R")]
+        [PermissionAuthorize("P-R")]
         [HttpGet("{id}")]
         public async Task<IActionResult> Detail(int id)
         {
@@ -102,7 +102,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             });
         }
 
-        //[PermissionAuthorize("P-C")]
+        [PermissionAuthorize("P-C")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ProductAddRequest req)
         {
@@ -129,7 +129,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
-        //[PermissionAuthorize("P-U")]
+        [PermissionAuthorize("P-U")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromBody] ProductUpdateRequest req, int id)
         {
@@ -157,7 +157,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        //[PermissionAuthorize("P-U")]
+        [PermissionAuthorize("P-U")]
         [HttpPatch("{id}")]
         public async Task<IActionResult> Modify([FromBody] ProductModifyRequest req, int id)
         {
@@ -185,7 +185,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        //[PermissionAuthorize("P-D")]
+        [PermissionAuthorize("P-D")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

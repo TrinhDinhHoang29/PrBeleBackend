@@ -22,25 +22,25 @@ namespace PrBeleBackend.Infrastructure.Seeder
             {
                 var categoriesSeed = new List<Category>(){
                    new Category {
-                    Name = "Tất cả Áo Nam",
+                    Name = "Áo Nam",
                     Status = 1,
-                    Slug = "tat-ca-ao-nam",
+                    Slug = "ao-nam",
                     Deleted = false,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                 },
                           new Category {
-                    Name = "Tất cả Quần Nam",
+                    Name = "Quần Nam",
                     Status = 1,
-                    Slug = "tat-ca-quan-nam",
+                    Slug = "quan-nam",
                     Deleted = false,
                         CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                 },
                           new Category {
-                    Name = "Tất cả phụ kiện",
+                    Name = "Phụ kiện",
                     Status = 1,
-                    Slug = "tat-ca-phu-kien",
+                    Slug = "phu-kien",
                     Deleted = false,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
@@ -925,6 +925,19 @@ namespace PrBeleBackend.Infrastructure.Seeder
                     new Account()
                     {
                         RoleId = 1,
+                        FullName = "Bele Admin",
+                        PhoneNumber = "1234567890",
+                        Email = "bele@gmail.com",
+                        Sex = "Male",
+                        Password = "AQAAAAIAAYagAAAAEA1cyOY5Og1rZ8/WmW28h13EWVwjRW0nnmt4d2TB0cP8xqjKczVOYsuyvDBAX50YCg==",
+                        Status = 1,
+                        Deleted = false,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Account()
+                    {
+                        RoleId = 1,
                         FullName = "John Doe",
                         PhoneNumber = "1234567890",
                         Email = "johndoe@example.com",
@@ -1018,6 +1031,17 @@ namespace PrBeleBackend.Infrastructure.Seeder
     new Permission { Name = "Category Read", Code = "C-R" },
     new Permission { Name = "Category Update", Code = "C-U" },
     new Permission { Name = "Category Delete", Code = "C-D" },
+    // Quản lý liên hệ
+    new Permission { Name = "Contact Read", Code = "CT-R" },
+    new Permission { Name = "Contact Update", Code = "CT-U" },
+    new Permission { Name = "Contact Delete", Code = "CT-D" },
+    //Quản lý Dashborad
+        new Permission { Name = "Dashboard Read", Code = "D-R" },
+        //Quản lý giảm giá
+        new Permission { Name = "Discount Create", Code = "DC-C" },
+        new Permission { Name = "Discount Read", Code = "DC-R" },
+        new Permission { Name = "Discount Update", Code = "DC-U" },
+        new Permission { Name = "Discount Delete", Code = "DC-D" },
 
     // Quản lý nhân viên
     new Permission { Name = "Account Create", Code = "A-C" },
@@ -1026,10 +1050,12 @@ namespace PrBeleBackend.Infrastructure.Seeder
     new Permission { Name = "Account Delete", Code = "A-D" },
 
     // Quản lý đánh giá
-    new Permission { Name = "Review Create", Code = "R-C" },
-    new Permission { Name = "Review Read", Code = "R-R" },
-    new Permission { Name = "Review Update", Code = "R-U" },
-    new Permission { Name = "Review Delete", Code = "R-D" },
+    new Permission { Name = "Rate Reply", Code = "R-C" },
+   new Permission { Name = "Rate Read", Code = "R-R" },
+      new Permission { Name = "Rate Update", Code = "R-U" },
+
+     new Permission { Name = "Rate Delete", Code = "R-D" },
+
 
     // Quản lý đơn hàng
     new Permission { Name = "Order Read", Code = "O-R" },
@@ -1042,7 +1068,11 @@ namespace PrBeleBackend.Infrastructure.Seeder
     new Permission { Name = "Customer Delete", Code = "CU-D" },
 
     // Quản lý quyền
-    new Permission { Name = "Permission Management", Code = "P-M" }
+    new Permission { Name = "Permission Management", Code = "P-M" },
+    // Quản lý quyền
+    new Permission { Name = "Setting Read", Code = "S-R" },
+        new Permission { Name = "Setting Update", Code = "S-U" },
+
 };
 
 
@@ -1084,7 +1114,19 @@ namespace PrBeleBackend.Infrastructure.Seeder
                     new RolePermission { RoleId = 1, PermissionId = 28 },
                     new RolePermission { RoleId = 1, PermissionId = 29 },
                     new RolePermission { RoleId = 1, PermissionId = 30 },
-                    new RolePermission { RoleId = 1, PermissionId = 31 }
+                    new RolePermission { RoleId = 1, PermissionId = 31 },
+                                        new RolePermission { RoleId = 1, PermissionId = 32 },
+                    new RolePermission { RoleId = 1, PermissionId = 33 },
+                    new RolePermission { RoleId = 1, PermissionId = 34 },
+                    new RolePermission { RoleId = 1, PermissionId = 35 },
+                    new RolePermission { RoleId = 1, PermissionId = 36 },
+                    new RolePermission { RoleId = 1, PermissionId = 37 },
+                    new RolePermission { RoleId = 1, PermissionId = 38 },
+                    new RolePermission { RoleId = 1, PermissionId = 39 },
+                    new RolePermission { RoleId = 1, PermissionId = 40 },
+                                        new RolePermission { RoleId = 1, PermissionId = 41 },
+
+
 
                     //tới 31 
                 };

@@ -9,7 +9,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerGetterService _customerGetterService;
@@ -28,7 +28,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _customerUpdaterService = customerUpdaterService;
             _customerDeleterService = customerDeleterService;
         }
-        //[PermissionAuthorize("CU-R")]
+        [PermissionAuthorize("CU-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
                         int? status,
@@ -68,7 +68,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
             });
         }
-        //[PermissionAuthorize("CU-U")]
+        [PermissionAuthorize("CU-U")]
         [HttpPatch("{Id}")]
         public async Task<IActionResult> Edit(int Id, CustomerUpdatePatchRequest customerUpdateRequest)
         {
@@ -94,7 +94,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
-        //[PermissionAuthorize("CU-D")]
+        [PermissionAuthorize("CU-D")]
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
         {

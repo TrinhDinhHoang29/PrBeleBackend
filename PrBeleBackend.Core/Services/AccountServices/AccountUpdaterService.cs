@@ -27,13 +27,9 @@ namespace PrBeleBackend.Core.Services.AccountServices
             if (accountExist == null) {
                 throw new ArgumentNullException("Account not found !");
             }
-            Account accountRequest = accountUpdateRequest.ToAccount();
-
             ValidationHelper.ModelValidation(accountUpdateRequest);
 
-            var passwordHasher = new PasswordHasher<string>();
-            string hashedPassword = passwordHasher.HashPassword(null, accountUpdateRequest.Password);
-            accountRequest.Password = hashedPassword;
+            Account accountRequest = accountUpdateRequest.ToAccount();
 
             Account? emailExist = await _accountRepository.GetAccountByEmail(accountUpdateRequest.Email);
 
@@ -57,10 +53,30 @@ namespace PrBeleBackend.Core.Services.AccountServices
             {
                 throw new Exception("Account not found !");
             }
+            ValidationHelper.ModelValidation(accountUpdateRequest);
+
             accountExist.Status = accountUpdateRequest.Status;
             accountExist.UpdatedAt = DateTime.Now;
 
-            ValidationHelper.ModelValidation(accountExist);
+
+            Account result = await _accountRepository.UpdateAccount(accountExist);
+            return result.ToAccountResponse();
+        }
+
+        public async Task<AccountResponse> UpdatePasswordAccount(int Id, AccountUpdatePasswordRequest? accountUpdateRequest)
+        {
+            Account? accountExist = await _accountRepository.GetAccountById(Id);
+
+            if (accountExist == null)
+            {
+                throw new Exception("Account not found !");
+            }
+            ValidationHelper.ModelValidation(accountUpdateRequest);
+
+            accountExist.UpdatedAt = DateTime.Now;
+            var passwordHasher = new PasswordHasher<string>();
+            string hashedPassword = passwordHasher.HashPassword(null, accountUpdateRequest.Password);
+            accountExist.Password = hashedPassword;
 
             Account result = await _accountRepository.UpdateAccount(accountExist);
             return result.ToAccountResponse();

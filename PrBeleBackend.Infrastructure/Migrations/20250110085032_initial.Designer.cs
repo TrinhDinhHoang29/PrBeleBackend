@@ -12,8 +12,8 @@ using PrBeleBackend.Infrastructure.DbContexts;
 namespace PrBeleBackend.Infrastructure.Migrations
 {
     [DbContext(typeof(BeleStoreContext))]
-    [Migration("20250109082108_Update-setting")]
-    partial class Updatesetting
+    [Migration("20250110085032_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

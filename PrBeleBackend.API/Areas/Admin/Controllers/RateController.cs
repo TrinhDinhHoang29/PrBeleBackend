@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PrBeleBackend.API.Filters;
 using PrBeleBackend.Core.DTO.RateDTOs;
 using PrBeleBackend.Core.Enums;
 using PrBeleBackend.Core.ServiceContracts.RateContracts;
@@ -9,7 +10,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class RateController : ControllerBase
     {
         private readonly IRateGetterService _rateGetterService;
@@ -30,6 +31,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _rateUpdaterService = rateUpdaterService;
             _rateSortService = rateSortService;
         }
+
+        [PermissionAuthorize("R-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
                         int? status,
@@ -69,6 +72,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             });
 
         }
+        [PermissionAuthorize("R-C")]
+
         [HttpPost]
         public async Task<IActionResult> Reply(ReplyRateRequest replyRateRequest)
         {
@@ -91,6 +96,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
+        [PermissionAuthorize("R-U")]
         [HttpPatch("{Id}")]
         public async Task<IActionResult> Edit(int Id,RateStatusUpdateRequest rateStatusUpdateRequest)
         {
@@ -111,6 +117,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
+        [PermissionAuthorize("R-D")]
+
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
         {

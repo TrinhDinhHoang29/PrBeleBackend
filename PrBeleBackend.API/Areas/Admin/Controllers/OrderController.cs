@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PrBeleBackend.API.Filters;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.DiscountDTOs;
 using PrBeleBackend.Core.DTO.OrderDTOs;
@@ -11,6 +13,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrderController : ControllerBase
     {
         private readonly IOrderGetterService _orderGetterService;
@@ -28,6 +31,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _orderDeleterService = orderDeleterService;
             _orderUpdaterService = orderUpdaterService;
         }
+        [PermissionAuthorize("O-R")]
+
         [HttpGet]
         public async Task<IActionResult> Index(
                        int? status,
@@ -78,6 +83,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
             });
         }
+        [PermissionAuthorize("O-R")]
+
         [HttpGet("{Id}")]
         public async Task<IActionResult> Detail(int Id)
         {
@@ -125,6 +132,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             
 
         }
+        [PermissionAuthorize("O-U")]
 
         [HttpPatch("{Id}")]
         public async Task<IActionResult> UpdateStatusOrder(int Id, OrderUpdatePatchRequest StatusRequest)
@@ -148,6 +156,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
 
         }
+        [PermissionAuthorize("O-D")]
+
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
         {

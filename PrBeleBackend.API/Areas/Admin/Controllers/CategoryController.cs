@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
+using PrBeleBackend.API.Filters;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.CategoryDTOs;
 using PrBeleBackend.Core.Enums;
@@ -11,6 +13,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryGetterService _categoryGetterService;
@@ -32,7 +35,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _categoryDeleterService = categoryDeleterService;
             _categorySorterService = categorySorterService;
         }
-
+        [PermissionAuthorize("C-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
             int? status,
@@ -81,6 +84,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 message = "Data fetched successfully."
             });
         }
+        [PermissionAuthorize("C-R")]
 
         [HttpGet("{Id}")]
         public async Task<IActionResult> Detail(int Id)
@@ -112,6 +116,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
  
         }
+        [PermissionAuthorize("C-C")]
 
         [HttpPost]
         public async Task<IActionResult> Create(CategoryAddRequest categoryAddRequest)
@@ -143,6 +148,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
 
         }
+        [PermissionAuthorize("C-U")]
 
         [HttpPut("{Id}")]
         public async Task<IActionResult> Update(int Id,CategoryUpdateRequest? categoryUpdateRequest)
@@ -174,6 +180,40 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
+        [PermissionAuthorize("C-U")]
+
+        [HttpPatch("{Id}")]
+        public async Task<IActionResult> Edit(int Id, CategoryUpdatePatchRequest? categoryUpdateRequest)
+        {
+            try
+            {
+                CategoryResponse category = await _categoryUpdaterService
+                    .UpdatePatch(Id, categoryUpdateRequest);
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        category = category,
+                    },
+                    message = "Successful !"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 404,
+                    data = new
+                    {
+
+                    },
+                    message = ex.Message
+                });
+            }
+        }
+
+        [PermissionAuthorize("C-D")]
 
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)

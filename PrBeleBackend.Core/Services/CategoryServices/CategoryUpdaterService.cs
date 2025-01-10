@@ -64,7 +64,37 @@ namespace PrBeleBackend.Core.Services.CategoryServices
             return result.ToCategoryResponse();
 
         }
-    
-    
+
+        public  async Task<CategoryResponse> UpdatePatch(int Id, CategoryUpdatePatchRequest? categoryUpdateRequest)
+        {
+            if (categoryUpdateRequest == null)
+            {
+                throw new ArgumentNullException(nameof(categoryUpdateRequest));
+            }
+
+            //check CategoryId
+
+            Category? checkCategoryNeedUpdate = await _categoryRepository.GetCategoryById(Id);
+
+            if (checkCategoryNeedUpdate == null)
+            {
+                throw new ArgumentNullException(nameof(checkCategoryNeedUpdate));
+            }
+            //Validate model
+            ValidationHelper.ModelValidation(categoryUpdateRequest);
+            //check CategoryParent
+            if (checkCategoryNeedUpdate.ReferenceCategoryId < 1 && categoryUpdateRequest.Status == 0)
+            {
+                throw new Exception("Can't unactive parentCategory.");
+            }
+            checkCategoryNeedUpdate.Status = categoryUpdateRequest.Status;
+            checkCategoryNeedUpdate.UpdatedAt = DateTime.Now;
+
+            //Update Category 
+            Category result = await _categoryRepository
+                .UpdateCategory(checkCategoryNeedUpdate);
+
+            return result.ToCategoryResponse();
+        }
     }
 }
