@@ -1085,6 +1085,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                     new RolePermission { RoleId = 2, PermissionId = 2 },
                     new RolePermission { RoleId = 2, PermissionId = 3 },
                     new RolePermission { RoleId = 2, PermissionId = 4 },
+                    new RolePermission { RoleId = 1, PermissionId = 1 },
                     new RolePermission { RoleId = 1, PermissionId = 2 },
                     new RolePermission { RoleId = 1, PermissionId = 3 },
                     new RolePermission { RoleId = 1, PermissionId = 4 },
@@ -1115,7 +1116,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                     new RolePermission { RoleId = 1, PermissionId = 29 },
                     new RolePermission { RoleId = 1, PermissionId = 30 },
                     new RolePermission { RoleId = 1, PermissionId = 31 },
-                                        new RolePermission { RoleId = 1, PermissionId = 32 },
+                    new RolePermission { RoleId = 1, PermissionId = 32 },
                     new RolePermission { RoleId = 1, PermissionId = 33 },
                     new RolePermission { RoleId = 1, PermissionId = 34 },
                     new RolePermission { RoleId = 1, PermissionId = 35 },
@@ -1124,7 +1125,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                     new RolePermission { RoleId = 1, PermissionId = 38 },
                     new RolePermission { RoleId = 1, PermissionId = 39 },
                     new RolePermission { RoleId = 1, PermissionId = 40 },
-                                        new RolePermission { RoleId = 1, PermissionId = 41 },
+                    new RolePermission { RoleId = 1, PermissionId = 41 },
 
 
 

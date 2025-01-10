@@ -11,7 +11,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
     [Route("api/admin/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class DiscountController : ControllerBase
     {
         private readonly IDiscountAdderService _discountAdderService;
@@ -33,7 +33,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _discountSorterService = discountSorterService;
             _discountUpdaterService = discountUpdaterService;
         }
-        [PermissionAuthorize("DC-R")]
+        //[PermissionAuthorize("DC-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
                        int? status,
@@ -71,7 +71,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
             });
         }
-        [PermissionAuthorize("DC-R")]
+        //[PermissionAuthorize("DC-R")]
 
         [HttpGet("{Id}")]
         public async Task<IActionResult> Detail(int Id)
@@ -92,7 +92,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 message = "Data fetched successfully."
             });
         }
-        [PermissionAuthorize("DC-C")]
+        //[PermissionAuthorize("DC-C")]
 
         [HttpPost]
         public async Task<IActionResult> Create(DiscountAddRequest discountAddRequest)
@@ -118,7 +118,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
-        [PermissionAuthorize("DC-U")]
+        //[PermissionAuthorize("DC-U")]
 
         [HttpPut("{Id}")]
         public async Task<IActionResult> Update(int Id, DiscountUpdateRequest discountUpdateRequest)
@@ -146,7 +146,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
 
         }
-        [PermissionAuthorize("DC-U")]
+        //[PermissionAuthorize("DC-U")]
 
         [HttpPatch("{Id}")]
         public async Task<IActionResult> Edit(int Id, DiscountUpdatePatchRequest discountUpdateRequest)
@@ -178,7 +178,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
-        [PermissionAuthorize("DC-D")]
+        //[PermissionAuthorize("DC-D")]
 
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)

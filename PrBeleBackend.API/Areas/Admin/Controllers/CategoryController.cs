@@ -13,7 +13,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryGetterService _categoryGetterService;
@@ -35,7 +35,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _categoryDeleterService = categoryDeleterService;
             _categorySorterService = categorySorterService;
         }
-        [PermissionAuthorize("C-R")]
+        //[PermissionAuthorize("C-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
             int? status,
@@ -84,7 +84,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 message = "Data fetched successfully."
             });
         }
-        [PermissionAuthorize("C-R")]
+        //[PermissionAuthorize("C-R")]
 
         [HttpGet("{Id}")]
         public async Task<IActionResult> Detail(int Id)
@@ -116,7 +116,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
  
         }
-        [PermissionAuthorize("C-C")]
+        //[PermissionAuthorize("C-C")]
 
         [HttpPost]
         public async Task<IActionResult> Create(CategoryAddRequest categoryAddRequest)
@@ -148,7 +148,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
 
         }
-        [PermissionAuthorize("C-U")]
+        //[PermissionAuthorize("C-U")]
 
         [HttpPut("{Id}")]
         public async Task<IActionResult> Update(int Id,CategoryUpdateRequest? categoryUpdateRequest)
@@ -180,7 +180,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
-        [PermissionAuthorize("C-U")]
+        //[PermissionAuthorize("C-U")]
 
         [HttpPatch("{Id}")]
         public async Task<IActionResult> Edit(int Id, CategoryUpdatePatchRequest? categoryUpdateRequest)
@@ -213,7 +213,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        [PermissionAuthorize("C-D")]
+        //[PermissionAuthorize("C-D")]
 
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)

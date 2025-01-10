@@ -12,13 +12,8 @@ using PrBeleBackend.Infrastructure.DbContexts;
 namespace PrBeleBackend.Infrastructure.Migrations
 {
     [DbContext(typeof(BeleStoreContext))]
-<<<<<<<< HEAD:PrBeleBackend.Infrastructure/Migrations/20250110061613_Init.Designer.cs
-    [Migration("20250110061613_Init")]
+    [Migration("20250110131435_Init")]
     partial class Init
-========
-    [Migration("20250110100452_intial")]
-    partial class intial
->>>>>>>> b209c7028e01a93587909ffcd91004839c3c41e7:PrBeleBackend.Infrastructure/Migrations/20250110100452_intial.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

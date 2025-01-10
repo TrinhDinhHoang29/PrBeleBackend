@@ -10,8 +10,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]/[Action]")]
     [ApiController]
-    [Authorize]
-    [PermissionAuthorize("D-R")]
+    //[Authorize]
+    //[PermissionAuthorize("D-R")]
     public class DashboardController : ControllerBase
     {
         private readonly BeleStoreContext _beleStoreContext;

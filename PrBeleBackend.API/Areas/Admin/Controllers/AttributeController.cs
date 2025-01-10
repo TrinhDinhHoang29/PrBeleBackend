@@ -12,7 +12,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AttributeController : ControllerBase
     {
         private readonly IAttributeGetterService _attributeGetterService;
@@ -39,7 +39,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             this._attributeSorterService = attributeSorterService;
         }
 
-        [PermissionAuthorize("PA-R")]
+        //[PermissionAuthorize("PA-R")]
         [HttpGet]
         public async Task<IActionResult> GetAttributeType()
         {
@@ -113,7 +113,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        [PermissionAuthorize("PA-C")]
+        //[PermissionAuthorize("PA-C")]
         [HttpPost("{id}")]
         public async Task<IActionResult> CreateAttributeValue([FromBody] AttributeValueAdderRequest req, int id)
         {
@@ -141,7 +141,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        [PermissionAuthorize("PA-U")]
+        //[PermissionAuthorize("PA-U")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAttributeValue([FromBody] AttributeValueUpdaterRequest req, int id)
         {
@@ -169,7 +169,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        [PermissionAuthorize("PA-U")]
+        //[PermissionAuthorize("PA-U")]
         [HttpPatch("{id}")]
         public async Task<IActionResult> ModifyAttributeValueStatus([FromBody] int status, int id)
         {
@@ -197,7 +197,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        [PermissionAuthorize("PA-D")]
+        //[PermissionAuthorize("PA-D")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAttributeValue(int id)
         {
