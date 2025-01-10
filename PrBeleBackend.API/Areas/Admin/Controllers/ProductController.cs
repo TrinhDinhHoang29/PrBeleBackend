@@ -129,8 +129,23 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
-        //[PermissionAuthorize("P-U")]
-        [HttpPut("{id}")]
+
+  //      {
+  //"name": "test update",
+  //"basePrice": 1000,
+  //"categoryId": 1,
+  //"discountId": 1,
+  //"description": "test update",
+  //"attributeType": [
+  //  1
+  //],
+  //"tag": [
+  //  1
+  //]
+  //  }
+
+    //[PermissionAuthorize("P-U")]
+    [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromBody] ProductUpdateRequest req, int id)
         {
             try

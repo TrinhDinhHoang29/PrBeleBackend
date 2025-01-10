@@ -18,11 +18,13 @@ namespace PrBeleBackend.Core.DTO.ProductDTOs
         public string Discount { get; set; }
         public decimal BasePrice { get; set; }
         public string Slug { get; set; }
+        public string Thumbnail { get; set; }
         public int View { get; set; }
         public int Like { get; set; }
         public int Status { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime CreatedAt { get; set; }
         public List<AttributeType> AttributeTypes { get; set; }
+        public List<Tag> Tags { get; set; }
     }
 }

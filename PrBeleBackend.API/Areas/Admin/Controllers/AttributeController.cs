@@ -51,11 +51,11 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         {
             try
             {
-                IEnumerable<AttributeValueResponse> attributeValues = await _attributeGetterService.GetFilteredAttributValue(field, query, status);
+                List<AttributeValueResponse> attributeValues = await _attributeGetterService.GetFilteredAttributeValue(field, query, status);
 
-                IEnumerable<AttributeValueResponse> attributeValuesPagination = attributeValues.Skip(limit * (page - 1)).Take(limit).ToList();
-    
-                IEnumerable<AttributeValueResponse> attributeValuesSort = await this._attributeSorterService.SortAttributeValue(attributeValuesPagination, sort, order);
+                List<AttributeValueResponse> attributeValuesPagination = attributeValues.Skip(limit * (page - 1)).Take(limit).ToList();
+
+                List<AttributeValueResponse> attributeValuesSort = await this._attributeSorterService.SortAttributeValue(attributeValuesPagination, sort, order);
 
                 return Ok(new
                 {
@@ -66,7 +66,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                         pagination = new
                         {
                             currentPage = page,
-                            totalPage = Math.Ceiling(Convert.ToDecimal(attributeValues) / limit)
+                            totalPage = Math.Ceiling(Convert.ToDecimal(attributeValues.Count) / limit)
                         }
                     },
                     message = "Get atribute value list success !"
@@ -83,8 +83,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
 
         //[PermissionAuthorize("A-C")]
-        [HttpPost("{id}")]
-        public async Task<IActionResult> CreateAttributeValue([FromBody] AttributeValueAdderRequest req, int id)
+        [HttpPost]
+        public async Task<IActionResult> CreateAttributeValue([FromBody] AttributeValueAdderRequest req)
         {
             try
             {

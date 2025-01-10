@@ -40,7 +40,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             string? field,
             string? query,
             string? sort,
-            int id,
+            int productId,
             int? status = 1,
             SortOrderOptions? order = SortOrderOptions.ASC,
             int page = 1,
@@ -49,7 +49,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         {
             try
             {
-                IEnumerable<VariantResponse> variants = await this._variantGetterService.GetFilteredVariant(id, field, query, status);
+                IEnumerable<VariantResponse> variants = await this._variantGetterService.GetFilteredVariant(productId, field, query, status);
 
                 IEnumerable<VariantResponse> variantsPagination = variants.Skip(limit * (page - 1)).Take(limit).ToList();
 
@@ -62,7 +62,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                         pagination = new
                         {
                             currentPage = page,
-                            totalPage = Math.Ceiling(Convert.ToDecimal(variants) / limit),
+                            totalPage = Math.Ceiling(Convert.ToDecimal(variants.Count()) / limit),
                         }
                     },
                     message = "Get variants success!"

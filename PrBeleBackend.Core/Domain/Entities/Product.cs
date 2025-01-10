@@ -64,15 +64,26 @@ namespace PrBeleBackend.Core.Domain.Entities
                 });
             }
 
+            List<ProductTag> productTag = new List<ProductTag>();
+
+            foreach (var tag in productAddRequest.Tag)
+            {
+                productTag.Add(new ProductTag
+                {
+                    TagId = tag
+                });
+            }
+
             return new Product
             {
                 Name = productAddRequest.Name,
                 BasePrice = productAddRequest.BasePrice,
                 CategoryId = productAddRequest.CategoryId,
-                //DiscountId = productAddRequest.DiscountId,
+                DiscountId = productAddRequest.DiscountId,
                 Status = productAddRequest.Status,
                 Description = productAddRequest.Description,
-                ProductAttributeTypes = productAttTyp
+                ProductAttributeTypes = productAttTyp,
+                ProductTags = productTag
             };
         }
 
@@ -88,6 +99,16 @@ namespace PrBeleBackend.Core.Domain.Entities
                 });
             }
 
+            List<ProductTag> productTag = new List<ProductTag>();
+
+            foreach (var tag in productUpdateRequest.Tag)
+            {
+                productTag.Add(new ProductTag
+                {
+                    TagId = tag
+                });
+            }
+
             return new Product
             {
                 Name = productUpdateRequest.Name,
@@ -95,7 +116,8 @@ namespace PrBeleBackend.Core.Domain.Entities
                 CategoryId = productUpdateRequest.CategoryId,
                 DiscountId = productUpdateRequest.DiscountId,
                 Description = productUpdateRequest.Description,
-                ProductAttributeTypes = productAttTyp
+                ProductAttributeTypes = productAttTyp,
+                ProductTags = productTag
             };
         }
 

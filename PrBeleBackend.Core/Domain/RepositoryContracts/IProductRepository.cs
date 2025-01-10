@@ -21,7 +21,7 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
 
         public Task<Product> AddProduct(Product product);
 
-        public Task<Product> UpdateProduct(Product product);
+        public Task<Product> UpdateProduct(Product product, int id);
 
         public Task<Product> ModifyProduct(ProductModifyRequest req, int id);
 

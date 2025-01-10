@@ -27,7 +27,7 @@ namespace PrBeleBackend.Core.Services.AttributeServices
             return await this._attributeRepository.GetAttributeValueCount();
         }
 
-        public async Task<List<AttributeValueResponse>> GetFilteredAttributValue(string? searchBy = "", string? searchStr = "", int? status = 1)
+        public async Task<List<AttributeValueResponse>> GetFilteredAttributeValue(string? searchBy = "", string? searchStr = "", int? status = 1)
         {
             switch (searchBy)
             {

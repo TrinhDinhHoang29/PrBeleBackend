@@ -47,9 +47,17 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     Slug = p.Slug,
                     View = p.View,
                     Like = p.Like,
+                    Thumbnail = p.Thumbnail,
                     Status = p.Status,
                     UpdatedAt = p.UpdatedAt,
                     CreatedAt = p.CreatedAt,
+                    Tags = _context.tags.Join(
+                        _context.productTags,
+                        t => t.Id,
+                        pt => pt.TagId,
+                        (t, pt) => new { t, pt }
+                    ).Where(res => res.pt.ProductId == p.Id)
+                    .Select(res => res.t).ToList(),
                     AttributeTypes = _context.attributeTypes.Join(
                         _context.productAttributeTypes,
                         at => at.Id,
@@ -82,6 +90,13 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     Status = p.Status,
                     UpdatedAt = p.UpdatedAt,
                     CreatedAt = p.CreatedAt,
+                    Tags = _context.tags.Join(
+                        _context.productTags,
+                        t => t.Id,
+                        pt => pt.TagId,
+                        (t, pt) => new { t, pt }
+                    ).Where(res => res.pt.ProductId == p.Id)
+                    .Select(res => res.t).ToList(),
                     AttributeTypes = _context.attributeTypes.Join(
                         _context.productAttributeTypes,
                         at => at.Id,
@@ -100,24 +115,31 @@ namespace PrBeleBackend.Infrastructure.Repositories
             return product;
         }
 
-        public async Task<Product> UpdateProduct(Product productUpdate)
+        public async Task<Product> UpdateProduct(Product productUpdate, int id)
         {
             Product? product = await this._context.products
-                .Where(product => !product.Deleted)
-                .Where(product => product.Id == productUpdate.Id)
+                .Include(p => p.ProductAttributeTypes)
+                .Include(p => p.ProductTags)
+                .Where(product => product.Deleted == false)
+                .Where(product => product.Id == id)
                 .FirstOrDefaultAsync();
 
-            if (product != null)
+            if (product == null)
             {
                 throw new ArgumentNullException(nameof(product));
             }
 
             product.Name = productUpdate.Name;
             product.Description = productUpdate.Description;
-            product.CategoryId = productUpdate.Category.Id;
+            product.CategoryId = productUpdate.CategoryId;
             product.BasePrice = productUpdate.BasePrice;
-            //product.DiscountId = productUpdate.DiscountId;
-            //product.ProductAttributeTypes = productUpdate.ProductAttributeTypes;
+            product.DiscountId = productUpdate.DiscountId;
+
+            product.ProductAttributeTypes.Clear();
+            product.ProductAttributeTypes.AddRange(productUpdate.ProductAttributeTypes);
+
+            product.ProductTags.Clear();
+            product.ProductTags.AddRange(productUpdate.ProductTags);
 
             if (productUpdate.Thumbnail != "")
             {
@@ -126,12 +148,6 @@ namespace PrBeleBackend.Infrastructure.Repositories
 
             product.Slug = productUpdate.Slug;
             product.UpdatedAt = productUpdate.UpdatedAt;
-
-            await this._context.SaveChangesAsync();
-
-            await this._context.productAttributeTypes.Where(product => product.ProductId == productUpdate.Id).ExecuteDeleteAsync();
-
-            await this._context.productAttributeTypes.AddRangeAsync(productUpdate.ProductAttributeTypes);
 
             await this._context.SaveChangesAsync();
 
@@ -147,7 +163,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
 
             if (productMatching == null)
             {
-                throw new ArgumentNullException(nameof(productMatching));
+                throw new ArgumentNullException("Product not found!");
             }
 
             switch (req.ModifyField)

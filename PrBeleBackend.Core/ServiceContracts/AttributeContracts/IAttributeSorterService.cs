@@ -10,6 +10,6 @@ namespace PrBeleBackend.Core.ServiceContracts.AttributeContracts
 {
     public interface IAttributeSorterService
     {
-        public Task<IEnumerable<AttributeValueResponse>> SortAttributeValue(IEnumerable<AttributeValueResponse> attributeValues, string? sort = "", SortOrderOptions? order = SortOrderOptions.ASC);
+        public Task<List<AttributeValueResponse>> SortAttributeValue(List<AttributeValueResponse> attributeValues, string? sort = "", SortOrderOptions? order = SortOrderOptions.ASC);
     }
 }

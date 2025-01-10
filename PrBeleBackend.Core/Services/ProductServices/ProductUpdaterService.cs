@@ -42,7 +42,7 @@ namespace PrBeleBackend.Core.Services.ProductServices
                 productUpdate.Thumbnail = await this._cloudinaryService.UploadImageAsync(req.ProductFile, "product", 300, 400);
             }
 
-            return await this._productRepository.UpdateProduct(productUpdate);
+            return await this._productRepository.UpdateProduct(productUpdate, id);
         }
     }
 }
