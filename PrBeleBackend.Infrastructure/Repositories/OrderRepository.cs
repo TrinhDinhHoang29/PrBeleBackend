@@ -69,7 +69,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                                .ThenInclude(v => v.AttributeType)
                 .Include(o => o.ProductOrders)
                     .ThenInclude(po => po.Variant)
-                        .ThenInclude(po => po.Product)
+
                .FirstOrDefaultAsync(o => o.Id == Id);
 
             return order;

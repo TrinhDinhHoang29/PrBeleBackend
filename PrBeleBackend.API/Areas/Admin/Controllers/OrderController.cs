@@ -102,7 +102,9 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                     id = v.Variant.Id,
                     name = v.Variant.Product?.Name,
                     thumbnail = v.Variant.Thumbnail,
-                    price = v.Variant.Price,
+                    discountValue = v.DiscountValue,
+                    finalPrice = v.FinalPrice,
+                    originalPrice = v.OriginalPrice,
                     quantity = v.Quantity,
                     attribute = v.Variant.VariantAttributeValues?.Select(e => new Dictionary<string, string>
                 {

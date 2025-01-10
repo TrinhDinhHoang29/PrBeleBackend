@@ -1333,42 +1333,177 @@ namespace PrBeleBackend.Infrastructure.Seeder
             {
                 List<Order> ordersSeed = new List<Order>()
                 {
-                    new Order
-            {
-                UserId = 1,
-                FullName = "Nguyen Van A",
-                PhoneNumber = "0123456789",
-                Address = "123 Le Loi, Hanoi",
-                TotalMoney = 1000000,
-                PayMethod = "COD",
-                ShipDate = DateTime.Now,
-                ReceiveDate = DateTime.Now.AddDays(5),
-                Status = 3,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
-            },
-                    new Order
-                    {
-                        UserId = 2,
-                        FullName = "Tran Thi B",
-                        PhoneNumber = "0987654321",
-                        Address = "456 Tran Phu, Ho Chi Minh",
-                        TotalMoney = 1500000,
-                        PayMethod = "VNPAY",
-                        ShipDate = DateTime.Now,
-                        ReceiveDate = DateTime.Now.AddDays(3),
-                        Status = 3,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
-                    }
+                   new Order
+        {
+            UserId = 6,
+            FullName = "Nguyễn Văn A",
+            PhoneNumber = "0123456789",
+            Address = "123 Đường ABC, TP.HCM",
+            Note = "Giao hàng nhanh",
+            TotalMoney = 500000,
+            PayMethod = "COD",
+            ShipDate = DateTime.Now.AddDays(2),
+            ReceiveDate = DateTime.Now.AddDays(4),
+            Status = 1,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now
+        },
+        new Order
+        {
+            UserId = 6,
+            FullName = "Trần Thị B",
+            PhoneNumber = "0987654321",
+            Address = "456 Đường XYZ, Hà Nội",
+            Note = "Gói hàng cẩn thận",
+            TotalMoney = 300000,
+            PayMethod = "VNPAY",
+            ShipDate = DateTime.Now.AddDays(1),
+            ReceiveDate = DateTime.Now.AddDays(3),
+            Status = 1,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now
+        },
+        new Order
+        {
+            UserId = 6,
+            FullName = "Lê Văn C",
+            PhoneNumber = "0345678901",
+            Address = "789 Đường DEF, Đà Nẵng",
+            Note = "Giao hàng vào buổi sáng",
+            TotalMoney = 200000,
+            PayMethod = "COD",
+            ShipDate = DateTime.Now.AddDays(3),
+            ReceiveDate = DateTime.Now.AddDays(5),
+            Status = 1,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now
+        },
+        new Order
+        {
+            UserId = 6,
+            FullName = "Phạm Thị D",
+            PhoneNumber = "0567890123",
+            Address = "321 Đường GHI, Cần Thơ",
+            Note = "Không gọi điện trước",
+            TotalMoney = 400000,
+            PayMethod = "VNPAY",
+            ShipDate = DateTime.Now.AddDays(2),
+            ReceiveDate = DateTime.Now.AddDays(4),
+            Status = 1,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now
+        }
                 };
                 _context.orders.AddRange(ordersSeed);
                 _context.SaveChanges();
                 var productOrder = new List<ProductOrder>()
                 {
-                    new ProductOrder { OrderId = 1, VariantId = 4, Quantity = 2 },
-                    new ProductOrder { OrderId = 1, VariantId = 5, Quantity = 1 },
-                    new ProductOrder { OrderId = 2, VariantId = 7, Quantity = 3 }
+                     new ProductOrder
+        {
+            OrderId = 1,
+            VariantId = 1,
+            Quantity = 2,
+            OriginalPrice = 150000,
+            DiscountValue = 10,
+            FinalPrice = 135000,
+            IsRating = false
+        },
+        new ProductOrder
+        {
+            OrderId = 1,
+            VariantId = 2,
+            Quantity = 1,
+            OriginalPrice = 230000,
+            DiscountValue = 5,
+            FinalPrice = 218500,
+            IsRating = false
+        },
+
+        // Hóa đơn 2: 1 sản phẩm
+        new ProductOrder
+        {
+            OrderId = 2,
+            VariantId = 3,
+            Quantity = 3,
+            OriginalPrice = 100000,
+            DiscountValue = 0,
+            FinalPrice = 100000,
+            IsRating = false
+        },
+
+        // Hóa đơn 3: 4 sản phẩm
+        new ProductOrder
+        {
+            OrderId = 3,
+            VariantId = 4,
+            Quantity = 1,
+            OriginalPrice = 50000,
+            DiscountValue = 20,
+            FinalPrice = 40000,
+            IsRating = false
+        },
+        new ProductOrder
+        {
+            OrderId = 3,
+            VariantId = 5,
+            Quantity = 2,
+            OriginalPrice = 75000,
+            DiscountValue = 10,
+            FinalPrice = 67500,
+            IsRating = false
+        },
+        new ProductOrder
+        {
+            OrderId = 3,
+            VariantId = 6,
+            Quantity = 1,
+            OriginalPrice = 120000,
+            DiscountValue = 15,
+            FinalPrice = 102000,
+            IsRating = false
+        },
+        new ProductOrder
+        {
+            OrderId = 3,
+            VariantId = 7,
+            Quantity = 1,
+            OriginalPrice = 80000,
+            DiscountValue = 5,
+            FinalPrice = 76000,
+            IsRating = false
+        },
+
+        // Hóa đơn 4: 3 sản phẩm
+        new ProductOrder
+        {
+            OrderId = 4,
+            VariantId = 8,
+            Quantity = 2,
+            OriginalPrice = 90000,
+            DiscountValue = 10,
+            FinalPrice = 81000,
+            IsRating = false
+        },
+        new ProductOrder
+        {
+            OrderId = 4,
+            VariantId = 9,
+            Quantity = 1,
+            OriginalPrice = 150000,
+            DiscountValue = 0,
+            FinalPrice = 150000,
+            IsRating = false
+        },
+        new ProductOrder
+        {
+            OrderId = 4,
+            VariantId = 10,
+            Quantity = 1,
+            OriginalPrice = 250000,
+            DiscountValue = 20,
+            FinalPrice = 200000,
+            IsRating = false
+        }
                 };
            
                 _context.productOrders.AddRange(productOrder);
