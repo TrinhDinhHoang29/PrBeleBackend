@@ -34,7 +34,7 @@ namespace PrBeleBackend.Core.Services.VariantServices
 
         public async Task<List<VariantResponse>> GetFilteredVariant(int productId = 0, string? searchBy = "", string? searchStr = "")
         {
-            if(searchBy == "" || searchStr == "")
+            if(searchBy == null && searchStr == null)
             {
                 List<VariantResponse> variant = await this._variantRepository.GetFilteredVariant(var => true, productId);
 
@@ -50,20 +50,17 @@ namespace PrBeleBackend.Core.Services.VariantServices
                         return variantByStatus;
                     }
 
-                case nameof(Variant.Stock):
+                case "InStock":
                     {
-                        if (searchStr == "InStock")
-                        {
-                            List<VariantResponse> variantByStock = await this._variantRepository.GetFilteredVariant(var => var.Stock > 0, productId);
+                        List<VariantResponse> variantByStock = await this._variantRepository.GetFilteredVariant(var => var.Stock > 0, productId);
 
-                            return variantByStock;
-                        }
-                        else
-                        {
-                            List<VariantResponse> variantByStock = await this._variantRepository.GetFilteredVariant(var => var.Stock < 0, productId);
+                        return variantByStock;
+                    }
+                case "OutStock":
+                    {
+                        List<VariantResponse> variantByStock = await this._variantRepository.GetFilteredVariant(var => var.Stock <= 0, productId);
 
-                            return variantByStock;
-                        }
+                        return variantByStock;
                     }
                 default:
                     {

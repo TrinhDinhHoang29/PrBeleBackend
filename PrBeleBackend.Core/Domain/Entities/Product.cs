@@ -56,7 +56,7 @@ namespace PrBeleBackend.Core.Domain.Entities
         {
             List<ProductAttributeType> productAttTyp = new List<ProductAttributeType>();
 
-            foreach (var attributeId in productAddRequest.AttributeType)
+            foreach (var attributeId in productAddRequest.AttributeTypes)
             {
                 productAttTyp.Add(new ProductAttributeType
                 {
@@ -66,7 +66,7 @@ namespace PrBeleBackend.Core.Domain.Entities
 
             List<ProductTag> productTag = new List<ProductTag>();
 
-            foreach (var tag in productAddRequest.Tag)
+            foreach (var tag in productAddRequest.Tags)
             {
                 productTag.Add(new ProductTag
                 {
@@ -91,7 +91,7 @@ namespace PrBeleBackend.Core.Domain.Entities
         {
             List<ProductAttributeType> productAttTyp = new List<ProductAttributeType>();
 
-            foreach (var attributeId in productUpdateRequest.AttributeType)
+            foreach (var attributeId in productUpdateRequest.AttributeTypes)
             {
                 productAttTyp.Add(new ProductAttributeType
                 {
@@ -101,7 +101,7 @@ namespace PrBeleBackend.Core.Domain.Entities
 
             List<ProductTag> productTag = new List<ProductTag>();
 
-            foreach (var tag in productUpdateRequest.Tag)
+            foreach (var tag in productUpdateRequest.Tags)
             {
                 productTag.Add(new ProductTag
                 {

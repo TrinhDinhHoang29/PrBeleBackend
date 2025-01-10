@@ -74,7 +74,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             string? field,
             string? query,
             string? sort,
-            int? status = 1,
+            int? status,
             SortOrderOptions? order = SortOrderOptions.ASC,
             int page = 1,
             int limit = 10
@@ -82,7 +82,12 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         {
             try
             {
-                List<AttributeValueResponse> attributeValues = await _attributeGetterService.GetFilteredAttributeValue(field, query, status);
+                List<AttributeValueResponse> attributeValues = await _attributeGetterService.GetFilteredAttributeValue(field, query);
+
+                if (status != null)
+                {
+                    attributeValues = attributeValues.Where(a => a.Status == status).ToList();
+                }
 
                 List<AttributeValueResponse> attributeValuesPagination = attributeValues.Skip(limit * (page - 1)).Take(limit).ToList();
 

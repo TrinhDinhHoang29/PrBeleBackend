@@ -67,7 +67,7 @@ namespace PrBeleBackend.Core.Services.ProductServices
 
         public async Task<List<ProductResponse>> GetFilteredProduct(List<ProductResponse> products, string? searchBy = "", string? searchStr = "")
         {
-            if(searchStr == "" || searchBy == "")
+            if(searchStr == null && searchBy == null)
             {
                 List<ProductResponse> productsById = await this._productRepository.FilterProduct(products, product => true);
 
