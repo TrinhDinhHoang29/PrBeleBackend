@@ -118,12 +118,27 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
         [PermissionAuthorize("A-U")]
         [HttpPut("{Id}")]
-        public async Task<IActionResult> Update(int Id, AccountUpdateRequest accountUpdateRequest)
+        public async Task<IActionResult> Update(int Id, AccountUpdateFakeRequest accountAddRequest)
         {
             try
             {
+                AccountUpdateRequest accountUpdateRequest = new AccountUpdateRequest()
+                {
+                    FullName = accountAddRequest.FullName,
+                    PhoneNumber = accountAddRequest.PhoneNumber,
+                    Email = accountAddRequest.Email,
+                    RoleId = accountAddRequest.RoleId,
+                    Sex = accountAddRequest.Sex,
+                    Status = accountAddRequest.Status,
+                    
+                };
+                AccountUpdatePasswordRequest accountUpdatePassword = new AccountUpdatePasswordRequest()
+                {
+                    Password = accountAddRequest.Password,
+                    RePassword = accountAddRequest.RePassword
+                };
                 AccountResponse accountResponse = await _accountUpdaterService
-                    .UpdateAccount(Id, accountUpdateRequest);
+                    .UpdateAccount(Id, accountUpdateRequest, accountUpdatePassword);
                 return Ok(new
                 {
                     status = 200,

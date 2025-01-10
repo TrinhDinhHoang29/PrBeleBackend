@@ -63,6 +63,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                         id = orderResponses.Id,
                         name = orderResponses.FullName,
                         phoneNumber = orderResponses.PhoneNumber,
+                        email = orderResponses.Email,
                         address = orderResponses.Address,
                         note = orderResponses.Note,
                         payMethod = orderResponses.PayMethod,
@@ -118,6 +119,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                     {
                         id = orderResponses.Id,
                         name = orderResponses.FullName,
+                        email = orderResponses.Email,
                         phoneNumber = orderResponses.PhoneNumber,
                         address = orderResponses.Address,
                         note = orderResponses.Note,

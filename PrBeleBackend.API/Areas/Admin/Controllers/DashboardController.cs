@@ -10,8 +10,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]/[Action]")]
     [ApiController]
-    [Authorize]
-    [PermissionAuthorize("D-R")]
+    //[Authorize]
+    //[PermissionAuthorize("D-R")]
     public class DashboardController : ControllerBase
     {
         private readonly BeleStoreContext _beleStoreContext;
@@ -115,6 +115,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             else if (type.ToString() == "month")
             {
                 int sumDay = DateTime.DaysInMonth(today.Year,today.Month);
+                int sumOrder = 0;
                 for (int i = 1; i <= sumDay; i++)
                 {
                     int countOrder = await _beleStoreContext.orders
@@ -123,7 +124,12 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                     o.UpdatedAt.Month == today.Month &&
                     o.UpdatedAt.Year == today.Year)
                     .CountAsync();
-                    total.Add(countOrder);
+                    sumOrder += countOrder;
+                    if (i %7 == 0)
+                    {
+                        total.Add(sumOrder);
+                        sumOrder = 0;
+                    }
                 }
 
             }

@@ -20,16 +20,31 @@ namespace PrBeleBackend.Core.Services.AccountServices
         {
             _accountRepository = accountRepository;
         }
-        public async Task<AccountResponse> UpdateAccount(int Id, AccountUpdateRequest? accountUpdateRequest)
+        public async Task<AccountResponse> UpdateAccount(int Id, AccountUpdateRequest? accountUpdateRequest,AccountUpdatePasswordRequest accountUpdatePassword)
         {
             Account? accountExist = await _accountRepository.GetAccountById(Id);
-
+            
             if (accountExist == null) {
                 throw new ArgumentNullException("Account not found !");
             }
+            if(accountUpdatePassword.Password != null || accountUpdatePassword.RePassword != null)
+            {
+                ValidationHelper.ModelValidation(accountUpdatePassword);
+                var passwordHasher = new PasswordHasher<string>();
+                string hashedPassword = passwordHasher.HashPassword(null, accountUpdatePassword.Password);
+                accountExist.Password = hashedPassword;
+
+
+            }
             ValidationHelper.ModelValidation(accountUpdateRequest);
 
-            Account accountRequest = accountUpdateRequest.ToAccount();
+            accountExist.FullName = accountUpdateRequest.FullName;
+            accountExist.Status = accountUpdateRequest.Status;
+            accountExist.PhoneNumber = accountUpdateRequest.PhoneNumber;
+            accountExist.Email = accountUpdateRequest.Email;
+            accountExist.RoleId = accountUpdateRequest.RoleId;
+
+            accountExist.Sex = accountUpdateRequest.Sex.ToString();
 
             Account? emailExist = await _accountRepository.GetAccountByEmail(accountUpdateRequest.Email);
 
@@ -37,9 +52,8 @@ namespace PrBeleBackend.Core.Services.AccountServices
                 throw new ArgumentNullException("Email already exists !");
             }
 
-            accountRequest.Id = Id;
-            accountRequest.UpdatedAt = DateTime.Now;
-            Account result = await _accountRepository.UpdateAccount(accountRequest);
+            accountExist.UpdatedAt = DateTime.Now;
+            Account result = await _accountRepository.UpdateAccount(accountExist);
 
             return result.ToAccountResponse();
 

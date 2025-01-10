@@ -42,6 +42,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
         public async Task<List<Order>> GetAllOrder()
         {
             List<Order> orders = await _context.orders
+                  .Include(o => o.Customer)
                  .ToListAsync();
             return orders;
         }
@@ -49,6 +50,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
         public async Task<List<Order>> GetFilteredOrder(Expression<Func<Order, bool>> predicate)
         {
             List<Order> orders = await _context.orders
+                .Include(o =>o.Customer)
                .Where(predicate)
                .ToListAsync();
             return orders;
@@ -62,6 +64,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
         public async Task<Order?> GetOrderById(int? Id)
         {
             Order? order = await _context.orders
+                .Include(o => o.Customer)
                 .Include(o => o.ProductOrders)
                     .ThenInclude(po => po.Variant)
                         .ThenInclude(v => v.VariantAttributeValues)
