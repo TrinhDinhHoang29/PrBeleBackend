@@ -69,6 +69,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .Include(r => r.Customer)
                 .Where(r => r.Deleted == false)
                 .FirstOrDefaultAsync(r => r.Id == Id);
+            if (rate == null)
+                return null;
             if(rate.ReferenceRateId > 0)
             {
                 rate.RateReference = await _context.rates
@@ -96,13 +98,26 @@ namespace PrBeleBackend.Infrastructure.Repositories
             if (rateExist == null) { 
                 throw new ArgumentNullException(nameof(rate));
             }
-            rateExist.Status = 0;
-            rateExist.UpdatedAt = DateTime.Now;
             Rate? rateChild = await _context.rates.FirstOrDefaultAsync(r => r.Id == rateExist.ReferenceRateId);
-            if (rateChild != null) { 
-                rateChild.Status = 0;
-                rateChild.UpdatedAt = DateTime.Now;
+            if (rateExist.Status == 0)
+            {
+
+                if (rateChild != null)
+                {
+                    rateChild.Status = 0;
+                    rateChild.UpdatedAt = DateTime.Now;
+                }
             }
+            else
+            {
+                if (rateChild != null)
+                {
+                    rateChild.Status = 1;
+                    rateChild.UpdatedAt = DateTime.Now;
+                }
+            }
+            rateExist.UpdatedAt = DateTime.Now;
+
             await _context.SaveChangesAsync();
             return rate;
         }

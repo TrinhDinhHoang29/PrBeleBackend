@@ -1,10 +1,12 @@
 ﻿using CloudinaryDotNet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Configuration;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.SettingDTOs;
 using PrBeleBackend.Core.ServiceContracts;
 using PrBeleBackend.Core.ServiceContracts.SettingContracts;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
@@ -32,6 +34,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             return Ok(new
             {
                 status = 200,
+                message = "Settings retrieved successfully.",
                 data = new
                 {
                     setting = setting
@@ -47,6 +50,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 return Ok(new
                 {
                     status = 200,
+                    message = "Settings updated successfully.",
                     data = new
                     {
                         setting = setting

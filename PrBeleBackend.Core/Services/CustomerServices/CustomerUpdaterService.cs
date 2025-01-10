@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
+using PrBeleBackend.Core.DTO.AuthDTOs;
 using PrBeleBackend.Core.DTO.CustomerDTOs;
 using PrBeleBackend.Core.Helpers;
 using PrBeleBackend.Core.ServiceContracts.CustomerContracts;
@@ -52,6 +53,24 @@ namespace PrBeleBackend.Core.Services.CustomerServices
                 throw new ArgumentException(message: "Invalid Password !!");
             }
             string hashedPassword = passwordHasher.HashPassword(null, customerUpdateRequest.newPassword);
+
+            customerExist.UpdatedAt = DateTime.Now;
+            customerExist.Password = hashedPassword;
+
+            Customer result = await _customerRepository.UpdateCustomer(customerExist);
+            return result.ToCustomerResponse();
+        }
+        public async Task<CustomerResponse> CliUpdatePasswordFromForgotCustomer(int Id, CliForgotPasswordRequest? cliForgotPasswordRequest)
+        {
+            Customer? customerExist = await _customerRepository.GetCustomerById(Id);
+            if (customerExist == null)
+            {
+                throw new ArgumentNullException("Customer not found !");
+            }
+            ValidationHelper.ModelValidation(cliForgotPasswordRequest);
+            var passwordHasher = new PasswordHasher<string>();
+
+            string hashedPassword = passwordHasher.HashPassword(null, cliForgotPasswordRequest.Password);
 
             customerExist.UpdatedAt = DateTime.Now;
             customerExist.Password = hashedPassword;

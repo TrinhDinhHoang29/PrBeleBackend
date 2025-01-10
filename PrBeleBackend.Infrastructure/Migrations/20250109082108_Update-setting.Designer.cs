@@ -12,8 +12,8 @@ using PrBeleBackend.Infrastructure.DbContexts;
 namespace PrBeleBackend.Infrastructure.Migrations
 {
     [DbContext(typeof(BeleStoreContext))]
-    [Migration("20250109075109_init")]
-    partial class init
+    [Migration("20250109082108_Update-setting")]
+    partial class Updatesetting
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -711,7 +711,19 @@ namespace PrBeleBackend.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
+                    b.Property<string>("BranchAddress1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BranchAddress2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BranchName1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BranchName2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -726,22 +738,58 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Property<string>("InstagramLink")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MainBanner")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MainLogo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceInfo1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceInfo2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceInfo3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceInfo4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceTitle1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceTitle2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceTitle3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceTitle4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SlideshowBanner1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SlideshowBanner2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SlideshowBanner3")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Slogan")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TiktokLink")
+                    b.Property<string>("SloganLogo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubBanner1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubBanner2")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("YoutubeLink")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ZaloLink")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("mainLogo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("subLogo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

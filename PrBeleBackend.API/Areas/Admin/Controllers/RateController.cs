@@ -57,7 +57,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 status = 200,
                 data = new
                 {
-                    Rates = rates,
+                    Rates = sortedRate,
                     pagination = new
                     {
                         currentPage = page,

@@ -55,7 +55,7 @@ namespace PrBeleBackend.Core.Services.AccountServices
 
             if (accountExist == null)
             {
-                throw new ArgumentNullException("Account not found !");
+                throw new Exception("Account not found !");
             }
             accountExist.Status = accountUpdateRequest.Status;
             accountExist.UpdatedAt = DateTime.Now;

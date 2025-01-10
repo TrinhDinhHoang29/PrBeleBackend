@@ -37,19 +37,20 @@ namespace PrBeleBackend.Core.Services.OrderServices.cs
             return result.ToOrderResponse();
         }
 
-        public async Task<OrderResponse> UpdateStatusOrder(int OrderId)
+        public async Task<OrderResponse> UpdateStatusOrder(int OrderId, OrderUpdatePatchRequest StatusRequest)
         {
             Order? orderExist = await _orderRepository.GetOrderById(OrderId);
 
             if (orderExist == null)
             {
-                throw new ArgumentNullException("Order not found !");
+                throw new Exception("Order not found !");
             }
+            ValidationHelper.ModelValidation(StatusRequest);
             if(orderExist.Status == 4 || orderExist.Status == -1)
             {
-                throw new ArgumentNullException("Request invalid !");
+                throw new Exception("Request invalid !");
             }
-            orderExist.Status = orderExist.Status + 1;
+            orderExist.Status = StatusRequest.Status;
 
             Order result = await _orderRepository.UpdateOrder(orderExist);
             return result.ToOrderResponse();
