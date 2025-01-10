@@ -34,15 +34,21 @@ namespace PrBeleBackend.Infrastructure.Repositories
         public async Task<List<VariantSizeResponse>> GetVariantByProductIdAndColor(int productId, int colorId)
         {
             return await this._context.variantAttributeValues
-                .Include(vav => vav.Variant)
+                 .Include(vav => vav.Variant)
                  .Include(vav => vav.AttributeValue)
-                 .Where(vav => vav.Variant.ProductId == productId)
-                 .Select(vav => new VariantSizeResponse
-                 {
-                     VariantId = vav.VariantId,
-                     SizeId = vav.AttributeValueId,
-                     Size = vav.AttributeValue.Value
-                 })
+                 .Where(vav => vav.Variant.ProductId == productId && vav.AttributeValue.Id == colorId)
+                 .Select(vav => this._context.variants
+                    .Include(v => v.VariantAttributeValues)
+                        .ThenInclude(vav => vav.AttributeValue)
+                            .ThenInclude(av => av.AttributeType)
+                    .Where(v => v.Id == vav.VariantId)
+                    .Select(v => new VariantSizeResponse { 
+                        VariantId = v.Id,
+                        Size = v.VariantAttributeValues
+                            .Where(vav => vav.AttributeValue.AttributeType.Name == "Size")
+                            .Select(vav => vav.AttributeValue.Value).FirstOrDefault()
+                    }).FirstOrDefault()
+                 )
                  .ToListAsync();
         }
 

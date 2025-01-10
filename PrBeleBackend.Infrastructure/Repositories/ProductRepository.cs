@@ -51,6 +51,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
         public async Task<List<ProductResponse>> GetAllProduct()
         {
             return await _context.products
+            .Include(p => p.Discount)
             .Where(product => product.Deleted == false)
             .Select(p => new ProductResponse
             {
@@ -60,7 +61,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     .Where(c => c.Id == p.CategoryId)
                     .FirstOrDefault(),
                 Description = p.Description,
-                Discount = "0",
+                Discount = p.Discount,
                 BasePrice = p.BasePrice,
                 Slug = p.Slug,
                 View = p.View,
@@ -147,6 +148,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
         public async Task<ProductResponse> GetProductById(int id)
         {
             return await _context.products
+                 .Include(p => p.Discount)
                 .Where(product => product.Deleted == false)
                 .Where(product => product.Id == id)
                 .Select(p => new ProductResponse
@@ -157,7 +159,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                         .Where(c => c.Id == p.CategoryId)
                         .FirstOrDefault(),
                     Description = p.Description,
-                    Discount = "0",
+                    Discount = p.Discount,
                     BasePrice = p.BasePrice,
                     Slug = p.Slug,
                     View = p.View,

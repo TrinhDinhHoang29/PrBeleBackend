@@ -27,10 +27,10 @@ namespace PrBeleBackend.Core.DTO.ProductDTOs
         public string Description { get; set; }
 
         [Required]
-        public List<int> AttributeType { get; set; }
+        public List<int> AttributeTypes { get; set; }
 
         [Required]
-        public List<int> Tag { get; set; }
+        public List<int> Tags { get; set; }
 
         public IFormFile? ProductFile { get; set; }
     }

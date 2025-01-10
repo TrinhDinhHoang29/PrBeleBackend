@@ -114,7 +114,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
         //[PermissionAuthorize("PV-C")]
         [HttpPost]
-        public async Task<IActionResult> CreateVariant([FromBody] VariantAdderRequest req)
+        public async Task<IActionResult> CreateVariant([FromForm] VariantAdderRequest req)
         {
             try
             {
@@ -143,7 +143,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
         //[PermissionAuthorize("PV-U")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVariant([FromBody] VariantUpdaterRequest req, int id)
+        public async Task<IActionResult> UpdateVariant([FromForm] VariantUpdaterRequest req, int id)
         {
             try
             {

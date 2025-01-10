@@ -109,7 +109,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
         //[PermissionAuthorize("P-C")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ProductAddRequest req)
+        public async Task<IActionResult> Create([FromForm] ProductAddRequest req)
         {
             try
             {
@@ -136,7 +136,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         }
         //[PermissionAuthorize("P-U")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromBody] ProductUpdateRequest req, int id)
+        public async Task<IActionResult> Update([FromForm] ProductUpdateRequest req, int id)
         {
             try
             {

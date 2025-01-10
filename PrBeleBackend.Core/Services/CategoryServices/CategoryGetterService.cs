@@ -37,7 +37,7 @@ namespace PrBeleBackend.Core.Services.CategoryServices
             return categoryDetail.ToCategoryResponse();
         }
 
-        public async Task<List<CategoryResponse>> GetFilteredCategory(string? searchBy, string? searchString)
+        public async Task<List<CategoryResponse>> GetFilteredCategory(string? searchBy = "", string? searchString = "")
         {
             List<Category> categories = await _categoryRepository.GetAllCategory();
 

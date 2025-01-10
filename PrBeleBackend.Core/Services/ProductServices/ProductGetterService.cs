@@ -65,7 +65,7 @@ namespace PrBeleBackend.Core.Services.ProductServices
         //    }
         //}
 
-        public async Task<List<ProductResponse>> GetFilteredProduct(List<ProductResponse> products, string? searchBy, string? searchStr)
+        public async Task<List<ProductResponse>> GetFilteredProduct(List<ProductResponse> products, string? searchBy = "", string? searchStr = "")
         {
             if(searchStr == "" || searchBy == "")
             {
