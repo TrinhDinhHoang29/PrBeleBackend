@@ -25,7 +25,7 @@ namespace PrBeleBackend.Core.DTO.VariantDTOs
 
         public int Status { get; set; }
 
-        public bool Deleted { get; set; } = false;
+        //public bool Deleted { get; set; } = false;
 
         public DateTime CreatedAt { get; set; }
 

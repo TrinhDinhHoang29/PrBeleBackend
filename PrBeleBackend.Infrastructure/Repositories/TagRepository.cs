@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
+using PrBeleBackend.Core.DTO.TagDTOs;
 using PrBeleBackend.Infrastructure.DbContexts;
 using System;
 using System.Collections.Generic;
@@ -35,10 +36,15 @@ namespace PrBeleBackend.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<List<Tag>> GetAllTag()
+        public async Task<List<TagResponse>> GetAllTag()
         {
-            List<Tag> tags = await _context.tags.ToListAsync();
-            return tags;
+            return await _context.tags
+                .Select(tag => new TagResponse
+                {
+                    Id = tag.Id,
+                    Name = tag.Name,
+                })
+                .ToListAsync();
         }
 
         public async Task<List<Tag>> GetFilteredTag(Expression<Func<Tag, bool>> predicate)

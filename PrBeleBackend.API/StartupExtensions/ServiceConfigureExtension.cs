@@ -22,6 +22,7 @@ using PrBeleBackend.Core.ServiceContracts.ProductContracts;
 using PrBeleBackend.Core.ServiceContracts.RateContracts;
 using PrBeleBackend.Core.ServiceContracts.RoleContracts;
 using PrBeleBackend.Core.ServiceContracts.SettingContracts;
+using PrBeleBackend.Core.ServiceContracts.TagContracts;
 using PrBeleBackend.Core.ServiceContracts.VariantContracts;
 using PrBeleBackend.Core.Services;
 using PrBeleBackend.Core.Services.AccountServices;
@@ -39,6 +40,7 @@ using PrBeleBackend.Core.Services.ProductServices;
 using PrBeleBackend.Core.Services.RateServices;
 using PrBeleBackend.Core.Services.RoleServices;
 using PrBeleBackend.Core.Services.SettingServices;
+using PrBeleBackend.Core.Services.TagServices;
 using PrBeleBackend.Core.Services.VariantServices;
 using PrBeleBackend.Infrastructure.DbContexts;
 using PrBeleBackend.Infrastructure.Repositories;
@@ -211,6 +213,11 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IRateDeleterService, RateDeleterService>();
             Services.AddScoped<IRateSortService, RateSorterService>();
             Services.AddScoped<IRateUpdaterService, RateUpdaterService>();
+            #endregion
+
+            #region DI Tag
+            Services.AddScoped<ITagRepository, TagRepository>();
+            Services.AddScoped<ITagGetterService, TagGetterService>();
             #endregion
 
             #region DI Setting

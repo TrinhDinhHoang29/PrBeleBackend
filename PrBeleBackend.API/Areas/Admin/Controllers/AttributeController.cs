@@ -5,6 +5,8 @@ using PrBeleBackend.Core.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using PrBeleBackend.API.Filters;
 using PrBeleBackend.Core.Enums;
+using CloudinaryDotNet.Actions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
@@ -37,8 +39,36 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             this._attributeSorterService = attributeSorterService;
         }
 
-        //[PermissionAuthorize("A-R")]
         [HttpGet]
+        public async Task<IActionResult> GetAttributeType()
+        {
+
+            try
+            {
+                List<AttributeTypeResponse> attTyps = await this._attributeGetterService.GetAttributeType();
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        attributeTypes = attTyps
+                    },
+                    message = "Get atribute type list success !"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
+        //[PermissionAuthorize("A-R")]
+        [HttpGet("value")]
         public async Task<IActionResult> GetFilteredAttributeValue(
             string? field,
             string? query,

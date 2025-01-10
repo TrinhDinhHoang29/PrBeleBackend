@@ -35,7 +35,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
         {
             return await this._context.variants
                 .Where(predicate)
-                .Where(var => !var.Deleted)
+                .Where(var => var.Deleted == false)
                 .Where(var => var.Status == status)
                 .Where(var => var.ProductId == productId)
                 .Select(var => new VariantResponse
@@ -45,14 +45,13 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     Stock = var.Stock,
                     Thumbnail = var.Thumbnail,
                     Status = var.Status,
-                    Deleted = var.Deleted,
+                    //Deleted = var.Deleted,
                     CreatedAt = var.CreatedAt,
                     UpdatedAt = var.UpdatedAt,
                     ProductName = this._context.products
                         .Where(p => !p.Deleted)
                         .Where(p => p.Id == productId)
-                        .Select(p => p.Name)
-                        .ToString(),
+                        .Select(p => p.Name).FirstOrDefault().ToString(),
                     AttributeValues = this._context.attributeValues
                         .Join(
                             this._context.variantAttributeValues,
@@ -79,13 +78,14 @@ namespace PrBeleBackend.Infrastructure.Repositories
                    Stock = var.Stock,
                    Thumbnail = var.Thumbnail,
                    Status = var.Status,
-                   Deleted = var.Deleted,
+                   //Deleted = var.Deleted,
                    CreatedAt = var.CreatedAt,
                    UpdatedAt = var.UpdatedAt,
                    ProductName = this._context.products
                        .Where(p => !p.Deleted)
                        .Where(p => p.Id == var.ProductId)
                        .Select(p => p.Name)
+                       .FirstOrDefault()
                        .ToString(),
                    AttributeValues = this._context.attributeValues
                        .Join(
@@ -123,7 +123,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
             }
 
             Variant? variantMatching = await this._context.variants
-                .Where(var => !var.Deleted)
+                .Include(var => var.VariantAttributeValues)
+                .Where(var => var.Deleted == false)
                 .Where(var => var.Id == id)
                 .FirstOrDefaultAsync();
 
@@ -141,13 +142,12 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 variantMatching.Thumbnail = variant.Thumbnail;
             }
 
-            await this._context.variantAttributeValues
-                .Where(varAttVal => varAttVal.VariantId == id)
-                .ExecuteDeleteAsync();
+            variantMatching.VariantAttributeValues.Clear();
+            variantMatching.VariantAttributeValues.AddRange(variant.VariantAttributeValues);
 
-            await this._context.variantAttributeValues.AddRangeAsync(variantMatching.VariantAttributeValues);
+            await this._context.SaveChangesAsync();
 
-            return variant;
+            return variantMatching;
         }
 
         public async Task<Variant> ModifyVariant(VariantModifierRequest req, int id)

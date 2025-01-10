@@ -15,7 +15,17 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
     {
         public Task<int> GetProductCount();
 
-        public Task<List<ProductResponse>> GetFilteredProduct(Expression<Func<Product, bool>> predicate, int? status);
+        public bool IsHaveTag(int productId, int tagId);
+
+        public bool IsHaveAttributeType(int productId, int attTypId);
+
+        public bool IsHaveAttributeValue(int productId, string value);
+
+        public Task<List<ProductResponse>> GetAllProduct(int? status = 1);
+
+        public Task<List<ProductResponse>> FilterProduct(List<ProductResponse> products, Func<ProductResponse, bool> predicate);
+
+        //public Task<List<ProductResponse>> GetFilteredProduct(Expression<Func<Product, bool>> predicate, int? status);
 
         public Task<ProductResponse> GetProductById(int id);
 

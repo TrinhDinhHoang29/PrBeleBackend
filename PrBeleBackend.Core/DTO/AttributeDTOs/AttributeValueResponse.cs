@@ -15,7 +15,8 @@ namespace PrBeleBackend.Core.DTO.AttributeDTOs
         public string? Name { get; set; }
         public string? Value { get; set; }
         public string? AttributeTypeName { get; set; }
-        public bool Deleted { get; set; } = false;
+        public int Status { get; set; }
+        //public bool Deleted { get; set; } = false;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

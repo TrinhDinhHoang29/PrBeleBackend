@@ -33,7 +33,7 @@ namespace PrBeleBackend.Core.Domain.Entities
                 Id = attrValueRes.Id,
                 Name = attrValueRes.Name,
                 Value = attrValueRes.Value,
-                Deleted = attrValueRes.Deleted,
+                //Deleted = attrValueRes.Deleted,
                 CreatedAt = attrValueRes.CreatedAt,
                 UpdatedAt = attrValueRes.UpdatedAt
             };

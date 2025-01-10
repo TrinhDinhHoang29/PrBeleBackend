@@ -22,6 +22,16 @@ namespace PrBeleBackend.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<List<AttributeTypeResponse>> GetAttributeType()
+        {
+            return await this._context.attributeTypes
+                .Select(attTyp => new AttributeTypeResponse
+                {
+                    Id = attTyp.Id,
+                    Name = attTyp.Name,
+                }).ToListAsync();
+        }
+
         public async Task<int> GetAttributeValueCount()
         {
             return await this._context.attributeValues.CountAsync();
@@ -38,7 +48,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     Id = attVal.Id,
                     Name = attVal.Name,
                     Value = attVal.Value,
-                    Deleted = attVal.Deleted,
+                    //Deleted = attVal.Deleted,
+                    Status = attVal.Status,
                     CreatedAt = attVal.CreatedAt,
                     UpdatedAt = attVal.UpdatedAt,
                     AttributeTypeName = this._context.attributeTypes

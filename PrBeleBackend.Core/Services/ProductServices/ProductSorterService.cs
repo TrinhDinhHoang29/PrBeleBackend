@@ -45,6 +45,17 @@ namespace PrBeleBackend.Core.Services.ProductServices
                             return products.OrderByDescending(p => p.Name).ToList();
                         }
                     }
+                case nameof(ProductResponse.BasePrice):
+                    {
+                        if (order == SortOrderOptions.ASC)
+                        {
+                            return products.OrderBy(p => p.BasePrice).ToList();
+                        }
+                        else
+                        {
+                            return products.OrderByDescending(p => p.BasePrice).ToList();
+                        }
+                    }
                 default:
                     {
                         if (order == SortOrderOptions.ASC)

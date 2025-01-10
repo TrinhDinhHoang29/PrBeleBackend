@@ -55,7 +55,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         {
             try
             {
-                IEnumerable<ProductResponse> products = await _productGetterService.GetFilteredProduct(field, query, status);
+                IEnumerable<ProductResponse> products = await _productGetterService.GetFilteredProduct(await this._productGetterService.GetAllproduct(status), field, query);
 
                 IEnumerable<ProductResponse> productPagination = products.Skip(limit * (page - 1)).Take(limit).ToList();
 

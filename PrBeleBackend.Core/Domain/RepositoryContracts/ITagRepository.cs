@@ -1,4 +1,5 @@
 ﻿using PrBeleBackend.Core.Domain.Entities;
+using PrBeleBackend.Core.DTO.TagDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
 {
     public interface ITagRepository
     {
-        public Task<List<Tag>> GetAllTag();
+        public Task<List<TagResponse>> GetAllTag();
 
         public Task<List<Tag>> GetFilteredTag(Expression<Func<Tag, bool>> predicate);
 

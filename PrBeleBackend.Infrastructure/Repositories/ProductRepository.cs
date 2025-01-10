@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,51 +24,114 @@ namespace PrBeleBackend.Infrastructure.Repositories
             _context = context;
         }
 
+        public bool IsHaveTag(int productId, int tagId)
+        {
+            return this._context.productTags.Any(pt => pt.ProductId == productId && pt.TagId == tagId);
+        }
+
+        public bool IsHaveAttributeType(int productId, int attTypId)
+        {
+            return this._context.productAttributeTypes.Any(pat => pat.ProductId == productId && pat.AttributeTypeId == attTypId);
+        }
+
+        public bool IsHaveAttributeValue(int productId, string value)
+        {
+            return this._context.variantAttributeValues
+                .Include(vav => vav.Variant)
+                .Include(vav => vav.AttributeValue)
+                .Any(vav => vav.Variant.ProductId == productId && vav.AttributeValue.Value == value);
+        }
+
         public async Task<int> GetProductCount()
         {
             return await _context.products.CountAsync();
         }
 
-        public async Task<List<ProductResponse>> GetFilteredProduct(Expression<Func<Product, bool>> predicate, int? status = 1)
+        public async Task<List<ProductResponse>> GetAllProduct(int? status = 1)
         {
             return await _context.products
-                .Where(product => product.Deleted == false)
-                .Where(predicate)
-                .Where(product => product.Status == status)
-                .Select(p => new ProductResponse
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Category = _context.categories
-                        .Where(c => c.Id == p.CategoryId)
-                        .FirstOrDefault(),
-                    Description = p.Description,
-                    Discount = "0",
-                    BasePrice = p.BasePrice,
-                    Slug = p.Slug,
-                    View = p.View,
-                    Like = p.Like,
-                    Thumbnail = p.Thumbnail,
-                    Status = p.Status,
-                    UpdatedAt = p.UpdatedAt,
-                    CreatedAt = p.CreatedAt,
-                    Tags = _context.tags.Join(
-                        _context.productTags,
-                        t => t.Id,
-                        pt => pt.TagId,
-                        (t, pt) => new { t, pt }
-                    ).Where(res => res.pt.ProductId == p.Id)
-                    .Select(res => res.t).ToList(),
-                    AttributeTypes = _context.attributeTypes.Join(
-                        _context.productAttributeTypes,
-                        at => at.Id,
-                        pat => pat.AttributeTypeId,
-                        (at, pat) => new {at, pat}
-                    ).Where(res => res.pat.ProductId == p.Id)
-                    .Select(res => res.at).ToList()
-                })
-                .ToListAsync();
+            .Where(product => product.Deleted == false)
+            .Where(product => product.Status == status)
+            .Select(p => new ProductResponse
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Category = _context.categories
+                    .Where(c => c.Id == p.CategoryId)
+                    .FirstOrDefault(),
+                Description = p.Description,
+                Discount = "0",
+                BasePrice = p.BasePrice,
+                Slug = p.Slug,
+                View = p.View,
+                Like = p.Like,
+                Thumbnail = p.Thumbnail,
+                Status = p.Status,
+                UpdatedAt = p.UpdatedAt,
+                CreatedAt = p.CreatedAt,
+                Tags = _context.tags.Join(
+                    _context.productTags,
+                    t => t.Id,
+                    pt => pt.TagId,
+                    (t, pt) => new { t, pt }
+                ).Where(res => res.pt.ProductId == p.Id)
+                .Select(res => res.t).ToList(),
+                AttributeTypes = _context.attributeTypes.Join(
+                    _context.productAttributeTypes,
+                    at => at.Id,
+                    pat => pat.AttributeTypeId,
+                    (at, pat) => new { at, pat }
+                ).Where(res => res.pat.ProductId == p.Id)
+                .Select(res => res.at).ToList()
+            })
+            .ToListAsync();
         }
+
+        public async Task<List<ProductResponse>> FilterProduct(List<ProductResponse> products, Func<ProductResponse, bool> predicate)
+        {
+            return products.Where(predicate).ToList();
+        }
+
+        //public async Task<List<ProductResponse>> GetFilteredProduct(Expression<Func<Product, bool>> predicate, int? status)
+        //{
+        //    return await _context.products
+        //       .Where(product => product.Deleted == false)
+        //       .Where(product => product.Status == status)
+        //       .Where(predicate)
+        //       .Select(p => new ProductResponse
+        //       {
+        //           Id = p.Id,
+        //           Name = p.Name,
+        //           Category = _context.categories
+        //               .Where(c => c.Id == p.CategoryId)
+        //               .FirstOrDefault(),
+        //           Description = p.Description,
+        //           Discount = "0",
+        //           BasePrice = p.BasePrice,
+        //           Slug = p.Slug,
+        //           View = p.View,
+        //           Like = p.Like,
+        //           Thumbnail = p.Thumbnail,
+        //           Status = p.Status,
+        //           UpdatedAt = p.UpdatedAt,
+        //           CreatedAt = p.CreatedAt,
+        //           Tags = _context.tags.Join(
+        //               _context.productTags,
+        //               t => t.Id,
+        //               pt => pt.TagId,
+        //               (t, pt) => new { t, pt }
+        //           ).Where(res => res.pt.ProductId == p.Id)
+        //           .Select(res => res.t).ToList(),
+        //           AttributeTypes = _context.attributeTypes.Join(
+        //               _context.productAttributeTypes,
+        //               at => at.Id,
+        //               pat => pat.AttributeTypeId,
+        //               (at, pat) => new { at, pat }
+        //           ).Where(res => res.pat.ProductId == p.Id)
+        //           .Select(res => res.at).ToList()
+        //       })
+        //       .ToListAsync();
+        //}
 
         public async Task<ProductResponse> GetProductById(int id)
         {

@@ -682,10 +682,10 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.SaveChanges();
                 var attributeValuesSeed = new List<AttributeValue>()
                     {
-                        new AttributeValue { Name = "Black", Value = "Black", AttributeTypeId = 1, Deleted = false, Status = 1,
+                        new AttributeValue { Name = "Black", Value = "#000", AttributeTypeId = 1, Deleted = false, Status = 1,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now },
-                        new AttributeValue { Name = "White", Value = "White", AttributeTypeId = 1, Deleted = false, Status = 1,
+                        new AttributeValue { Name = "White", Value = "#fff", AttributeTypeId = 1, Deleted = false, Status = 1,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now },
                         new AttributeValue { Name = "Small", Value = "S", AttributeTypeId = 2, Deleted = false, Status = 1,

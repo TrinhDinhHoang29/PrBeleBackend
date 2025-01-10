@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PrBeleBackend.Core.DTO.ProductDTOs;
 using PrBeleBackend.Core.DTO.TagDTOs;
 using PrBeleBackend.Core.ServiceContracts.TagContracts;
 
-namespace PrBeleBackend.API.Areas.Admin.Controllers
+namespace PrBeleBackend.API.Controllers
 {
-    [Route("api/admin/[controller]")]
-    [ApiController]
+    [Route("api/[controller]")]
     public class TagController : Controller
     {
         private readonly ITagGetterService _tagGetterService;
