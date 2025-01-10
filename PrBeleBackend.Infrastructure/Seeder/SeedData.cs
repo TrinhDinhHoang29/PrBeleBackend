@@ -1371,7 +1371,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
             PhoneNumber = "0345678901",
             Address = "789 Đường DEF, Đà Nẵng",
             Note = "Giao hàng vào buổi sáng",
-            TotalMoney = 200000,
+            TotalMoney = 340000,
             PayMethod = "COD",
             ShipDate = DateTime.Now.AddDays(3),
             ReceiveDate = DateTime.Now.AddDays(5),
@@ -1386,7 +1386,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
             PhoneNumber = "0567890123",
             Address = "321 Đường GHI, Cần Thơ",
             Note = "Không gọi điện trước",
-            TotalMoney = 400000,
+            TotalMoney = 10200000,
             PayMethod = "VNPAY",
             ShipDate = DateTime.Now.AddDays(2),
             ReceiveDate = DateTime.Now.AddDays(4),
@@ -1403,21 +1403,21 @@ namespace PrBeleBackend.Infrastructure.Seeder
         {
             OrderId = 1,
             VariantId = 1,
-            Quantity = 2,
-            OriginalPrice = 150000,
-            DiscountValue = 10,
-            FinalPrice = 135000,
-            IsRating = false
+            Quantity = 1,
+            OriginalPrice = 250000,
+            DiscountValue = 0,
+            FinalPrice = 250000,
+            IsRating = true
         },
         new ProductOrder
         {
             OrderId = 1,
             VariantId = 2,
             Quantity = 1,
-            OriginalPrice = 230000,
+            OriginalPrice = 250000,
             DiscountValue = 5,
-            FinalPrice = 218500,
-            IsRating = false
+            FinalPrice = 250000,
+            IsRating = true
         },
 
         // Hóa đơn 2: 1 sản phẩm
@@ -1439,18 +1439,18 @@ namespace PrBeleBackend.Infrastructure.Seeder
             VariantId = 4,
             Quantity = 1,
             OriginalPrice = 50000,
-            DiscountValue = 20,
-            FinalPrice = 40000,
+            DiscountValue = 0,
+            FinalPrice = 50000,
             IsRating = false
         },
         new ProductOrder
         {
             OrderId = 3,
             VariantId = 5,
-            Quantity = 2,
-            OriginalPrice = 75000,
+            Quantity = 1,
+            OriginalPrice = 100000,
             DiscountValue = 10,
-            FinalPrice = 67500,
+            FinalPrice = 90000,
             IsRating = false
         },
         new ProductOrder
@@ -1458,9 +1458,9 @@ namespace PrBeleBackend.Infrastructure.Seeder
             OrderId = 3,
             VariantId = 6,
             Quantity = 1,
-            OriginalPrice = 120000,
-            DiscountValue = 15,
-            FinalPrice = 102000,
+            OriginalPrice = 100000,
+            DiscountValue = 0,
+            FinalPrice = 100000,
             IsRating = false
         },
         new ProductOrder
@@ -1468,9 +1468,9 @@ namespace PrBeleBackend.Infrastructure.Seeder
             OrderId = 3,
             VariantId = 7,
             Quantity = 1,
-            OriginalPrice = 80000,
-            DiscountValue = 5,
-            FinalPrice = 76000,
+            OriginalPrice = 100000,
+            DiscountValue = 0,
+            FinalPrice = 100000,
             IsRating = false
         },
 
@@ -1480,9 +1480,9 @@ namespace PrBeleBackend.Infrastructure.Seeder
             OrderId = 4,
             VariantId = 8,
             Quantity = 2,
-            OriginalPrice = 90000,
-            DiscountValue = 10,
-            FinalPrice = 81000,
+            OriginalPrice = 100000,
+            DiscountValue = 20,
+            FinalPrice = 80000,//160k
             IsRating = false
         },
         new ProductOrder
@@ -1490,9 +1490,9 @@ namespace PrBeleBackend.Infrastructure.Seeder
             OrderId = 4,
             VariantId = 9,
             Quantity = 1,
-            OriginalPrice = 150000,
+            OriginalPrice = 60000,
             DiscountValue = 0,
-            FinalPrice = 150000,
+            FinalPrice = 60000,//220k
             IsRating = false
         },
         new ProductOrder
@@ -1500,9 +1500,9 @@ namespace PrBeleBackend.Infrastructure.Seeder
             OrderId = 4,
             VariantId = 10,
             Quantity = 1,
-            OriginalPrice = 250000,
-            DiscountValue = 20,
-            FinalPrice = 200000,
+            OriginalPrice = 800000,
+            DiscountValue = 0,
+            FinalPrice = 800000,
             IsRating = false
         }
                 };
@@ -1531,11 +1531,11 @@ namespace PrBeleBackend.Infrastructure.Seeder
                     new Rate
         {
             ProductId = 1,
-            UserType = "Admin",
+            UserType = "Customer",
             UserId = 2,
             Star = 5,
             Content = "Good quality, but shipping was slow.",
-            ReferenceRateId = 1,
+            ReferenceRateId = 0,
             Status = 1,
             Deleted = false,
             CreatedAt = DateTime.UtcNow.AddDays(-7),

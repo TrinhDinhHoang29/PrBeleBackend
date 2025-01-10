@@ -46,7 +46,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .Include(r => r.Product)
                 .Include(r => r.Account)
                 .Include(r => r.Customer)
-                .Where(r => r.Deleted == false)
+                .Where(r => r.Deleted == false && r.UserType != "Admin")
                 .ToListAsync();
             foreach (var rate in rates)
             {
@@ -67,7 +67,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .Include(r => r.Product)
                 .Include(r => r.Account)
                 .Include(r => r.Customer)
-                .Where(r => r.Deleted == false)
+                .Where(r => r.Deleted == false && r.UserType != "Admin")
                 .FirstOrDefaultAsync(r => r.Id == Id);
             if (rate == null)
                 return null;
@@ -85,7 +85,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .Include(r => r.Product)
                 .Include(r => r.Account)
                 .Include(r => r.Customer)
-                .Where(r => r.Deleted == false)
+                .Where(r => r.Deleted == false && r.UserType != "Admin")
                 .Where(predicate)
                 .ToListAsync();
             return rates;

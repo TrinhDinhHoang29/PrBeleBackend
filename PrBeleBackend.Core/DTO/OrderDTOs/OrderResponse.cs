@@ -21,6 +21,7 @@ namespace PrBeleBackend.Core.DTO.OrderDTOs
         [Required, Phone, StringLength(16)]
         public string? PhoneNumber { get; set; }
         public string? Note { get; set; }
+        public string? Email { get; set; }
 
         [Required, StringLength(255)]
         public string? Address { get; set; }
@@ -45,6 +46,7 @@ namespace PrBeleBackend.Core.DTO.OrderDTOs
             return new OrderResponse { 
                 Id = order.Id,
                 UserId = order.UserId,
+                Email = order.Customer.Email,
                 FullName = order.FullName,
                 PhoneNumber = order.PhoneNumber,
                 Address = order.Address,
