@@ -51,9 +51,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     Status = attVal.Status,
                     CreatedAt = attVal.CreatedAt,
                     UpdatedAt = attVal.UpdatedAt,
-                    AttributeTypeName = this._context.attributeTypes
+                    AttributeType = this._context.attributeTypes
                         .Where(attTyp => attTyp.Id == attVal.AttributeTypeId)
-                        .Select(attTyp => attTyp.Name)
                         .FirstOrDefault()
                 })
                 .ToListAsync();
@@ -73,9 +72,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     Status = attVal.Status,
                     CreatedAt = attVal.CreatedAt,
                     UpdatedAt = attVal.UpdatedAt,
-                    AttributeTypeName = this._context.attributeTypes
+                    AttributeType = this._context.attributeTypes
                         .Where(attTyp => attTyp.Id == attVal.AttributeTypeId)
-                        .Select(attTyp => attTyp.Name)
                         .FirstOrDefault()
                 })
                 .FirstOrDefaultAsync();
@@ -104,6 +102,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
 
             attrValMatching.Name = attrVal.Name;
             attrValMatching.Value = attrVal.Value;
+            attrValMatching.AttributeTypeId = attrVal.AttributeTypeId;
+            attrValMatching.Status = attrVal.Status;
 
             await this._context.SaveChangesAsync();
 

@@ -32,6 +32,7 @@ namespace PrBeleBackend.Core.DTO.ProductDTOs
         [Required]
         public List<int> Tags { get; set; }
 
+        [DefaultValue(null)]
         public IFormFile? ProductFile { get; set; }
     }
 }

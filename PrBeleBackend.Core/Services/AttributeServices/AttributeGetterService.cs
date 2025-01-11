@@ -34,7 +34,7 @@ namespace PrBeleBackend.Core.Services.AttributeServices
 
         public async Task<List<AttributeValueResponse>> GetFilteredAttributeValue(string? searchBy = "", string? searchStr = "")
         {
-            if(searchStr == null && searchBy == null)
+            if(searchStr == null || searchBy == null)
             {
                 List<AttributeValueResponse> attributeValue = await this._attributeRepository.GetFilteredAttributeValue(attributeValue => true);
 
