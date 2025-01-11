@@ -52,6 +52,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
         {
             return await _context.products
             .Include(p => p.Discount)
+            .Include(p => p.Category)
             .Where(product => product.Deleted == false)
             .Select(p => new ProductResponse
             {
@@ -83,7 +84,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
                         VariantId = varAttVal.VariantId,
                         Color = varAttVal.AttributeValue.Value,
                         ColorId = varAttVal.AttributeValueId,
-                        Thumbnail = varAttVal.Variant.Thumbnail
+                        Thumbnail = varAttVal.Variant.Thumbnail,
+                        Price = varAttVal.Variant.Price
                     }).ToList(),
                 Tags = _context.tags.Join(
                     _context.productTags,
@@ -185,7 +187,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
                         VariantId = varAttVal.VariantId,
                         Color = varAttVal.AttributeValue.Value,
                         ColorId = varAttVal.AttributeValueId,
-                        Thumbnail = varAttVal.Variant.Thumbnail
+                        Thumbnail = varAttVal.Variant.Thumbnail,
+                        Price = varAttVal.Variant.Price
                     }).ToList(),
                     Tags = _context.tags.Join(
                     _context.productTags,

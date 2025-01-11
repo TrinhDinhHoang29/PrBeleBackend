@@ -27,7 +27,10 @@ namespace PrBeleBackend.API.Controllers
             {
                 List<ProductResponse> products = await this._productGetterService.GetAllproduct();
 
-                products = products.Where(p => p.Status == 1).ToList();
+                products = products
+                    .Where(p => p.Category.Status == 1)
+                    .Where(p => p.Status == 1)
+                    .ToList();
 
                 if (filter != null)
                 {

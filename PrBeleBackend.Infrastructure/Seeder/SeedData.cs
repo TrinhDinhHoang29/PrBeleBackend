@@ -1551,7 +1551,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 var settings = new Setting
                 {
                     MainLogo = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411156/bele/Settings/wvwhol9ag1xn6jc5dhjy.png",
-                    SloganLogo = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411158/bele/Settings/tayvoazxyd0kqjyjcnon.png",
+                    SloganLogo = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736575503/bele/Settings/logo_slogan_xowxd9.png",
                     Slogan = "Best Choice For Good Styles",
                     Hotline = "0306221498",
                     Email = "bele@gmail.com",
@@ -1562,9 +1562,9 @@ namespace PrBeleBackend.Infrastructure.Seeder
                     FacebookLink = "https://www.facebook.com/trung.kien.302814",
                     InstagramLink = "https://www.instagram.com/cutchienbotoi/",
                     YoutubeLink = "https://www.youtube.com/@NOOB-zl8os",
-                    MainBanner = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411159/bele/Settings/ahsquh48itwoxo6n6a7t.png",
-                    SubBanner1 =  "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411160/bele/Settings/pma1cpwotnw5c1dxxyio.png",
-                    SubBanner2 = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411161/bele/Settings/d4v112vxzjzarvmistwz.png",
+                    MainBanner = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736575365/bele/Settings/main_banner_sy9uss.png",
+                    SubBanner1 = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736575365/bele/Settings/sub_banner_1_po6nu9.png",
+                    SubBanner2 = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736575365/bele/Settings/sub_banner_2_admhkd.png",
                     SlideshowBanner1 = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411162/bele/Settings/c4ufjs0jp6fos7gylg1y.webp",
                     SlideshowBanner2 = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411163/bele/Settings/cjkscbypev8vb6h7tdjb.webp",
                     SlideshowBanner3 = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736411165/bele/Settings/neosvdg0k87bfffqw6dq.webp",

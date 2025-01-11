@@ -14,6 +14,8 @@ namespace PrBeleBackend.Core.DTO.VariantDTOs
 
         public string Thumbnail { get; set; }
 
+        public decimal Price { get; set; }
+
         public int ColorId { get; set; }
     }
 }

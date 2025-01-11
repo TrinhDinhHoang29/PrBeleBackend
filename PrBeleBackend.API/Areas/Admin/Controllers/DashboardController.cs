@@ -10,8 +10,8 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]/[Action]")]
     [ApiController]
-    //[Authorize]
-    //[PermissionAuthorize("D-R")]
+    [Authorize]
+    [PermissionAuthorize("D-R")]
     public class DashboardController : ControllerBase
     {
         private readonly BeleStoreContext _beleStoreContext;
@@ -101,13 +101,13 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
                 for (int i = 0; i <= 6; i++)
                 {
-                    startOfWeek =startOfWeek.AddDays(i);
                     int countOrder = await _beleStoreContext.orders
                     .Where(o => o.Status == 4)
                     .Where(o => o.UpdatedAt.Day == startOfWeek.Day &&
                     o.UpdatedAt.Month == startOfWeek.Month &&
                     o.UpdatedAt.Year == startOfWeek.Year)
                     .CountAsync();
+                    startOfWeek = startOfWeek.AddDays(1);
                     total.Add(countOrder);
                 }
                

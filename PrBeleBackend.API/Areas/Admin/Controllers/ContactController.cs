@@ -9,7 +9,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
 
     public class ContactController : ControllerBase
     {
@@ -29,7 +29,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _contactUpdaterService = contactUpdaterService;
             _contactDeleterService = contactDeleterService;
         }
-        //[PermissionAuthorize("CT-R")]
+        [PermissionAuthorize("CT-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
             int? status,
@@ -69,7 +69,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
             });
         }
-        //[PermissionAuthorize("CT-U")]
+        [PermissionAuthorize("CT-U")]
 
         [HttpPatch("{Id}")]
         public async Task<IActionResult> Edit(int Id, ContactUpdatePatchRequest contactUpdateRequest)
@@ -96,7 +96,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
-        //[PermissionAuthorize("CT-D")]
+        [PermissionAuthorize("CT-D")]
 
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)

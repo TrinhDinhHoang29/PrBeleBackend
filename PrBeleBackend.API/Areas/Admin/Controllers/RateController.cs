@@ -10,7 +10,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class RateController : ControllerBase
     {
         private readonly IRateGetterService _rateGetterService;
@@ -32,7 +32,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _rateSortService = rateSortService;
         }
 
-        //[PermissionAuthorize("R-R")]
+        [PermissionAuthorize("R-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
                         int? status,
@@ -72,7 +72,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             });
 
         }
-        //[PermissionAuthorize("R-C")]
+        [PermissionAuthorize("R-C")]
 
         [HttpPost]
         public async Task<IActionResult> Reply(ReplyRateRequest replyRateRequest)
@@ -96,7 +96,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
-        //[PermissionAuthorize("R-U")]
+        [PermissionAuthorize("R-U")]
         [HttpPatch("{Id}")]
         public async Task<IActionResult> Edit(int Id,RateStatusUpdateRequest rateStatusUpdateRequest)
         {
@@ -117,7 +117,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                 });
             }
         }
-        //[PermissionAuthorize("R-D")]
+        [PermissionAuthorize("R-D")]
 
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
