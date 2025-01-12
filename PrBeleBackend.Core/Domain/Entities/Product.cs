@@ -60,7 +60,7 @@ namespace PrBeleBackend.Core.Domain.Entities
             {
                 productAttTyp.Add(new ProductAttributeType
                 {
-                    AttributeTypeId = attributeId
+                    AttributeTypeId = Convert.ToInt32(attributeId)
                 });
             }
 
@@ -70,7 +70,7 @@ namespace PrBeleBackend.Core.Domain.Entities
             {
                 productTag.Add(new ProductTag
                 {
-                    TagId = tag
+                    TagId = Convert.ToInt32(tag)
                 });
             }
 
@@ -95,7 +95,7 @@ namespace PrBeleBackend.Core.Domain.Entities
             {
                 productAttTyp.Add(new ProductAttributeType
                 {
-                    AttributeTypeId = attributeId
+                    AttributeTypeId = Convert.ToInt32(attributeId)
                 });
             }
 
@@ -105,7 +105,7 @@ namespace PrBeleBackend.Core.Domain.Entities
             {
                 productTag.Add(new ProductTag
                 {
-                    TagId = tag
+                    TagId = Convert.ToInt32(tag)
                 });
             }
 

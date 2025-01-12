@@ -12,7 +12,7 @@ using PrBeleBackend.Infrastructure.DbContexts;
 namespace PrBeleBackend.Infrastructure.Migrations
 {
     [DbContext(typeof(BeleStoreContext))]
-    [Migration("20250110131435_Init")]
+    [Migration("20250111102138_Init")]
     partial class Init
     {
         /// <inheritdoc />

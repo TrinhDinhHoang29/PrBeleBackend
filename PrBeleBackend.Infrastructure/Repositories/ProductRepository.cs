@@ -52,6 +52,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
         {
             return await _context.products
             .Include(p => p.Discount)
+            .Include(p => p.Category)
             .Where(product => product.Deleted == false)
             .Select(p => new ProductResponse
             {
@@ -70,6 +71,9 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 Status = p.Status,
                 UpdatedAt = p.UpdatedAt,
                 CreatedAt = p.CreatedAt,
+                RateAVG = _context.rates
+                    .Where(r => r.ProductId == p.Id)
+                    .Select(r => r.Star).ToList(),
                 VariantColors = _context.variantAttributeValues
                     .Include(varAttVal => varAttVal.Variant)
                     .Include(varAttVal => varAttVal.AttributeValue)
@@ -79,7 +83,9 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     {
                         VariantId = varAttVal.VariantId,
                         Color = varAttVal.AttributeValue.Value,
-                        ColorId = varAttVal.AttributeValueId
+                        ColorId = varAttVal.AttributeValueId,
+                        Thumbnail = varAttVal.Variant.Thumbnail,
+                        Price = varAttVal.Variant.Price
                     }).ToList(),
                 Tags = _context.tags.Join(
                     _context.productTags,
@@ -156,17 +162,21 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     Id = p.Id,
                     Name = p.Name,
                     Category = _context.categories
-                        .Where(c => c.Id == p.CategoryId)
-                        .FirstOrDefault(),
+                    .Where(c => c.Id == p.CategoryId)
+                    .FirstOrDefault(),
                     Description = p.Description,
                     Discount = p.Discount,
                     BasePrice = p.BasePrice,
                     Slug = p.Slug,
                     View = p.View,
                     Like = p.Like,
+                    Thumbnail = p.Thumbnail,
                     Status = p.Status,
                     UpdatedAt = p.UpdatedAt,
                     CreatedAt = p.CreatedAt,
+                    RateAVG = _context.rates
+                    .Where(r => r.ProductId == p.Id)
+                    .Select(r => r.Star).ToList(),
                     VariantColors = _context.variantAttributeValues
                     .Include(varAttVal => varAttVal.Variant)
                     .Include(varAttVal => varAttVal.AttributeValue)
@@ -176,22 +186,24 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     {
                         VariantId = varAttVal.VariantId,
                         Color = varAttVal.AttributeValue.Value,
-                        ColorId = varAttVal.AttributeValueId
+                        ColorId = varAttVal.AttributeValueId,
+                        Thumbnail = varAttVal.Variant.Thumbnail,
+                        Price = varAttVal.Variant.Price
                     }).ToList(),
                     Tags = _context.tags.Join(
-                        _context.productTags,
-                        t => t.Id,
-                        pt => pt.TagId,
-                        (t, pt) => new { t, pt }
-                    ).Where(res => res.pt.ProductId == p.Id)
-                    .Select(res => res.t).ToList(),
+                    _context.productTags,
+                    t => t.Id,
+                    pt => pt.TagId,
+                    (t, pt) => new { t, pt }
+                ).Where(res => res.pt.ProductId == p.Id)
+                .Select(res => res.t).ToList(),
                     AttributeTypes = _context.attributeTypes.Join(
-                        _context.productAttributeTypes,
-                        at => at.Id,
-                        pat => pat.AttributeTypeId,
-                        (at, pat) => new { at, pat }
-                    ).Where(res => res.pat.ProductId == p.Id)
-                    .Select(res => res.at).ToList()
+                    _context.productAttributeTypes,
+                    at => at.Id,
+                    pat => pat.AttributeTypeId,
+                    (at, pat) => new { at, pat }
+                ).Where(res => res.pat.ProductId == p.Id)
+                .Select(res => res.at).ToList()
                 }).FirstOrDefaultAsync();
         }
 
@@ -231,7 +243,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
 
             if (productUpdate.Thumbnail != "")
             {
-                product.Thumbnail = product.Thumbnail;
+                product.Thumbnail = productUpdate.Thumbnail;
             }
 
             product.Slug = productUpdate.Slug;

@@ -57,6 +57,8 @@ namespace PrBeleBackend.Core.Domain.Entities
             {
                 Name = attrValueReq.Name,
                 Value = attrValueReq.Value,
+                AttributeTypeId = attrValueReq.AttributeTypeId,
+                Status = attrValueReq.Status,
             };
         }
     }

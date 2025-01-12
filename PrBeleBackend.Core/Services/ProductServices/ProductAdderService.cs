@@ -41,7 +41,10 @@ namespace PrBeleBackend.Core.Services.ProductServices
             product.UpdatedAt = DateTime.Now;
             product.CreatedAt = DateTime.Now;
 
-            product.Thumbnail = await this._cloudinaryService.UploadImageAsync(req.ProductFile, "product", 300, 400);
+            if(req.ProductFile != null)
+            {
+                product.Thumbnail = await this._cloudinaryService.UploadImageAsync(req.ProductFile, "product", 300, 400);
+            }
 
             return await this._productRepository.AddProduct(product);
         }

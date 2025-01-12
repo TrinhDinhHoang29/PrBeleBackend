@@ -23,6 +23,7 @@ namespace PrBeleBackend.Core.DTO.ProductDTOs
         public int View { get; set; }
         public int Like { get; set; }
         public int Status { get; set; }
+        public List<int> RateAVG { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime CreatedAt { get; set; }
         public List<VariantColorReponse> VariantColors { get; set; }

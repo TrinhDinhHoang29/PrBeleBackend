@@ -47,7 +47,7 @@ namespace PrBeleBackend.Core.Domain.Entities
             {
                 varAttVal.Add(new VariantAttributeValue
                 {
-                    AttributeValueId = item
+                    AttributeValueId = Convert.ToInt32(item)
                 });
             }
 
@@ -69,7 +69,7 @@ namespace PrBeleBackend.Core.Domain.Entities
             {
                 varAttVal.Add(new VariantAttributeValue
                 {
-                    AttributeValueId = item
+                    AttributeValueId = Convert.ToInt32(item)
                 });
             }
 

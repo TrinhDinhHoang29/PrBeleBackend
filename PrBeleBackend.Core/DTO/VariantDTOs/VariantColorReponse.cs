@@ -9,7 +9,12 @@ namespace PrBeleBackend.Core.DTO.VariantDTOs
     public class VariantColorReponse
     {
         public int VariantId { get; set; }
+
         public string Color { get; set; }
+
+        public string Thumbnail { get; set; }
+
+        public decimal Price { get; set; }
 
         public int ColorId { get; set; }
     }

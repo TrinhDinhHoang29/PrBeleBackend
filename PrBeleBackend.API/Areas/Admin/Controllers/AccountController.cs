@@ -11,7 +11,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountGetterService _accountGetterService;
@@ -32,7 +32,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _accountUpdaterService = accountUpdaterService;
             _accountDeleterService = accountDeleterService;
         }
-        //[PermissionAuthorize("A-R")]
+        [PermissionAuthorize("A-R")]
         [HttpGet]
         public async Task<IActionResult> Index(
             int? status,
@@ -70,7 +70,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             });
         }
 
-        //[PermissionAuthorize("A-R")]
+        [PermissionAuthorize("A-R")]
         [HttpGet("{Id}")]
         public async Task<IActionResult> Detail(int Id)
         {
@@ -92,7 +92,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             });
         }
 
-        //[PermissionAuthorize("A-C")]
+        [PermissionAuthorize("A-C")]
         [HttpPost]
         public async Task<IActionResult> Create(AccountAddRequest accountAddRequest)
         {
@@ -117,7 +117,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        //[PermissionAuthorize("A-U")]
+        [PermissionAuthorize("A-U")]
         [HttpPut("{Id}")]
         public async Task<IActionResult> Update(int Id, AccountUpdateFakeRequest accountAddRequest)
         {
@@ -159,7 +159,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
         }
 
-        //[PermissionAuthorize("A-U")]
+        [PermissionAuthorize("A-U")]
         [HttpPatch("ChangePassword/{Id}")]
         public async Task<IActionResult> UpdatePassword(int Id, AccountUpdatePasswordRequest accountUpdateRequest)
         {
@@ -187,7 +187,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
         }
 
-        //[PermissionAuthorize("A-U")]
+        [PermissionAuthorize("A-U")]
         [HttpPatch("{Id}")]
         public async Task<IActionResult> Edit(int Id, AccountUpdatePatchRequest accountUpdateRequest)
         {
@@ -213,7 +213,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
         }
 
-        //[PermissionAuthorize("A-D")]
+        [PermissionAuthorize("A-D")]
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
         {

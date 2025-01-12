@@ -14,5 +14,11 @@ namespace PrBeleBackend.Core.DTO.AttributeDTOs
 
         [Required]
         public string Value { get; set; }
+
+        [Required]
+        public int AttributeTypeId { get; set; }
+
+        [Required]
+        public int Status { get; set; }
     }
 }

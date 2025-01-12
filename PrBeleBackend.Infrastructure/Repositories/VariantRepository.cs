@@ -44,6 +44,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     .Where(v => v.Id == vav.VariantId)
                     .Select(v => new VariantSizeResponse { 
                         VariantId = v.Id,
+                        Thumbnail = v.Thumbnail,
                         Size = v.VariantAttributeValues
                             .Where(vav => vav.AttributeValue.AttributeType.Name == "Size")
                             .Select(vav => vav.AttributeValue.Value).FirstOrDefault()

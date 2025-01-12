@@ -13,7 +13,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class OrderController : ControllerBase
     {
         private readonly IOrderGetterService _orderGetterService;
@@ -31,7 +31,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             _orderDeleterService = orderDeleterService;
             _orderUpdaterService = orderUpdaterService;
         }
-        //[PermissionAuthorize("O-R")]
+        [PermissionAuthorize("O-R")]
 
         [HttpGet]
         public async Task<IActionResult> Index(
@@ -84,7 +84,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
 
             });
         }
-        //[PermissionAuthorize("O-R")]
+        [PermissionAuthorize("O-R")]
 
         [HttpGet("{Id}")]
         public async Task<IActionResult> Detail(int Id)
@@ -136,7 +136,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             
 
         }
-        //[PermissionAuthorize("O-U")]
+        [PermissionAuthorize("O-U")]
 
         [HttpPatch("{Id}")]
         public async Task<IActionResult> UpdateStatusOrder(int Id, OrderUpdatePatchRequest StatusRequest)
@@ -160,7 +160,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
             }
 
         }
-        //[PermissionAuthorize("O-D")]
+        [PermissionAuthorize("O-D")]
 
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
