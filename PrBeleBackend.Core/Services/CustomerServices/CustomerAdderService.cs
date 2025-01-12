@@ -4,6 +4,7 @@ using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.DTO.AccountDTOs;
 using PrBeleBackend.Core.DTO.AuthDTOs;
 using PrBeleBackend.Core.DTO.CustomerDTOs;
+using PrBeleBackend.Core.Enums;
 using PrBeleBackend.Core.Helpers;
 using PrBeleBackend.Core.ServiceContracts.CustomerContracts;
 using System;
@@ -24,7 +25,10 @@ namespace PrBeleBackend.Core.Services.CustomerServices
         public async Task<CustomerResponse> AddCustomer(CliRegisterRequest cliRegisterRequest)
         {
             ValidationHelper.ModelValidation(cliRegisterRequest);
+
             Customer customerRequest = cliRegisterRequest.ToCustomer();
+            customerRequest.Sex = SexOptions.Male.ToString();
+            customerRequest.Birthday = DateTime.Now;
             var passwordHasher = new PasswordHasher<string>();
             string hashedPassword = passwordHasher.HashPassword(null, cliRegisterRequest.Password);
             customerRequest.Password = hashedPassword;

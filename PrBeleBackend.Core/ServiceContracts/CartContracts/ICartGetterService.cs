@@ -8,5 +8,6 @@ namespace PrBeleBackend.Core.ServiceContracts.CartContracts
 {
     public interface ICartGetterService
     {
+
     }
 }

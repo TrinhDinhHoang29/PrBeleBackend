@@ -92,7 +92,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
             matchingOrder.ShipDate = order.ShipDate;
             matchingOrder.ReceiveDate = order.ReceiveDate;
             matchingOrder.Status = order.Status;
-            matchingOrder.UpdatedAt = DateTime.UtcNow;
+            matchingOrder.UpdatedAt = DateTime.Now;
 
             await _context.SaveChangesAsync();
 

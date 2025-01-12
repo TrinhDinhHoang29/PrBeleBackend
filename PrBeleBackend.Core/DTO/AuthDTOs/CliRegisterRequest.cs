@@ -16,10 +16,6 @@ namespace PrBeleBackend.Core.DTO.AuthDTOs
         public string? FullName { get; set; }
         [Required, Phone]
         public string? PhoneNumber { get; set; }
-        [Required]
-        public DateTime Birthday { get; set; }
-        [Required]
-        public SexOptions? Sex { get; set; }
 
         [Required]
         [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",

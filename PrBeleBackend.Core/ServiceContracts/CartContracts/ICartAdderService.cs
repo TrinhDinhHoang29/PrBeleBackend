@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrBeleBackend.Core.DTO.CartDTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace PrBeleBackend.Core.ServiceContracts.CartContracts
 {
     public interface ICartAdderService
     {
+        public Task<CartResponse> AddCart(int UserId);
     }
 }

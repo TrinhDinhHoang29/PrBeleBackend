@@ -29,8 +29,17 @@ namespace PrBeleBackend.Infrastructure.Repositories
             customer.CreatedAt = DateTime.Now;
             customer.UpdatedAt = DateTime.Now;
             customer.Deleted = false;
+         
             await _context.customers.AddAsync(customer);
+           
             await _context.SaveChangesAsync();
+            await _context.carts.AddAsync(new Cart
+            {
+                UserId = customer.Id,
+                TotalMoney = 0,
+            });
+            await _context.SaveChangesAsync();
+
             return customer;
         }
 

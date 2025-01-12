@@ -49,8 +49,6 @@ namespace PrBeleBackend.Core.Domain.Entities
                 Email = cliRegisterRequest.Emaiil,
                 Password = cliRegisterRequest.Password,
                 PhoneNumber = cliRegisterRequest.PhoneNumber,
-                Birthday = cliRegisterRequest.Birthday,
-                Sex = cliRegisterRequest.Sex.ToString(),
             };
         }
     }
