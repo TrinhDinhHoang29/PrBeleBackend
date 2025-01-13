@@ -46,7 +46,7 @@ namespace PrBeleBackend.Core.Domain.Entities
             return new Customer()
             {
                 FullName = cliRegisterRequest.FullName,
-                Email = cliRegisterRequest.Emaiil,
+                Email = cliRegisterRequest.Email,
                 Password = cliRegisterRequest.Password,
                 PhoneNumber = cliRegisterRequest.PhoneNumber,
             };

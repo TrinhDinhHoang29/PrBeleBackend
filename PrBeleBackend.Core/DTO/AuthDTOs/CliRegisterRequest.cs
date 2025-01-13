@@ -11,7 +11,7 @@ namespace PrBeleBackend.Core.DTO.AuthDTOs
     public class CliRegisterRequest
     {
         [Required]
-        public string? Emaiil {  get; set; }
+        public string? Email {  get; set; }
         [Required]
         public string? FullName { get; set; }
         [Required, Phone]

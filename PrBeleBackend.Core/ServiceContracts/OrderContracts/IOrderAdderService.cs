@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PrBeleBackend.Core.DTO.OrderDTOs;
+
 
 namespace PrBeleBackend.Core.ServiceContracts.OrderContracts
 {
-    internal class IOrderAdderService
+    public interface IOrderAdderService
     {
+        public Task<OrderResponse> AddOrder(OrderAddRequest request);
     }
 }

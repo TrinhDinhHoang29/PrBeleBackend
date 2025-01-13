@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.CartDTOs;
+using PrBeleBackend.Core.ServiceContracts.CartContracts;
 using PrBeleBackend.Infrastructure.DbContexts;
 using System.Security.Claims;
 
@@ -16,47 +17,45 @@ namespace PrBeleBackend.API.Controllers
     public class CartController : ControllerBase
     {
         private readonly BeleStoreContext _dbContext;
-        public CartController(BeleStoreContext dbContext)
+        private readonly ICartGetterService _cartGetterService;
+        public CartController(BeleStoreContext dbContext,ICartGetterService cartGetterService)
         {
             _dbContext = dbContext;
+            _cartGetterService = cartGetterService;
         }
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            Cart? cart = await _dbContext.carts
-                .Include(c => c.ProductCarts)
-                .ThenInclude(c => c.Variant)
-                .ThenInclude(c => c.Product)
-                .ThenInclude(c => c.Discount)
-                .Include(c => c.ProductCarts)
-                .ThenInclude(c => c.Variant)
-                .ThenInclude(c => c.VariantAttributeValues)
-                .ThenInclude(c => c.AttributeValue)
-                .ThenInclude(c => c.AttributeType)
-                .FirstOrDefaultAsync(a => a.UserId == customerId);
-            var  CartItems = cart?.ProductCarts.Select(item => new
-            {
-                ProductName = item.Variant?.Product?.Name,
-                attribute = item?.Variant?.VariantAttributeValues?.Select(e => new Dictionary<string, string?>
-                {
-                    { e.AttributeValue.AttributeType.Name, e.AttributeValue.Name }
-                }),
+            CartResponse? cartResponse = await _cartGetterService.GetDetail(customerId);
+            //Cart? cart = await _dbContext.carts
+            //    .Include(c => c.ProductCarts)
+            //    .ThenInclude(c => c.Variant)
+            //    .ThenInclude(c => c.Product)
+            //    .ThenInclude(c => c.Discount)
+            //    .Include(c => c.ProductCarts)
+            //    .ThenInclude(c => c.Variant)
+            //    .ThenInclude(c => c.VariantAttributeValues)
+            //    .ThenInclude(c => c.AttributeValue)
+            //    .ThenInclude(c => c.AttributeType)
+            //    .FirstOrDefaultAsync(a => a.UserId == customerId);
+            //var  CartItems = cart?.ProductCarts.Select(item => new
+            //{
+            //    ProductName = item.Variant?.Product?.Name,
+            //    attribute = item?.Variant?.VariantAttributeValues?.Select(e => new Dictionary<string, string?>
+            //    {
+            //        { e.AttributeValue.AttributeType.Name, e.AttributeValue.Name }
+            //    }),
 
-                Quantity = item?.Quantity,
-                Discout = item?.Variant?.Product?.Discount?.ExpireDate > DateTime.Now ? item.Variant.Product?.Discount.DiscountValue : 0,
-            });
+            //    Quantity = item?.Quantity,
+            //    Discout = item?.Variant?.Product?.Discount?.ExpireDate > DateTime.Now ? item.Variant.Product?.Discount.DiscountValue : 0,
+            //});
             return Ok(new
             {
                 status = 200,
                 Data = new
                 {
-                    Cart = new
-                    {
-                        TotalMoney = cart?.TotalMoney,
-                        CartItems = CartItems
-
-                    }
+                    Cart = cartResponse
                 },
                 message = "Fetch success ."
             });

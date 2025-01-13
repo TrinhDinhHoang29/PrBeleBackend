@@ -29,9 +29,9 @@ namespace PrBeleBackend.API.Controllers
                     status = 200,
                     data = new
                     {
-                        name = customerResponse.FullName,
-                        phone = customerResponse.PhoneNumber,
-                        birthDay = customerResponse.Birthday,
+                        FullName = customerResponse.FullName,
+                        PhoneNumber = customerResponse.PhoneNumber,
+                        Birthday = customerResponse.Birthday,
                     },
                     message = "Profile updated successfully."
 

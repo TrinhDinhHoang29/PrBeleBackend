@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using PrBeleBackend.API.Filters;
+using PrBeleBackend.Core.DTO.AccountDTOs;
 using PrBeleBackend.Core.DTO.AuthDTOs;
 using PrBeleBackend.Core.DTO.CustomerDTOs;
 using PrBeleBackend.Core.DTO.JwtDTOs;
@@ -67,7 +68,11 @@ namespace PrBeleBackend.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message,
+                });
             }
 
         }
@@ -155,6 +160,33 @@ namespace PrBeleBackend.API.Controllers
             });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> RefreshToken(RefrestTokenRequest refrestTokenRequest)
+        {
+            try
+            {
+                JwtResponse jwtResponse = await _authService.CliRefreshToken(refrestTokenRequest);
+                CustomerResponse? customerResponse = await _customerGetterService.GetCustomerByEmail(jwtResponse.Email);
+
+                return Ok(new
+                {
+                    jwt = new
+                    {
+                        accessToken = jwtResponse.JwtToken,
+                        expireAccessToken = jwtResponse.ExpirationJwtToken,
+                        refreshToken = jwtResponse.RefreshToken,
+                    }
+                });
+            }
+            catch (Exception ex) { 
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message,
+                });
+            }
+        }
+
         [PermissionAuthorize("Forgot password")]
         [HttpPost]
         public async Task<IActionResult> CreateNewPassword(CliForgotPasswordRequest cliForgotPasswordRequest)
@@ -192,12 +224,12 @@ namespace PrBeleBackend.API.Controllers
                 status = 200,
                 data = new
                 {
-                    name = customerResponse.FullName,
-                    email = customerResponse.Email,
-                    phoneNumber = customerResponse.PhoneNumber,
-                    sex = customerResponse.Sex,
-                    birthDay = customerResponse.Birthday,
-                    password = "***********",
+                    FullName = customerResponse.FullName,
+                    Email = customerResponse.Email,
+                    PhoneNumber = customerResponse.PhoneNumber,
+                    Sex = customerResponse.Sex,
+                    Birthday = customerResponse.Birthday,
+                    Password = "***********",
                     createdAt = customerResponse.CreatedAt,
                 },
                 mesmessage = "Data fetched successfully."

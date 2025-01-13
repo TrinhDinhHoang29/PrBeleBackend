@@ -28,7 +28,7 @@ namespace PrBeleBackend.API.Controllers
                     Name = category.Name,
                     Slug = category.Slug,
                     referenceCategory = categories
-                    .Where(r => r.Status ==0)
+                    .Where(r => r.Status == 1)
                     .Where(c => c.ReferenceCategoryId == category.Id).Select(c => new
                     {
                         Id = c.Id,
