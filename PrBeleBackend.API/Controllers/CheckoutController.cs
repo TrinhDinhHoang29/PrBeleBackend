@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using PaymentProject.Models;
 using PaymentProject.VNPay;
 using PrBeleBackend.Core.Domain.Entities;
-using PrBeleBackend.Core.DTO.CartDTOs;
+using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.DTO.OrderDTOs;
 using PrBeleBackend.Core.ServiceContracts.CartContracts;
 using PrBeleBackend.Infrastructure.DbContexts;
+using System.Net;
 using System.Security.Claims;
 
 namespace PrBeleBackend.API.Controllers
@@ -17,14 +18,18 @@ namespace PrBeleBackend.API.Controllers
     public class CheckoutController : ControllerBase
     {
         private readonly ICartGetterService _cartGetterService;
+        private readonly IOrderRepository _orderRepository;
+        private readonly ICartRepository _cartRepository;
         private readonly IVnPayService _vnPayService;
 
         private readonly BeleStoreContext _dbContext;
-        public CheckoutController(ICartGetterService cartGetterService,BeleStoreContext beleStoreContext, IVnPayService vnPayService)
+        public CheckoutController(ICartRepository cartRepository, IOrderRepository orderRepository, ICartGetterService cartGetterService,BeleStoreContext beleStoreContext, IVnPayService vnPayService)
         {
+            _cartRepository = cartRepository;
             _cartGetterService = cartGetterService;
             _dbContext = beleStoreContext;
             _vnPayService = vnPayService;
+            _orderRepository = orderRepository;
 
         }
         [Authorize(Roles = "Client")]
@@ -34,113 +39,162 @@ namespace PrBeleBackend.API.Controllers
         {
             try
             {
-                //Check stock
-                //-> Khong du
-                //-> Check Pay
-                //-> Offline 
-                //-> VNpay -> Success
-                //-> validation
-                //-> - stock
-
-                int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                Cart? cart = await _dbContext.carts
-                    .Include(c => c.ProductCarts)
-                        .ThenInclude(c => c.Variant)
-                            .ThenInclude(c => c.Product)
-                                .ThenInclude(c => c.Discount)
-                    .Include(c => c.ProductCarts)
-                        .ThenInclude(c => c.Variant)
-                            .ThenInclude(c => c.VariantAttributeValues)
-                                .ThenInclude(c => c.AttributeValue)
-                                    .ThenInclude(c => c.AttributeType)
-                    .FirstOrDefaultAsync(a => a.UserId == customerId);
-
-                var CartItems = cart?.ProductCarts.Select(item => new
+                // Lấy CustomerId từ Claims
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int customerId))
                 {
-                    ProductName = item.Variant?.Product?.Name,
-                    attribute = item?.Variant?.VariantAttributeValues?.Select(e => new Dictionary<string, string?>
-                    {
-                        { e.AttributeValue.AttributeType.Name, e.AttributeValue.Name }
-                    }),
-
-                    Quantity = item?.Quantity,
-                    Discout = item?.Variant?.Product?.Discount?.ExpireDate > DateTime.Now ? item.Variant.Product?.Discount.DiscountValue : 0,
-                });
-                if (!CartItems.Any())
-                {
-                    return BadRequest(new
-                    {
-                        status = 400,
-                        message = "Cart is null."
-                    });
+                    return BadRequest(new { status = 400, message = "Invalid user." });
                 }
-                foreach(var productCart in cart.ProductCarts)
+
+                // Lấy giỏ hàng của người dùng
+                Cart? cart = await _cartRepository.GetDetailCart(customerId);
+                if (cart == null || !cart.ProductCarts.Any())
                 {
-                    Variant? variant = await _dbContext.variants
-                        .Where(c => c.Status == 1 && c.Deleted == false)
-                        .FirstOrDefaultAsync(c => c.Id == productCart.VariantId);
-                    if (variant == null) {
-                        return BadRequest("This product is currently unavailable.");
-                    }
-                    if(variant.Stock < productCart.Quantity)
-                    {
-                        return BadRequest("This product is currently unavailable.");
-                    }
+                    return BadRequest(new { status = 400, message = "Cart is empty." });
                 }
-     
- 
 
-                PaymentInformationModel model = new PaymentInformationModel();
-                model.Name = orderAddRequest.FullName;
-                model.Amount = Double.Parse(cart.TotalMoney.ToString());
-                model.OrderDescription = "Thanh toan qua vnpay";
-                model.OrderType = "fashion";
+                // Kiểm tra tính khả dụng của các sản phẩm trong giỏ hàng
+                var unavailableProductMessage = await ValidateCartItems(cart);
+                if (!string.IsNullOrEmpty(unavailableProductMessage))
+                {
+                    return BadRequest(new { status = 400, message = unavailableProductMessage });
+                }
 
-                var url = _vnPayService.CreatePaymentUrl(model, HttpContext, customerId,
-                    orderAddRequest.FullName,
-                    orderAddRequest.PhoneNumber,
-                    orderAddRequest.Address,
-                    orderAddRequest.Note
-                    );
+                // Tạo thông tin thanh toán
+                var paymentUrl = CreatePaymentUrl(cart, orderAddRequest, customerId);
+                if (string.IsNullOrEmpty(paymentUrl))
+                {
+                    return BadRequest(new { status = 400, message = "Failed to create payment URL." });
+                }
+
                 return Ok(new
                 {
                     status = 200,
-                    data = url,
+                    data = paymentUrl,
                     message = "Redirect"
                 });
-
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = 400,
-                    message = ex.Message,
-                });
+                return BadRequest(new { status = 400, message = ex.Message });
             }
         }
-        [HttpGet("PaymentCallbackVnpay")]
-        public async Task<IActionResult> PaymentCallbackVnpay(int UserId, string FullName
-            , string PhoneNumber,
-            string Address,
-            string Note)
+
+        [Authorize(Roles = "Client")]
+        [HttpPost("COD")]
+        public async Task<IActionResult> CheckoutCOD(OrderAddRequest orderAddRequest)
         {
             try
             {
+                int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-                var response = _vnPayService.PaymentExecute(Request.Query);
+                // Lấy và kiểm tra giỏ hàng
+                Cart? cart = await _cartRepository.GetDetailCart(customerId);
+                if (cart == null || !cart.ProductCarts.Any())
+                {
+                    return BadRequest(new { status = 400, message = "Cart is empty." });
+                }
 
-                //string result = _memoryCache.Get("ID").ToString();
-                //
+                // Kiểm tra tính khả dụng của các sản phẩm trong giỏ hàng
+                var unavailableProductMessage = await ValidateCartItems(cart);
+                if (!string.IsNullOrEmpty(unavailableProductMessage))
+                {
+                    return BadRequest(new { status = 400, message = unavailableProductMessage });
+                }
+
+                // Tạo đơn hàng mới
+                var order = await _orderRepository.AddOrder(
+                    new Order()
+                    {
+                        UserId = customerId,
+                        FullName = orderAddRequest.FullName,
+                        PhoneNumber = orderAddRequest.PhoneNumber,
+                        Address = orderAddRequest.Address,
+                        Note = orderAddRequest.Note,
+                        Status = 1,
+                        PayMethod = "COD"
+                    });
+                if (order == null)
+                {
+                    return BadRequest(new { status = 400, message = "Failed to create order." });
+                }
+
+                // Xử lý sản phẩm trong đơn hàng
+                var result = await ProcessOrderItems(order, cart);
+                if (!result)
+                {
+                    return BadRequest(new { status = 400, message = "Failed to process order items." });
+                }
+
+                // Xóa giỏ hàng cũ và tạo giỏ hàng mới
+                await ResetCart(customerId);
+
+                return Ok(new { status = 200, data = "", message = "Order placed successfully." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { status = 400, message = ex.Message });
+            }
+        }
+       
+
+        [HttpGet("PaymentCallbackVnpay")]
+        public async Task<IActionResult> PaymentCallbackVnpay(int UserId, string FullName, string PhoneNumber, string Address, string Note)
+        {
+            try
+            {
+                // Xử lý phản hồi từ VNPAY
+                PaymentResponseModel response = _vnPayService.PaymentExecute(Request.Query);
+                if (!response.Success)
+                {
+                    return Ok(new
+                    {
+                        status = 400,
+                        data = response,
+                        message = "Payment failed."
+                    });
+                }
+
+                // Lấy thông tin giỏ hàng
+                Cart? cart = await _cartRepository.GetDetailCart(UserId);
+                if (cart == null || !cart.ProductCarts.Any())
+                {
+                    return BadRequest(new { status = 400, message = "Cart is empty." });
+                }
+
+                // Tạo đơn hàng mới
+                var order = await _orderRepository.AddOrder(new Order()
+                                 {
+                                     UserId = UserId,
+                                     FullName = FullName,
+                                     PhoneNumber = PhoneNumber,
+                                     Address = Address,
+                                     Note = Note,
+                                     Status = 1,
+                                     PayMethod = "VNPAY"
+                                 });
+                if (order == null)
+                {
+                    return BadRequest(new { status = 400, message = "Failed to create order." });
+                }
+
+                // Cập nhật kho hàng và xử lý sản phẩm trong đơn hàng
+                var result = await ProcessOrderItems(order, cart);
+                if (!result)
+                {
+                    return BadRequest(new { status = 400, message = "Failed to process order items." });
+                }
+
+                // Xóa giỏ hàng cũ và tạo giỏ hàng mới
+                await ResetCart(UserId);
+
                 return Ok(new
                 {
-                    status =200,
+                    status = 200,
                     data = response,
-                    UserId= UserId,
-                   
+                    message = "Payment successful."
                 });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(new
                 {
@@ -148,7 +202,151 @@ namespace PrBeleBackend.API.Controllers
                     message = ex.Message
                 });
             }
-            
         }
+
+        [Authorize(Roles = "Client")]
+        [HttpDelete("Cancel/{Id}")]
+        public async Task<IActionResult> CancelOrder(int Id)
+        {
+            try
+            {
+                int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                Order? orderExist = await _dbContext.orders
+                .Include(o => o.ProductOrders)
+                .ThenInclude(o => o.Variant)
+                .Where(o => o.Status == 1 && o.UserId == customerId)
+                .FirstOrDefaultAsync(o => o.Id == Id);
+                if (orderExist == null)
+                {
+                    return BadRequest(new
+                    {
+                        status = 400,
+                        message = "Request invalid."
+                    });
+                }
+                foreach (var item in orderExist.ProductOrders)
+                {
+                    Variant? variant = await _dbContext.variants.FirstOrDefaultAsync(v => v.Id == item.VariantId);
+                    variant.Stock = variant.Stock + item.Quantity;
+                }
+                orderExist.Status = -1;
+                await _dbContext.SaveChangesAsync();
+                return Ok(new
+                {
+                    status = 200,
+                    message = "Cancel order success."
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+
+        }
+
+
+
+
+
+        // Phương thức kiểm tra tính khả dụng của các sản phẩm
+        private async Task<string?> ValidateCartItems(Cart cart)
+        {
+            foreach (var productCart in cart.ProductCarts)
+            {
+                Variant? variant = await _dbContext.variants
+                    .Where(v => v.Status == 1 && !v.Deleted)
+                    .FirstOrDefaultAsync(v => v.Id == productCart.VariantId);
+
+                if (variant == null || variant.Stock < productCart.Quantity)
+                {
+                    return $"Product {productCart.Variant?.Product?.Name} is unavailable.";
+                }
+            }
+            return null;
+        }
+
+        // Phương thức tạo URL thanh toán
+        private string CreatePaymentUrl(Cart cart, OrderAddRequest orderAddRequest, int customerId)
+        {
+            var model = new PaymentInformationModel
+            {
+                Name = orderAddRequest.FullName,
+                Amount = (double)(cart.TotalMoney),
+                OrderDescription = "Thanh toan qua vnpay",
+                OrderType = "fashion"
+            };
+
+            return _vnPayService.CreatePaymentUrl(model, HttpContext, customerId,
+                orderAddRequest.FullName,
+                orderAddRequest.PhoneNumber,
+                orderAddRequest.Address,
+                orderAddRequest.Note);
+        }
+
+        // Tạo đơn hàng mới
+        // Xử lý sản phẩm trong đơn hàng và cập nhật kho hàng
+        private async Task<bool> ProcessOrderItems(Order order, Cart cart)
+        {
+            var productOrders = cart.ProductCarts.Select(item => new ProductOrder
+            {
+                OrderId = order.Id,
+                Quantity = item.Quantity,
+                VariantId = item.VariantId,
+                OriginalPrice = item.Variant.Price,
+                DiscountValue = item.Variant.Product.Discount?.ExpireDate > DateTime.Now ? item.Variant.Product.Discount.DiscountValue : 0,
+                FinalPrice = item.Variant.Price *
+                    (item.Variant.Product.Discount != null && item.Variant.Product.Discount.ExpireDate > DateTime.Now
+                        ? 1.0m - item.Variant.Product.Discount.DiscountValue / 100.0m
+                        : 1) * item.Quantity,
+                IsRating = false
+            }).ToList();
+
+            foreach (var productOrder in productOrders)
+            {
+                var variant = await _dbContext.variants
+                    .Where(v => v.Status == 1 && !v.Deleted)
+                    .FirstOrDefaultAsync(v => v.Id == productOrder.VariantId);
+
+                if (variant == null || variant.Stock < productOrder.Quantity)
+                {
+                    return false; // Không đủ hàng hoặc sản phẩm không khả dụng
+                }
+
+                variant.Stock -= productOrder.Quantity;
+            }
+
+            await _dbContext.productOrders.AddRangeAsync(productOrders);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+        // Xóa giỏ hàng cũ và tạo giỏ hàng mới
+        private async Task ResetCart(int userId)
+        {
+            var oldCart = await _dbContext.carts.FirstOrDefaultAsync(c => c.UserId == userId);
+            if (oldCart != null)
+            {
+                _dbContext.carts.Remove(oldCart);
+            }
+
+            var newCart = new Cart
+            {
+                TotalMoney = 0,
+                UserId = userId
+            };
+
+            await _dbContext.carts.AddAsync(newCart);
+            await _dbContext.SaveChangesAsync();
+        }
+
+
+
+
+    
+
     }
 }

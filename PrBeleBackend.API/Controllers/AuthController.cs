@@ -230,6 +230,7 @@ namespace PrBeleBackend.API.Controllers
                     Sex = customerResponse.Sex,
                     Birthday = customerResponse.Birthday,
                     Password = "***********",
+                    updatedAt = customerResponse.UpdatedAt,
                     createdAt = customerResponse.CreatedAt,
                 },
                 mesmessage = "Data fetched successfully."

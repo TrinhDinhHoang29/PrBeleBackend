@@ -28,28 +28,6 @@ namespace PrBeleBackend.API.Controllers
         {
             int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             CartResponse? cartResponse = await _cartGetterService.GetDetail(customerId);
-            //Cart? cart = await _dbContext.carts
-            //    .Include(c => c.ProductCarts)
-            //    .ThenInclude(c => c.Variant)
-            //    .ThenInclude(c => c.Product)
-            //    .ThenInclude(c => c.Discount)
-            //    .Include(c => c.ProductCarts)
-            //    .ThenInclude(c => c.Variant)
-            //    .ThenInclude(c => c.VariantAttributeValues)
-            //    .ThenInclude(c => c.AttributeValue)
-            //    .ThenInclude(c => c.AttributeType)
-            //    .FirstOrDefaultAsync(a => a.UserId == customerId);
-            //var  CartItems = cart?.ProductCarts.Select(item => new
-            //{
-            //    ProductName = item.Variant?.Product?.Name,
-            //    attribute = item?.Variant?.VariantAttributeValues?.Select(e => new Dictionary<string, string?>
-            //    {
-            //        { e.AttributeValue.AttributeType.Name, e.AttributeValue.Name }
-            //    }),
-
-            //    Quantity = item?.Quantity,
-            //    Discout = item?.Variant?.Product?.Discount?.ExpireDate > DateTime.Now ? item.Variant.Product?.Discount.DiscountValue : 0,
-            //});
             return Ok(new
             {
                 status = 200,
@@ -129,10 +107,14 @@ namespace PrBeleBackend.API.Controllers
                        .FirstOrDefaultAsync(a => a.UserId == customerId);
                 // Cập nhật TotalMoney
                 cartResult.TotalMoney = cartResult.ProductCarts
-                        .Sum(pc => pc.Variant.Price *
-                            (pc.Variant.Product.Discount != null && pc.Variant.Product.Discount.ExpireDate > DateTime.Now
-                                ? 1 - pc.Variant.Product.Discount.DiscountValue / 100
-                                : 1) * pc.Quantity);
+                    .Sum(pc =>
+                    {
+                        return pc.Variant.Price *
+                        (pc.Variant.Product.Discount != null && pc.Variant.Product.Discount.ExpireDate > DateTime.Now ?
+                            1 - (decimal)pc.Variant.Product.Discount.DiscountValue / 100.0m : 1)
+                            * pc.Quantity;
+                    });
+
                 await _dbContext.SaveChangesAsync();
 
                 // Lưu thay đổi
@@ -147,7 +129,7 @@ namespace PrBeleBackend.API.Controllers
                 }),
 
                     Quantity = item?.Quantity,
-                    Discout = item?.Variant?.Product?.Discount?.ExpireDate > DateTime.Now ? item.Variant.Product?.Discount.DiscountValue : 0,
+                    Discount = item?.Variant?.Product?.Discount?.ExpireDate > DateTime.Now ? item.Variant.Product?.Discount.DiscountValue : 0,
                 });
                 return Ok(new
                 {

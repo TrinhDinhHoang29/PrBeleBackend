@@ -17,7 +17,8 @@ namespace PrBeleBackend.Core.DTO.CartDTOs
     public class CartItem
     {
         public string ProductName { get; set; } // Tên sản phẩm
-        public List<AttributeDetail> Attributes { get; set; } // Danh sách thuộc tính sản phẩm (nếu có)
+        public string Thumbnail { get; set; }
+        public dynamic Attributes { get; set; } // Danh sách thuộc tính sản phẩm (nếu có)
         public int Quantity { get; set; } // Số lượng sản phẩm
         public decimal Discount { get; set; } // Mức giảm giá
     }
@@ -36,11 +37,11 @@ namespace PrBeleBackend.Core.DTO.CartDTOs
                 CartItems = cart?.ProductCarts.Select(item => new CartItem
                 {
                     ProductName = item.Variant?.Product?.Name,
-                    Attributes = item.Variant?.VariantAttributeValues?.Select(e => new AttributeDetail
-                    {
-                        AttributeType = e.AttributeValue.AttributeType.Name,
-                        AttributeValue = e.AttributeValue.Name
-                    }).ToList(),
+                    Thumbnail = item.Variant?.Thumbnail,
+                    Attributes = item.Variant?.VariantAttributeValues?.Select(e => new Dictionary<string, string>
+                {
+                    { e.AttributeValue.AttributeType.Name, e.AttributeValue.Name}
+                    }),
                     Quantity = item.Quantity,
                     Discount = item.Variant?.Product?.Discount?.ExpireDate > DateTime.Now
                ? item.Variant.Product.Discount.DiscountValue
@@ -48,5 +49,6 @@ namespace PrBeleBackend.Core.DTO.CartDTOs
                 }).ToList()
             };
         }
+
     }
 }

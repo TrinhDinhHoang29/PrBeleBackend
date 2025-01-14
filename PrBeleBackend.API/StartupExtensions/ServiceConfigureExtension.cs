@@ -147,6 +147,8 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IContactUpdaterService, ContactUpdaterService>();
             Services.AddScoped<IContactDeleterService, ContactDeleterService>();
             Services.AddScoped<IContactSorterService, ContactSorterService>();
+            Services.AddScoped<IContactAdderContract,ContactAdderService>();
+
             #endregion
 
             #region DI Auth
