@@ -16,6 +16,7 @@ namespace PrBeleBackend.Core.DTO.CartDTOs
     }
     public class CartItem
     {
+        public int ProductId { get; set; }
         public string ProductName { get; set; } // Tên sản phẩm
         public string Thumbnail { get; set; }
         public dynamic Attributes { get; set; } // Danh sách thuộc tính sản phẩm (nếu có)
@@ -37,6 +38,7 @@ namespace PrBeleBackend.Core.DTO.CartDTOs
                 TotalMoney = cart.TotalMoney,
                 CartItems = cart?.ProductCarts.Select(item => new CartItem
                 {
+                    ProductId = item.Variant.ProductId,
                     ProductName = item.Variant?.Product?.Name,
                     Thumbnail = item.Variant?.Thumbnail,
                     ProductPrice = item.Variant.Price,

@@ -120,7 +120,7 @@ namespace PrBeleBackend.API.Controllers
                 // Lưu thay đổi
                 var CartItems = cartResult?.ProductCarts.Select(item => new
                 {
-                    ProductId = item.Variant?.Product?.Id,
+                    ProductId = item.Variant?.ProductId,
                     ProductName = item.Variant?.Product?.Name,
                     ProductPrice = item.Variant?.Price,
                     Thumbnail = item.Variant.Thumbnail,
