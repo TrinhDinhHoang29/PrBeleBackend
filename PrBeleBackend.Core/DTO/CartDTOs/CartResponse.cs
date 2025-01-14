@@ -20,6 +20,7 @@ namespace PrBeleBackend.Core.DTO.CartDTOs
         public string Thumbnail { get; set; }
         public dynamic Attributes { get; set; } // Danh sách thuộc tính sản phẩm (nếu có)
         public int Quantity { get; set; } // Số lượng sản phẩm
+        public decimal ProductPrice { get; set; }
         public decimal Discount { get; set; } // Mức giảm giá
     }
     public class AttributeDetail
@@ -38,6 +39,7 @@ namespace PrBeleBackend.Core.DTO.CartDTOs
                 {
                     ProductName = item.Variant?.Product?.Name,
                     Thumbnail = item.Variant?.Thumbnail,
+                    ProductPrice = item.Variant.Price,
                     Attributes = item.Variant?.VariantAttributeValues?.Select(e => new Dictionary<string, string>
                 {
                     { e.AttributeValue.AttributeType.Name, e.AttributeValue.Name}
