@@ -123,6 +123,7 @@ namespace PrBeleBackend.API.Controllers
                     ProductId = item.Variant?.ProductId,
                     ProductName = item.Variant?.Product?.Name,
                     ProductPrice = item.Variant?.Price,
+                    VariantId = item.VariantId,
                     Thumbnail = item.Variant.Thumbnail,
                     Attributes = item?.Variant?.VariantAttributeValues?.Select(e => new Dictionary<string, string?>
                 {

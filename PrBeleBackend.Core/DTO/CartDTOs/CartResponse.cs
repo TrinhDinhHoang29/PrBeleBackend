@@ -18,7 +18,7 @@ namespace PrBeleBackend.Core.DTO.CartDTOs
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; } // Tên sản phẩm
-        public string VariantId { get; set; }
+        public int VariantId { get; set; }
         public string Thumbnail { get; set; }
         public dynamic Attributes { get; set; } // Danh sách thuộc tính sản phẩm (nếu có)
         public int Quantity { get; set; } // Số lượng sản phẩm
