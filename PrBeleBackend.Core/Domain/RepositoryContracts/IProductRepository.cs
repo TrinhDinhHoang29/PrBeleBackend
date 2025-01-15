@@ -15,13 +15,17 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
     {
 
         public Task<List<ProductResponse>> GetWishList(int customerId);
-        public Task<List<Product>> SearchProduct(List<string> keywords, int page = 1, int limit = 10);
+        public Task<List<ProductResponse>> SearchProduct(List<string> keywords, int page = 1, int limit = 10);
 
         public bool IsHaveTag(int productId, int tagId);
 
         public bool IsHaveAttributeType(int productId, int attTypId);
 
         public bool IsHaveAttributeValue(int productId, string value);
+
+        public bool IsHaveCategory(int productId, int categoryId);
+
+        public bool IsHaveCategoryRef(int productId, int categoryRefId);
 
         public Task<ProductResponse?> ProductDetailAdmin(int id);
 

@@ -2714,6 +2714,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.settings.AddRange(settings);
                 _context.SaveChanges();
             }
+            //if(!_contex)
         }
     }
 }

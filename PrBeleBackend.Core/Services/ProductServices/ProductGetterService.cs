@@ -72,6 +72,16 @@ namespace PrBeleBackend.Core.Services.ProductServices
 
                     return productsByAttTypId;
 
+                case "CategoryId":
+                    List<ProductResponse> productByCatId = await this._productRepository.FilterProduct(products, product => this._productRepository.IsHaveCategory(product.Id, Convert.ToInt32(searchStr)));
+
+                    return productByCatId;
+
+                case "CategoryRefId":
+                    List<ProductResponse> productByCatRefId = await this._productRepository.FilterProduct(products, product => this._productRepository.IsHaveCategory(product.Id, Convert.ToInt32(searchStr)));
+
+                    return productByCatRefId;
+
                 case "Color":
                 case "Size":
                     List<ProductResponse> productsByAttValId = await this._productRepository.FilterProduct(products, product => this._productRepository.IsHaveAttributeValue(product.Id, searchStr));

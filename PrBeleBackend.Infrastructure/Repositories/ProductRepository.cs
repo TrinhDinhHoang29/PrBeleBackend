@@ -81,7 +81,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<Product>> SearchProduct(List<string> keywords, int page = 1, int limit = 10)
+        public async Task<List<ProductResponse>> SearchProduct(List<string> keywords, int page = 1, int limit = 10)
         {
             List<ProductKeyword> result = new List<ProductKeyword>();
 
@@ -99,19 +99,58 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 }
             }
 
-            List<Product?> products = result
+            List<ProductResponse?> products = result
                 .GroupBy(k => k.ProductId)
                 .OrderBy(k => k.Count())
                 .Skip(limit * (page - 1))
                 .Take(limit)
-                .Select(pk => pk.Select(p => new Product
+                .Select(pk => pk.Select(p => new ProductResponse
                 {
                     Id = p.Product.Id,
                     Name = p.Product.Name,
+                    Category = _context.categories
+                    .Where(c => c.Id == p.Product.CategoryId)
+                    .FirstOrDefault(),
+                    Description = p.Product.Description,
                     Discount = p.Product.Discount,
                     BasePrice = p.Product.BasePrice,
                     Slug = p.Product.Slug,
+                    View = p.Product.View,
+                    Like = p.Product.Like,
                     Thumbnail = p.Product.Thumbnail,
+                    Status = p.Product.Status,
+                    UpdatedAt = p.Product.UpdatedAt,
+                    CreatedAt = p.Product.CreatedAt,
+                    RateAVG = _context.rates
+                    .Where(r => r.ProductId == p.Product.Id)
+                    .Select(r => r.Star).ToList(),
+                    VariantColors = _context.variantAttributeValues
+                    .Include(varAttVal => varAttVal.Variant)
+                    .Include(varAttVal => varAttVal.AttributeValue)
+                    .ThenInclude(attVal => attVal.AttributeType)
+                    .Where(varAttVal => varAttVal.Variant.ProductId == p.Product.Id && varAttVal.AttributeValue.AttributeType.Name == "Color")
+                    .Select(varAttVal => new VariantColorReponse
+                    {
+                        VariantId = varAttVal.VariantId,
+                        Color = varAttVal.AttributeValue.Value,
+                        ColorId = varAttVal.AttributeValueId,
+                        Thumbnail = varAttVal.Variant.Thumbnail,
+                        Price = varAttVal.Variant.Price
+                    }).ToList(),
+                    Tags = _context.tags.Join(
+                    _context.productTags,
+                    t => t.Id,
+                    pt => pt.TagId,
+                    (t, pt) => new { t, pt }
+                ).Where(res => res.pt.ProductId == p.Product.Id)
+                .Select(res => res.t).ToList(),
+                    AttributeTypes = _context.attributeTypes.Join(
+                    _context.productAttributeTypes,
+                    at => at.Id,
+                    pat => pat.AttributeTypeId,
+                    (at, pat) => new { at, pat }
+                ).Where(res => res.pat.ProductId == p.Product.Id)
+                .Select(res => res.at).ToList()
                 }).FirstOrDefault())
                 .ToList();
 
@@ -134,6 +173,18 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .Include(vav => vav.Variant)
                 .Include(vav => vav.AttributeValue)
                 .Any(vav => vav.Variant.ProductId == productId && vav.AttributeValue.Value == value);
+        }
+
+        public bool IsHaveCategory(int productId, int categoryId)
+        {
+            return this._context.products.Any(p => p.Id == productId && p.CategoryId == categoryId);
+        }
+
+        public bool IsHaveCategoryRef(int productId, int categoryRefId)
+        {
+            return this._context.products
+                .Include(p => p.Category)
+                .Any(p => p.Id == productId && p.Category.ReferenceCategoryId == categoryRefId);
         }
 
         public async Task<ProductResponse?> ProductDetailAdmin(int id)

@@ -128,14 +128,18 @@ namespace PrBeleBackend.API.Controllers
         {
             try
             {
-                List<Product> productResponse = await this._productSearcherService.SearchProduct(searchName);
+                List<ProductResponse> productResponse = await this._productSearcherService.SearchProduct(searchName, page, limit);
 
                 return Ok(new
                 {
                     status = 200,
                     data = new
                     {
-                        searchedProducts = productResponse
+                        searchedProducts = productResponse,
+                        pagination = new { 
+                            currentPage = page,
+                            totalPage = page + 1
+                        }
                     },
                     message = "Search product success !"
                 });
