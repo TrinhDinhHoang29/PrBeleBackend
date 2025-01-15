@@ -35,7 +35,7 @@ namespace PrBeleBackend.Core.Services.ProductServices
 
             keywords.AddRange(keywordsType2);
 
-            List<Product> keywordEle = await this._productRepository.SearchKeyword(keywords, page, limit);
+            List<Product> keywordEle = await this._productRepository.SearchProduct(keywords, page, limit);
 
             return keywordEle;
         }
