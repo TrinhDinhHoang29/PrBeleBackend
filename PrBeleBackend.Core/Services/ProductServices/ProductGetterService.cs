@@ -21,19 +21,24 @@ namespace PrBeleBackend.Core.Services.ProductServices
             this._productRepository = productRepository;
         }
 
-        public async Task<List<Product>> GetProductsWithCondition(int? id, string? slug)
+        public async Task<ProductResponse?> ProductDetailClient(int? id, string? slug)
         {
-            return await this._productRepository.GetProductsWithCondition(id, slug);
+            return await this._productRepository.ProductDetailClient(id, slug);
         }
 
-        public async Task<List<ProductResponse>> SelectProductForClient(List<Product> products)
+        public async Task<ProductResponse?> ProductDetailAdmin(int id)
         {
-            return this._productRepository.SelectProductForClient(products);
+            return await this._productRepository.ProductDetailAdmin(id);
         }
 
-        public async Task<List<ProductResponse>> SelectProductForAdmin(List<Product> products)
+        public async Task<List<ProductResponse>> GetAllProductClient()
         {
-            return await this._productRepository.SelectProductForAdmin(products);
+            return await this._productRepository.GetAllProductClient();
+        }
+
+        public async Task<List<ProductResponse>> GetAllProductAdmin()
+        {
+            return await this._productRepository.GetAllProductAdmin();
         }
 
         public async Task<List<ProductResponse>> GetFilteredProduct(List<ProductResponse> products, string? searchBy = "", string? searchStr = "")

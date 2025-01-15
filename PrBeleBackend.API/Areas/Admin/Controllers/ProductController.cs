@@ -55,9 +55,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         {
             try
             {
-                List<Product> products = await this._productGetterService.GetProductsWithCondition(null, null);
-
-                IEnumerable<ProductResponse> productResponses = await _productGetterService.GetFilteredProduct(await this._productGetterService.SelectProductForAdmin(products), field, query);
+                IEnumerable<ProductResponse> productResponses = await _productGetterService.GetFilteredProduct(await this._productGetterService.GetAllProductAdmin(), field, query);
                 
                 if(status != null)
                 {
@@ -96,16 +94,14 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Detail(int id)
         {
-            List<Product> product = await this._productGetterService.GetProductsWithCondition(id, null);
-
-            ProductResponse? productResponses = (await this._productGetterService.SelectProductForAdmin(product)).FirstOrDefault();
+            ProductResponse? productResponse =  await this._productGetterService.ProductDetailAdmin(id);
 
             return Ok(new
             {
                 status = 200,
                 data = new
                 {
-                    product = product
+                    product = productResponse
                 },
                 message = "Get product success !"
             });

@@ -32,9 +32,7 @@ namespace PrBeleBackend.API.Controllers
         {
             try
             {
-                List<Product> products = await this._productGetterService.GetProductsWithCondition(null, null);
-
-                List<ProductResponse> productResponses = await this._productGetterService.SelectProductForClient(products);
+                List<ProductResponse> productResponses = await this._productGetterService.GetAllProductAdmin();
 
                 productResponses = productResponses
                     .Where(p => p.Category.Status == 1)
@@ -45,7 +43,7 @@ namespace PrBeleBackend.API.Controllers
                 {
                     foreach (var set in filter)
                     {
-                        if(set.Key != "page" && set.Key != "limit")
+                        if (set.Key != "page" && set.Key != "limit")
                         {
                             productResponses = await this._productGetterService.GetFilteredProduct(productResponses, set.Key, set.Value);
                         }
@@ -63,7 +61,7 @@ namespace PrBeleBackend.API.Controllers
                         pagination = new
                         {
                             currentPage = page,
-                            totalPage = Math.Ceiling(Convert.ToDecimal(products.Count()) / limit)
+                            totalPage = Math.Ceiling(Convert.ToDecimal(productResponses.Count()) / limit)
                         }
                     },
                     message = "Get products success !"
@@ -88,9 +86,7 @@ namespace PrBeleBackend.API.Controllers
         {
             try
             {
-                List<Product> products = await this._productSearcherService.SearchProduct(searchName, page, limit);
-
-                List<ProductResponse> productResponse = await this._productGetterService.SelectProductForClient(products);
+                List<Product> productResponse = await this._productSearcherService.SearchProduct(searchName);
 
                 return Ok(new
                 {
@@ -115,9 +111,7 @@ namespace PrBeleBackend.API.Controllers
         [HttpGet("{slug}")]
         public async Task<IActionResult> Detail(string slug)
         {
-            List<Product> product = await this._productGetterService.GetProductsWithCondition(null, slug);
-
-            ProductResponse? productResponse = (await this._productGetterService.SelectProductForClient(product)).FirstOrDefault();
+            ProductResponse? productResponse = await this._productGetterService.ProductDetailClient(null, slug);
 
             return Ok(new
             {

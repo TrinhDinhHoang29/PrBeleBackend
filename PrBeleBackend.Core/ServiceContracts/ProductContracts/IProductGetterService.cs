@@ -12,11 +12,13 @@ namespace PrBeleBackend.Core.ServiceContracts.ProductContracts
 {
     public interface IProductGetterService
     {
-        public Task<List<Product>> GetProductsWithCondition(int? id, string? slug);
+        public Task<ProductResponse?> ProductDetailClient(int? id, string? slug);
 
-        public Task<List<ProductResponse>> SelectProductForClient(List<Product> products);
+        public Task<ProductResponse?> ProductDetailAdmin(int id);
 
-        public Task<List<ProductResponse>> SelectProductForAdmin(List<Product> products);
+        public Task<List<ProductResponse>> GetAllProductClient();
+
+        public Task<List<ProductResponse>> GetAllProductAdmin();
 
         public Task<List<ProductResponse>> GetFilteredProduct(List<ProductResponse> products, string? searchBy, string? searchStr);
     }

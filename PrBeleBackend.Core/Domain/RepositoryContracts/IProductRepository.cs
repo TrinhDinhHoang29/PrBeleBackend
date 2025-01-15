@@ -13,7 +13,7 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
 {
     public interface IProductRepository
     {
-        public Task<List<Product>> SearchKeyword(List<string> keywords, int page = 1, int limit = 10);
+        public Task<List<Product>> SearchProduct(List<string> keywords, int page = 1, int limit = 10);
 
         public bool IsHaveTag(int productId, int tagId);
 
@@ -21,11 +21,13 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
 
         public bool IsHaveAttributeValue(int productId, string value);
 
-        public Task<List<Product>> GetProductsWithCondition(int? id, string? slug);
+        public Task<ProductResponse?> ProductDetailAdmin(int id);
 
-        public List<ProductResponse> SelectProductForClient(List<Product> products);
+        public Task<ProductResponse?> ProductDetailClient(int? id, string? slug);
 
-        public Task<List<ProductResponse>> SelectProductForAdmin(List<Product> products);
+        public Task<List<ProductResponse>> GetAllProductClient();
+
+        public Task<List<ProductResponse>> GetAllProductAdmin();
 
         public Task<List<ProductResponse>> FilterProduct(List<ProductResponse> products, Func<ProductResponse, bool> predicate);
 
