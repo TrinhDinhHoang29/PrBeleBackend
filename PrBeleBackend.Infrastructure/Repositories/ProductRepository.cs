@@ -34,9 +34,9 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 {
                     Id = wl.Product.Id,
                     Name = wl.Product.Name,
-                    Category = _context.categories
-                    .Where(c => c.Id == wl.Product.CategoryId)
-                    .FirstOrDefault(),
+                    //Category = _context.categories
+                    //.Where(c => c.Id == wl.Product.CategoryId)
+                    //.FirstOrDefault(),
                     Description = wl.Product.Description,
                     Discount = wl.Product.Discount,
                     BasePrice = wl.Product.BasePrice,
@@ -70,13 +70,13 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     (t, pt) => new { t, pt }
                 ).Where(res => res.pt.ProductId == wl.Product.Id)
                 .Select(res => res.t).ToList(),
-                    AttributeTypes = _context.attributeTypes.Join(
-                    _context.productAttributeTypes,
-                    at => at.Id,
-                    pat => pat.AttributeTypeId,
-                    (at, pat) => new { at, pat }
-                ).Where(res => res.pat.ProductId == wl.Product.Id)
-                .Select(res => res.at).ToList()
+                //    AttributeTypes = _context.attributeTypes.Join(
+                //    _context.productAttributeTypes,
+                //    at => at.Id,
+                //    pat => pat.AttributeTypeId,
+                //    (at, pat) => new { at, pat }
+                //).Where(res => res.pat.ProductId == wl.Product.Id)
+                //.Select(res => res.at).ToList()
                 })
                 .ToListAsync();
         }
@@ -90,7 +90,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 Keyword? item = this._context.keywords
                         .Include(k => k.ProductKeywords)
                         .ThenInclude(k => k.Product)
-                        .Where(k => k.Key == keyword)
+                        .Where(k => k.Key.Contains(keyword))
                         .FirstOrDefault();
 
                 if (item != null)
@@ -108,15 +108,15 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 {
                     Id = p.Product.Id,
                     Name = p.Product.Name,
-                    Category = _context.categories
-                    .Where(c => c.Id == p.Product.CategoryId)
-                    .FirstOrDefault(),
+                    //Category = _context.categories
+                    //.Where(c => c.Id == p.Product.CategoryId)
+                    //.FirstOrDefault(),
                     Description = p.Product.Description,
                     Discount = p.Product.Discount,
                     BasePrice = p.Product.BasePrice,
                     Slug = p.Product.Slug,
-                    View = p.Product.View,
-                    Like = p.Product.Like,
+                    //View = p.Product.View,
+                    //Like = p.Product.Like,
                     Thumbnail = p.Product.Thumbnail,
                     Status = p.Product.Status,
                     UpdatedAt = p.Product.UpdatedAt,
@@ -144,13 +144,13 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     (t, pt) => new { t, pt }
                 ).Where(res => res.pt.ProductId == p.Product.Id)
                 .Select(res => res.t).ToList(),
-                    AttributeTypes = _context.attributeTypes.Join(
-                    _context.productAttributeTypes,
-                    at => at.Id,
-                    pat => pat.AttributeTypeId,
-                    (at, pat) => new { at, pat }
-                ).Where(res => res.pat.ProductId == p.Product.Id)
-                .Select(res => res.at).ToList()
+                //    AttributeTypes = _context.attributeTypes.Join(
+                //    _context.productAttributeTypes,
+                //    at => at.Id,
+                //    pat => pat.AttributeTypeId,
+                //    (at, pat) => new { at, pat }
+                //).Where(res => res.pat.ProductId == p.Product.Id)
+                //.Select(res => res.at).ToList()
                 }).FirstOrDefault())
                 .ToList();
 
@@ -234,15 +234,15 @@ namespace PrBeleBackend.Infrastructure.Repositories
             {
                 Id = p.Id,
                 Name = p.Name,
-                Category = _context.categories
-                    .Where(c => c.Id == p.CategoryId)
-                    .FirstOrDefault(),
+                //Category = _context.categories
+                //    .Where(c => c.Id == p.CategoryId)
+                //    .FirstOrDefault(),
                 Description = p.Description,
                 Discount = p.Discount,
                 BasePrice = p.BasePrice,
                 Slug = p.Slug,
-                View = p.View,
-                Like = p.Like,
+                //View = p.View,
+                //Like = p.Like,
                 Thumbnail = p.Thumbnail,
                 Status = p.Status,
                 UpdatedAt = p.UpdatedAt,
@@ -270,13 +270,13 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     (t, pt) => new { t, pt }
                 ).Where(res => res.pt.ProductId == p.Id)
                 .Select(res => res.t).ToList(),
-                AttributeTypes = _context.attributeTypes.Join(
-                    _context.productAttributeTypes,
-                    at => at.Id,
-                    pat => pat.AttributeTypeId,
-                    (at, pat) => new { at, pat }
-                ).Where(res => res.pat.ProductId == p.Id)
-                .Select(res => res.at).ToList()
+                //AttributeTypes = _context.attributeTypes.Join(
+                //    _context.productAttributeTypes,
+                //    at => at.Id,
+                //    pat => pat.AttributeTypeId,
+                //    (at, pat) => new { at, pat }
+                //).Where(res => res.pat.ProductId == p.Id)
+                //.Select(res => res.at).ToList()
             })
             .FirstOrDefaultAsync();
         }
@@ -291,15 +291,15 @@ namespace PrBeleBackend.Infrastructure.Repositories
            {
                Id = p.Id,
                Name = p.Name,
-               Category = _context.categories
-                    .Where(c => c.Id == p.CategoryId)
-                    .FirstOrDefault(),
+               //Category = _context.categories
+               //     .Where(c => c.Id == p.CategoryId)
+               //     .FirstOrDefault(),
                Description = p.Description,
                Discount = p.Discount,
                BasePrice = p.BasePrice,
                Slug = p.Slug,
-               View = p.View,
-               Like = p.Like,
+               //View = p.View,
+               //Like = p.Like,
                Thumbnail = p.Thumbnail,
                Status = p.Status,
                UpdatedAt = p.UpdatedAt,
@@ -327,13 +327,13 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     (t, pt) => new { t, pt }
                 ).Where(res => res.pt.ProductId == p.Id)
                 .Select(res => res.t).ToList(),
-               AttributeTypes = _context.attributeTypes.Join(
-                    _context.productAttributeTypes,
-                    at => at.Id,
-                    pat => pat.AttributeTypeId,
-                    (at, pat) => new { at, pat }
-                ).Where(res => res.pat.ProductId == p.Id)
-                .Select(res => res.at).ToList()
+               //AttributeTypes = _context.attributeTypes.Join(
+               //     _context.productAttributeTypes,
+               //     at => at.Id,
+               //     pat => pat.AttributeTypeId,
+               //     (at, pat) => new { at, pat }
+               // ).Where(res => res.pat.ProductId == p.Id)
+               // .Select(res => res.at).ToList()
            })
             .ToListAsync();
         }

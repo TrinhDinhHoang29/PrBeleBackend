@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PrBeleBackend.Core.Domain.Entities
 {
-    internal class Blog
+    public class Blog
     {
     }
 }
