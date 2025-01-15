@@ -74,7 +74,7 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
                         products = productSorted,
                         pagination = new {
                             currentPage = page,
-                            totalPage = Math.Ceiling(Convert.ToDecimal(products.Count()) / limit)
+                            totalPage = Math.Ceiling(Convert.ToDecimal(productResponses.Count()) / limit)
                         }
                     },
                     message = "Get products success !"
