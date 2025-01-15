@@ -2,6 +2,7 @@
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.DTO.ProductDTOs;
 using PrBeleBackend.Core.ServiceContracts.ProductContracts;
+using System.Security.Claims;
 
 namespace PrBeleBackend.API.Controllers
 {
@@ -23,7 +24,48 @@ namespace PrBeleBackend.API.Controllers
             this._productSearcherService = productSearcherService;
         }
 
-        [HttpGet]
+        [HttpGet("wishlish")]
+        public async Task<IActionResult> GetWishList(int page = 1, int limit = 10)
+        {
+            try
+            {
+                int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                List<ProductResponse> productResponses = await this._productGetterService.GetWishList(customerId);
+
+                productResponses = productResponses
+                    .Where(p => p.Category.Status == 1)
+                    .Where(p => p.Status == 1)
+                    .ToList();
+
+                List<ProductResponse> productsPagination = productResponses.Skip(limit * (page - 1)).Take(limit).ToList();
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        products = productsPagination,
+                        pagination = new
+                        {
+                            currentPage = page,
+                            totalPage = Math.Ceiling(Convert.ToDecimal(productResponses.Count()) / limit)
+                        }
+                    },
+                    message = "Get wishlist success !"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
+            [HttpGet]
         public async Task<IActionResult> GetFilteredProduct(
             Dictionary<string, string>? filter,
             int page = 1,
@@ -32,7 +74,7 @@ namespace PrBeleBackend.API.Controllers
         {
             try
             {
-                List<ProductResponse> productResponses = await this._productGetterService.GetAllProductAdmin();
+                List<ProductResponse> productResponses = await this._productGetterService.GetAllProductClient();
 
                 productResponses = productResponses
                     .Where(p => p.Category.Status == 1)

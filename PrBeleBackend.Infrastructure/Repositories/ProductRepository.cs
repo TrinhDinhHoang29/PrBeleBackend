@@ -25,6 +25,62 @@ namespace PrBeleBackend.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<List<ProductResponse>> GetWishList(int customerId)
+        {
+            return await this._context.wishList
+                .Where(wl => wl.CustomerId == customerId)
+                .Include(wl => wl.Product)
+                .Select(wl => new ProductResponse
+                {
+                    Id = wl.Product.Id,
+                    Name = wl.Product.Name,
+                    Category = _context.categories
+                    .Where(c => c.Id == wl.Product.CategoryId)
+                    .FirstOrDefault(),
+                    Description = wl.Product.Description,
+                    Discount = wl.Product.Discount,
+                    BasePrice = wl.Product.BasePrice,
+                    Slug = wl.Product.Slug,
+                    View = wl.Product.View,
+                    Like = wl.Product.Like,
+                    Thumbnail = wl.Product.Thumbnail,
+                    Status = wl.Product.Status,
+                    UpdatedAt = wl.Product.UpdatedAt,
+                    CreatedAt = wl.Product.CreatedAt,
+                    RateAVG = _context.rates
+                    .Where(r => r.ProductId == wl.Product.Id)
+                    .Select(r => r.Star).ToList(),
+                    VariantColors = _context.variantAttributeValues
+                    .Include(varAttVal => varAttVal.Variant)
+                    .Include(varAttVal => varAttVal.AttributeValue)
+                    .ThenInclude(attVal => attVal.AttributeType)
+                    .Where(varAttVal => varAttVal.Variant.ProductId == wl.Product.Id && varAttVal.AttributeValue.AttributeType.Name == "Color")
+                    .Select(varAttVal => new VariantColorReponse
+                    {
+                        VariantId = varAttVal.VariantId,
+                        Color = varAttVal.AttributeValue.Value,
+                        ColorId = varAttVal.AttributeValueId,
+                        Thumbnail = varAttVal.Variant.Thumbnail,
+                        Price = varAttVal.Variant.Price
+                    }).ToList(),
+                    Tags = _context.tags.Join(
+                    _context.productTags,
+                    t => t.Id,
+                    pt => pt.TagId,
+                    (t, pt) => new { t, pt }
+                ).Where(res => res.pt.ProductId == wl.Product.Id)
+                .Select(res => res.t).ToList(),
+                    AttributeTypes = _context.attributeTypes.Join(
+                    _context.productAttributeTypes,
+                    at => at.Id,
+                    pat => pat.AttributeTypeId,
+                    (at, pat) => new { at, pat }
+                ).Where(res => res.pat.ProductId == wl.Product.Id)
+                .Select(res => res.at).ToList()
+                })
+                .ToListAsync();
+        }
+
         public async Task<List<Product>> SearchProduct(List<string> keywords, int page = 1, int limit = 10)
         {
             List<ProductKeyword> result = new List<ProductKeyword>();
@@ -37,7 +93,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                         .Where(k => k.Key == keyword)
                         .FirstOrDefault();
 
-                if(item != null)
+                if (item != null)
                 {
                     result.AddRange(item.ProductKeywords);
                 }

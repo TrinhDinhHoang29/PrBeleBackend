@@ -877,6 +877,21 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.ToTable("VariantAttributeValue", (string)null);
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.WishList", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "CustomerId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("WishList", (string)null);
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Account", b =>
                 {
                     b.HasOne("PrBeleBackend.Core.Domain.Entities.Role", "Role")
@@ -1122,6 +1137,25 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("Variant");
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.WishList", b =>
+                {
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Customer", "Customer")
+                        .WithMany("WishList")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Product", "Product")
+                        .WithMany("WishList")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Account", b =>
                 {
                     b.Navigation("Rates");
@@ -1159,6 +1193,8 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Rates");
+
+                    b.Navigation("WishList");
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Discount", b =>
@@ -1192,6 +1228,8 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("Rates");
 
                     b.Navigation("Variants");
+
+                    b.Navigation("WishList");
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Role", b =>

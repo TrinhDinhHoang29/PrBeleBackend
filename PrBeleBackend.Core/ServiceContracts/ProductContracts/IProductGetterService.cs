@@ -12,6 +12,7 @@ namespace PrBeleBackend.Core.ServiceContracts.ProductContracts
 {
     public interface IProductGetterService
     {
+        public Task<List<ProductResponse>> GetWishList(int customerId);
         public Task<ProductResponse?> ProductDetailClient(int? id, string? slug);
 
         public Task<ProductResponse?> ProductDetailAdmin(int id);

@@ -21,6 +21,11 @@ namespace PrBeleBackend.Core.Services.ProductServices
             this._productRepository = productRepository;
         }
 
+        public async Task<List<ProductResponse>> GetWishList(int customerId)
+        {
+            return await this._productRepository.GetWishList(customerId);
+        }
+
         public async Task<ProductResponse?> ProductDetailClient(int? id, string? slug)
         {
             return await this._productRepository.ProductDetailClient(id, slug);

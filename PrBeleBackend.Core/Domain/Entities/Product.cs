@@ -42,6 +42,7 @@ namespace PrBeleBackend.Core.Domain.Entities
 
         public Category? Category { get; set; }
 
+        public List<WishList> WishList { get; set; }
         public List<ProductKeyword>? ProductKeywords { get; set; }
         public List<ProductAttributeType>? ProductAttributeTypes { get; set; }
         public Discount? Discount { get; set; }

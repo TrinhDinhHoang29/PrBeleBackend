@@ -13,6 +13,8 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
 {
     public interface IProductRepository
     {
+
+        public Task<List<ProductResponse>> GetWishList(int customerId);
         public Task<List<Product>> SearchProduct(List<string> keywords, int page = 1, int limit = 10);
 
         public bool IsHaveTag(int productId, int tagId);
