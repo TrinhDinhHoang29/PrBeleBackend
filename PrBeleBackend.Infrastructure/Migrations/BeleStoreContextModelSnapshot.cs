@@ -179,6 +179,66 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.ToTable("AttributeValue", (string)null);
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Blog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedAt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Deleted")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Blog", (string)null);
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.BlogContent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ContentText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.ToTable("BlogContent", (string)null);
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Cart", b =>
                 {
                     b.Property<int>("Id")
@@ -925,6 +985,17 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("AttributeType");
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.BlogContent", b =>
+                {
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Blog", "Blog")
+                        .WithMany("Contents")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Cart", b =>
                 {
                     b.HasOne("PrBeleBackend.Core.Domain.Entities.Customer", "Customer")
@@ -1171,6 +1242,11 @@ namespace PrBeleBackend.Infrastructure.Migrations
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.AttributeValue", b =>
                 {
                     b.Navigation("VariantAttributeValues");
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Blog", b =>
+                {
+                    b.Navigation("Contents");
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Cart", b =>

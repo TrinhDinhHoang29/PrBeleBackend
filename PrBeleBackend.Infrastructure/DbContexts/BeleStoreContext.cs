@@ -40,6 +40,9 @@ namespace PrBeleBackend.Infrastructure.DbContexts
         public DbSet<Keyword> keywords { get; set; }
         public DbSet<ProductKeyword> productKeywords { get; set; }
         public DbSet<WishList> wishList { get; set; }
+        public DbSet<Blog> blogs { get; set; }
+        public DbSet<BlogContent> blogContents { get; set; }
+
 
 
         protected override void  OnModelCreating(ModelBuilder modelBuilder)
@@ -71,6 +74,15 @@ namespace PrBeleBackend.Infrastructure.DbContexts
             modelBuilder.Entity<Keyword>().ToTable("Keyword");
             modelBuilder.Entity<ProductKeyword>().ToTable("ProductKeyword");
             modelBuilder.Entity<WishList>().ToTable("WishList");
+            modelBuilder.Entity<Blog>().ToTable("Blog");
+            modelBuilder.Entity<BlogContent>().ToTable("BlogContent");
+
+            //blog start
+            modelBuilder.Entity<BlogContent>()
+                .HasOne(bc => bc.Blog)
+                .WithMany(bc => bc.Contents)
+                .HasForeignKey(bc => bc.BlogId);
+            //blog end
 
             //product customer start
             modelBuilder.Entity<Product>()

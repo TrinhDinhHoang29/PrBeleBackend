@@ -2714,7 +2714,26 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.settings.AddRange(settings);
                 _context.SaveChanges();
             }
-            //if(!_contex)
+            //if (!_context.blogs.Any())
+            //{
+            //    List<Blog> blogs = new List<Blog>()
+            //    {
+            //        new Blog
+            //        {
+            //            Title = "Giới thiệu về Bele - Best Choice for Good Style",
+            //            Status = 1,
+            //            Deleted = 0,
+            //            CreatedAt = DateTime.Now.ToString(),
+            //            Contents = new List<BlogContent>()
+            //            {
+            //                new BlogContent
+            //                {
+
+            //                }
+            //            }
+            //        }
+            //    };    
+            //}
         }
     }
 }

@@ -15,6 +15,7 @@ namespace PrBeleBackend.Core.DTO.ProductDTOs
         public int Id { get; set; }
         public string Name { get; set; }
         public Category Category { get; set; }
+        public int CategoryStatus { get; set; }
         public string Description { get; set; }
         public Discount Discount { get; set; }
         public decimal BasePrice { get; set; }

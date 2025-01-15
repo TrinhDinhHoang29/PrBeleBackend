@@ -35,9 +35,10 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 {
                     Id = wl.Product.Id,
                     Name = wl.Product.Name,
-                    //Category = _context.categories
-                    //.Where(c => c.Id == wl.Product.CategoryId)
-                    //.FirstOrDefault(),
+                    CategoryStatus = _context.categories
+                    .Where(c => c.Id == wl.Product.CategoryId)
+                    .Select(c => c.Status)
+                    .FirstOrDefault(),
                     Description = wl.Product.Description,
                     Discount = wl.Product.Discount,
                     BasePrice = wl.Product.BasePrice,
@@ -91,7 +92,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 Keyword? item = this._context.keywords
                         .Include(k => k.ProductKeywords)
                         .ThenInclude(k => k.Product)
-                        .Where(k => k.Key.Contains(keyword))
+                        .Where(k => k.Key == keyword)
                         .FirstOrDefault();
 
                 if (item != null)
@@ -100,18 +101,36 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 }
             }
 
+            if(result.Count == 0)
+            {
+                foreach (string keyword in keywords)
+                {
+                    Keyword? item = this._context.keywords
+                            .Include(k => k.ProductKeywords)
+                            .ThenInclude(k => k.Product)
+                            .Where(k => k.Key.Contains(keyword))
+                            .FirstOrDefault();
+
+                    if (item != null)
+                    {
+                        result.AddRange(item.ProductKeywords);
+                    }
+                }
+            }
+
             List<ProductResponse?> products = result
                 .GroupBy(k => k.ProductId)
-                .OrderBy(k => k.Count())
+                .OrderByDescending(k => k.Count())
                 .Skip(limit * (page - 1))
                 .Take(limit)
                 .Select(pk => pk.Select(p => new ProductResponse
                 {
                     Id = p.Product.Id,
                     Name = p.Product.Name,
-                    //Category = _context.categories
-                    //.Where(c => c.Id == p.Product.CategoryId)
-                    //.FirstOrDefault(),
+                    CategoryStatus = _context.categories
+                    .Where(c => c.Id == p.Product.CategoryId)
+                    .Select(c => c.Status)
+                    .FirstOrDefault(),
                     Description = p.Product.Description,
                     Discount = p.Product.Discount,
                     BasePrice = p.Product.BasePrice,
@@ -235,10 +254,11 @@ namespace PrBeleBackend.Infrastructure.Repositories
             {
                 Id = p.Id,
                 Name = p.Name,
-                //Category = _context.categories
-                //    .Where(c => c.Id == p.CategoryId)
-                //    .FirstOrDefault(),
-                Description = p.Description,
+               CategoryStatus = _context.categories
+                    .Where(c => c.Id == p.CategoryId)
+                    .Select(c => c.Status)
+                    .FirstOrDefault(),
+               Description = p.Description,
                 Discount = p.Discount,
                 BasePrice = p.BasePrice,
                 Slug = p.Slug,
@@ -292,9 +312,10 @@ namespace PrBeleBackend.Infrastructure.Repositories
            {
                Id = p.Id,
                Name = p.Name,
-               //Category = _context.categories
-               //     .Where(c => c.Id == p.CategoryId)
-               //     .FirstOrDefault(),
+               CategoryStatus = _context.categories
+                    .Where(c => c.Id == p.CategoryId)
+                    .Select(c => c.Status)
+                    .FirstOrDefault(),
                Description = p.Description,
                Discount = p.Discount,
                BasePrice = p.BasePrice,

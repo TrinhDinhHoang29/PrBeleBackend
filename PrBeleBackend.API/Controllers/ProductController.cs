@@ -34,7 +34,7 @@ namespace PrBeleBackend.API.Controllers
                 List<ProductResponse> productResponses = await this._productGetterService.GetWishList(customerId);
 
                 productResponses = productResponses
-                    .Where(p => p.Category.Status == 1)
+                    .Where(p => p.CategoryStatus == 1)
                     .Where(p => p.Status == 1)
                     .ToList();
 
@@ -77,7 +77,7 @@ namespace PrBeleBackend.API.Controllers
                 List<ProductResponse> productResponses = await this._productGetterService.GetAllProductClient();
 
                 productResponses = productResponses
-                    .Where(p => p.Category.Status == 1)
+                    .Where(p => p.CategoryStatus == 1)
                     .Where(p => p.Status == 1)
                     .ToList();
 
