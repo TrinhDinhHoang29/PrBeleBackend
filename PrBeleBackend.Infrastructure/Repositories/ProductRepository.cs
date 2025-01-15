@@ -26,6 +26,45 @@ namespace PrBeleBackend.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<bool> RemoveProductFromWishList(int customerId, int productId)
+        {
+            await this._context.wishList
+                .Where(wl => wl.ProductId == productId)
+                .Where(wl => wl.CustomerId == customerId)
+                .ExecuteDeleteAsync();
+
+            try
+            {
+                await this._context.SaveChangesAsync();
+
+                return true;
+            }
+            catch(DbUpdateException ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
+        public async Task<bool> AddProductToWishList(int customerId, int productId)
+        {
+            await this._context.wishList.AddAsync(new WishList
+            {
+                CustomerId = customerId,
+                ProductId = productId
+            });
+
+            try
+            {
+                await this._context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
         public async Task<List<ProductResponse>> GetWishList(int customerId)
         {
             return await this._context.wishList

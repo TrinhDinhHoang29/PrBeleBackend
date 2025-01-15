@@ -20,6 +20,22 @@ namespace PrBeleBackend.Core.Services.ProductServices
             this._productRepository = productRepository;
         }
 
+        public async Task<bool> ModifyWishList(int customerId, int productId, string action)
+        {
+            if(action == "Add")
+            {
+                return await this._productRepository.AddProductToWishList(customerId, productId);
+            }
+            else if(action == "Remove")
+            {
+                return await this._productRepository.RemoveProductFromWishList(customerId, productId);
+            }
+            else
+            {
+                throw new ArgumentNullException("Wrong action name!");
+            }
+        }
+
         public async Task<Product> ModifyProduct(ProductModifyRequest req, int id)
         {
             if(req == null)

@@ -10,6 +10,8 @@ namespace PrBeleBackend.Core.ServiceContracts.ProductContracts
 {
     public interface IProductModifierService
     {
+        public Task<bool> ModifyWishList(int customerId, int productId, string action);
+
         public Task<Product> ModifyProduct(ProductModifyRequest req, int id);
     }
 }

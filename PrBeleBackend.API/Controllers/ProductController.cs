@@ -65,7 +65,36 @@ namespace PrBeleBackend.API.Controllers
             }
         }
 
-            [HttpGet]
+        [HttpPatch("{productId}")]
+        public async Task<IActionResult> ModifyWishList(int productId, string action)
+        {
+            try
+            {
+                int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                bool res = await this._productModifierService.ModifyWishList(customerId, productId, action);
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        
+                    },
+                    message = "Modify wish list success !"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetFilteredProduct(
             Dictionary<string, string>? filter,
             int page = 1,
