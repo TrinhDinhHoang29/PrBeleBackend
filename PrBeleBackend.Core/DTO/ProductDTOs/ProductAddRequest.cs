@@ -31,6 +31,9 @@ namespace PrBeleBackend.Core.DTO.ProductDTOs
         public string Description { get; set; }
 
         [Required]
+        public string Keyword { get; set; }
+
+        [Required]
         public List<int> AttributeTypes { get; set; }
 
         [Required]

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.DTO.CategoryDTOs;
@@ -378,9 +379,42 @@ namespace PrBeleBackend.Infrastructure.Repositories
         }
 
 
-        public async Task<Product> AddProduct(Product product)
+        public async Task<Product> AddProduct(Product product, List<string>? keywords)
         {
+            product.ProductKeywords = new List<ProductKeyword>();
+
+            foreach(var keyword in keywords)
+            {
+                Keyword? keywordMatch = await this._context.keywords
+                    .Where(k => k.Key == keyword)
+                    .FirstOrDefaultAsync();
+
+                if(keywordMatch == null)
+                {
+                    Keyword keywordInsert = new Keyword()
+                    {
+                        Key = keyword,
+                        CreatedAt = DateTime.Now.ToString()
+                    };
+
+                    await this._context.keywords.AddAsync(keywordInsert);
+
+                    product.ProductKeywords.Add(new ProductKeyword
+                    {
+                        KeywordId = keywordInsert.Id
+                    });
+                }
+                else
+                {
+                    product.ProductKeywords.Add(new ProductKeyword
+                    {
+                        KeywordId = keywordMatch.Id
+                    });
+                }
+            }
+
             await this._context.products.AddAsync(product);
+
             await this._context.SaveChangesAsync();
 
             return product;

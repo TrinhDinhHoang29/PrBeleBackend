@@ -130,6 +130,17 @@ namespace PrBeleBackend.API.Controllers
             {
                 List<ProductResponse> productResponse = await this._productSearcherService.SearchProduct(searchName, page, limit);
 
+                int totalPage = 0;
+
+                if(productResponse.Count < limit)
+                {
+                    totalPage = 1;
+                }
+                else if(productResponse.Count > limit)
+                {
+                    totalPage = page + 1;
+                }
+
                 return Ok(new
                 {
                     status = 200,
@@ -138,7 +149,7 @@ namespace PrBeleBackend.API.Controllers
                         searchedProducts = productResponse,
                         pagination = new { 
                             currentPage = page,
-                            totalPage = page + 1
+                            totalPage = totalPage
                         }
                     },
                     message = "Search product success !"

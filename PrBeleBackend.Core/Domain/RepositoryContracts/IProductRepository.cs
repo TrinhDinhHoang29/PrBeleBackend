@@ -37,12 +37,11 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
 
         public Task<List<ProductResponse>> FilterProduct(List<ProductResponse> products, Func<ProductResponse, bool> predicate);
 
-        public Task<Product> AddProduct(Product product);
+        public Task<Product> AddProduct(Product product, List<string>? keywords);
 
         public Task<Product> UpdateProduct(Product product, int id);
 
         public Task<Product> ModifyProduct(ProductModifyRequest req, int id);
-
 
         public Task<Product> DeleteProduct(int id);
     }
