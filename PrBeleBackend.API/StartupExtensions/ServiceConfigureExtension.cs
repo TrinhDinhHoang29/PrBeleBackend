@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using PaymentProject.VNPay;
+
 //using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.DTO.Cloudinary;
@@ -11,6 +13,7 @@ using PrBeleBackend.Core.ServiceContracts.AccountContracts;
 using PrBeleBackend.Core.ServiceContracts.AddressContracts;
 using PrBeleBackend.Core.ServiceContracts.AttributeContracts;
 using PrBeleBackend.Core.ServiceContracts.AuthContracts;
+using PrBeleBackend.Core.ServiceContracts.CartContracts;
 using PrBeleBackend.Core.ServiceContracts.CategoryContracts;
 using PrBeleBackend.Core.ServiceContracts.ContactContracts;
 using PrBeleBackend.Core.ServiceContracts.CustomerContracts;
@@ -29,6 +32,7 @@ using PrBeleBackend.Core.Services.AccountServices;
 using PrBeleBackend.Core.Services.AddressServices;
 using PrBeleBackend.Core.Services.AttributeServices;
 using PrBeleBackend.Core.Services.AuthServices;
+using PrBeleBackend.Core.Services.CartServices;
 using PrBeleBackend.Core.Services.CategoryServices;
 using PrBeleBackend.Core.Services.ContactServices;
 using PrBeleBackend.Core.Services.CustomerServices;
@@ -143,6 +147,8 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IContactUpdaterService, ContactUpdaterService>();
             Services.AddScoped<IContactDeleterService, ContactDeleterService>();
             Services.AddScoped<IContactSorterService, ContactSorterService>();
+            Services.AddScoped<IContactAdderContract,ContactAdderService>();
+
             #endregion
 
             #region DI Auth
@@ -240,6 +246,14 @@ namespace PrBeleBackend.API.StartupExtensions
             #region DI SendEmail
             Services.AddSingleton<IEmailService,EmailService>();
             #endregion
+
+            #region DI Cart
+            Services.AddScoped<ICartRepository, CartRepository>();
+            Services.AddScoped<ICartGetterService,CartGetterService>();
+
+            #endregion
+            Services.AddScoped<IVnPayService, VnPayService>();
+
 
         }
     }

@@ -5,6 +5,7 @@ using PrBeleBackend.Infrastructure.DbContexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,12 +37,30 @@ namespace PrBeleBackend.Infrastructure.Repositories
 
         public async Task<Cart?> GetDetailCart(int UserId)
         {
-            return await _context.carts
-                .Include(a => a.ProductCarts)
-                .ThenInclude(p => p.Variant)
-                .ThenInclude(v => v.Product)
-                .ThenInclude(p => p.Discount)
-                .FirstOrDefaultAsync(c => c.UserId == UserId);
+            Cart? cart = await _context.carts
+                .Include(c => c.ProductCarts)
+                .ThenInclude(c => c.Variant)
+                .ThenInclude(c => c.Product)
+                .ThenInclude(c => c.Discount)
+                .Include(c => c.ProductCarts)
+                .ThenInclude(c => c.Variant)
+                .ThenInclude(c => c.VariantAttributeValues)
+                .ThenInclude(c => c.AttributeValue)
+                .ThenInclude(c => c.AttributeType)
+                .FirstOrDefaultAsync(a => a.UserId == UserId);
+            //var CartItems = cart?.ProductCarts.Select(item => new
+            //{
+            //    ProductName = item.Variant?.Product?.Name,
+            //    attribute = item?.Variant?.VariantAttributeValues?.Select(e => new Dictionary<string, string?>
+            //    {
+            //        { e.AttributeValue.AttributeType.Name, e.AttributeValue.Name }
+            //    }),
+
+            //    Quantity = item?.Quantity,
+            //    Discout = item?.Variant?.Product?.Discount?.ExpireDate > DateTime.Now ? item.Variant.Product?.Discount.DiscountValue : 0,
+            //});
+            return cart;
+
         }
 
 

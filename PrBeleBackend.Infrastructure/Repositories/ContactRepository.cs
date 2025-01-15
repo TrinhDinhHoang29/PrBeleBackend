@@ -18,9 +18,11 @@ namespace PrBeleBackend.Infrastructure.Repositories
         {
             _context = context;
         }
-        public Task<Contact> AddContact(Contact contact)
+        public async Task<Contact> AddContact(Contact contact)
         {
-            throw new NotImplementedException();
+            await _context.contacts.AddAsync(contact);
+            await _context.SaveChangesAsync();
+            return contact;
         }
 
         public async Task<bool> DeleteContactById(int Id)

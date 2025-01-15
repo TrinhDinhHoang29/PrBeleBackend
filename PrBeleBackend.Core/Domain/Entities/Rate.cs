@@ -19,7 +19,7 @@ namespace PrBeleBackend.Core.Domain.Entities
         public string? Content { get; set; }
         public int ReferenceRateId { get; set; }
         public int Status { get; set; }
-        public bool Deleted { get; set; }
+        public bool Deleted { get; set; } = false;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public Product? Product { get; set; }

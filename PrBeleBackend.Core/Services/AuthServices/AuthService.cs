@@ -93,6 +93,8 @@ namespace PrBeleBackend.Core.Services.AuthServices
             await _customerRepository.UpdateCustomer(existCustomer);
             return jwtResponse;
         }
+
+
         public async Task<JwtResponse> RefreshToken(RefrestTokenRequest refrestTokenRequest)
         {
             Account? account = await _accountRepository.GetAccountByRefreshToken(refrestTokenRequest.RefreshToken);
@@ -134,6 +136,24 @@ namespace PrBeleBackend.Core.Services.AuthServices
             await _customerRepository.UpdateCustomer(customer);
             return true;
 
+        }
+
+        public async Task<JwtResponse> CliRefreshToken(RefrestTokenRequest refrestTokenRequest)
+        {
+            Customer? customer = await _customerRepository.GetCustomerByRefreshToken(refrestTokenRequest.RefreshToken);
+            if (customer == null)
+            {
+                throw new Exception("Can't find token !!");
+            }
+            if (customer.RefreshTokenExpirationDateTime <= DateTime.Now)
+            {
+                throw new Exception("Refresh token has expired. Please log in again.");
+            }
+
+            JwtResponse jwtResponse = await _jwtService.GenarateJwtClient(customer.ToCustomerResponse());
+            customer.RefreshToken = jwtResponse.RefreshToken;
+            await _customerRepository.UpdateCustomer(customer);
+            return jwtResponse;
         }
     }
 }

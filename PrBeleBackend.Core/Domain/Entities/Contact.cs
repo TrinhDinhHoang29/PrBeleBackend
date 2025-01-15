@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrBeleBackend.Core.DTO.ContactDTOs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -24,5 +25,20 @@ namespace PrBeleBackend.Core.Domain.Entities
         public int Status { get; set; } 
         public bool Deleted { get; set; } = false;
         public DateTime CreatedAt { get; set; }
+    }
+    public static class ContactExtension
+    {
+        public static Contact ToContact(this ContactAddRequest contactResponse)
+        {
+            return new Contact()
+            {
+                Title = contactResponse.Title,
+                Message = contactResponse.Message,
+                FullName = contactResponse.FullName,
+                Email = contactResponse.Email,
+                PhoneNumber = contactResponse.PhoneNumber,
+
+            };
+        }
     }
 }

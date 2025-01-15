@@ -2,12 +2,8 @@
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Infrastructure.DbContexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PrBeleBackend.Infrastructure.Repositories
 {
@@ -72,6 +68,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                                .ThenInclude(v => v.AttributeType)
                 .Include(o => o.ProductOrders)
                     .ThenInclude(po => po.Variant)
+                    .ThenInclude(v=>v.Product)
 
                .FirstOrDefaultAsync(o => o.Id == Id);
 

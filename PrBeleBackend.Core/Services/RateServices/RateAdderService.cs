@@ -29,5 +29,6 @@ namespace PrBeleBackend.Core.Services.RateServices
             await _rateRepository.ReplyRate(replyRateRequest.Id,rateRequest);
             return "Reply created successfully. !";
         }
+        
     }
 }

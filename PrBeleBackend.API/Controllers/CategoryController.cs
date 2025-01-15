@@ -20,14 +20,16 @@ namespace PrBeleBackend.API.Controllers
            
             List<CategoryResponse> categories = await _categoryGetterService.GetAllCategory();
             List<CategoryResponse> parentCategories = await _categoryGetterService.GetFilteredCategory("ReferenceCategoryId","0");
-            var result = parentCategories.Select(category =>
+            var result = parentCategories.Where(r => r.Status == 1 ).Select(category =>
             {
                 return new
                 {
                     Id = category.Id,
                     Name = category.Name,
                     Slug = category.Slug,
-                    referenceCategory = categories.Where(c => c.ReferenceCategoryId == category.Id).Select(c => new
+                    referenceCategory = categories
+                    .Where(r => r.Status == 1)
+                    .Where(c => c.ReferenceCategoryId == category.Id).Select(c => new
                     {
                         Id = c.Id,
                         Name = c.Name,

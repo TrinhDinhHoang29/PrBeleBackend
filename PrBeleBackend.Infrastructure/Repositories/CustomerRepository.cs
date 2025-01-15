@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
+using PrBeleBackend.Core.DTO.CustomerDTOs;
 using PrBeleBackend.Infrastructure.DbContexts;
 using System;
 using System.Collections.Generic;
@@ -29,11 +30,26 @@ namespace PrBeleBackend.Infrastructure.Repositories
             customer.CreatedAt = DateTime.Now;
             customer.UpdatedAt = DateTime.Now;
             customer.Deleted = false;
+         
             await _context.customers.AddAsync(customer);
+           
             await _context.SaveChangesAsync();
+            await _context.carts.AddAsync(new Cart
+            {
+                UserId = customer.Id,
+                TotalMoney = 0,
+            });
+            await _context.SaveChangesAsync();
+
             return customer;
         }
-
+        public async Task<Customer?> GetCustomerByRefreshToken(string? RefreshToken)
+        {
+            Customer? customer = await _context.customers
+               .Where(a => a.Deleted == false && a.Status == 1)
+               .FirstOrDefaultAsync(a => a.RefreshToken == RefreshToken);
+            return customer;
+        }
         public async Task<bool> DeleteCustomerById(int Id)
         {
             Customer? matchingCustomer = await _context
