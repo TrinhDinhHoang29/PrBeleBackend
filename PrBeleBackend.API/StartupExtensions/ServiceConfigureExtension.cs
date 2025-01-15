@@ -161,6 +161,7 @@ namespace PrBeleBackend.API.StartupExtensions
             Services.AddScoped<IProductModifierService, ProductModifierService>();
             Services.AddScoped<IProductDeleterService, ProductDeleterService>();
             Services.AddScoped<IProductSorterService, ProductSorterService>();
+            Services.AddScoped<IProductSearcherService, ProductSearcherService>();
             #endregion
 
             #region DI Attribute

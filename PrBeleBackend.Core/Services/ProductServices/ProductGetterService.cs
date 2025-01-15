@@ -21,49 +21,20 @@ namespace PrBeleBackend.Core.Services.ProductServices
             this._productRepository = productRepository;
         }
 
-        public async Task<int> GetProductCount()
+        public async Task<List<Product>> GetProductsWithCondition(int? id, string? slug)
         {
-            return await this._productRepository.GetProductCount();
+            return await this._productRepository.GetProductsWithCondition(id, slug);
         }
 
-        public async Task<List<ProductResponse>> GetAllproduct()
+        public async Task<List<ProductResponse>> SelectProductForClient(List<Product> products)
         {
-            return await this._productRepository.GetAllProduct();
+            return this._productRepository.SelectProductForClient(products);
         }
 
-        //public async Task<List<ProductResponse>> FilterProduct
-
-        //public async Task<List<ProductResponse>> GetFilteredProduct(string? searchBy, string? searchStr, int? status = 1)
-        //{
-        //    switch (searchBy)
-        //    {
-        //        case nameof(Product.Name):
-        //            List<ProductResponse> productsByName = await this._productRepository.GetFilteredProduct(product => product.Name.Contains(searchStr), status);
-
-        //            return productsByName;
-
-        //        default:
-        //            List<ProductResponse> products = await this._productRepository.GetFilteredProduct(product => true, status);
-
-        //            return products;
-        //    }
-        //}
-
-        //public async Task<List<ProductResponse>> GetFilteredProduct(string? searchBy, string? searchStr, int? status = 1)
-        //{
-        //    switch (searchBy)
-        //    {
-        //        case nameof(Product.Name):
-        //            List<ProductResponse> productsByName = await this._productRepository.FilterProduct(await this._productRepository.GetAllProduct(status), product => product.Name.Contains(searchStr));
-
-        //            return productsByName;
-
-        //        default:
-        //            List<ProductResponse> products = await this._productRepository.FilterProduct(await this._productRepository.GetAllProduct(status), product => true);
-
-        //            return products;
-        //    }
-        //}
+        public async Task<List<ProductResponse>> SelectProductForAdmin(List<Product> products)
+        {
+            return await this._productRepository.SelectProductForAdmin(products);
+        }
 
         public async Task<List<ProductResponse>> GetFilteredProduct(List<ProductResponse> products, string? searchBy = "", string? searchStr = "")
         {
@@ -103,13 +74,6 @@ namespace PrBeleBackend.Core.Services.ProductServices
                         return productsById;
                     }
             }
-        }
-
-        public async Task<ProductResponse> GetProductById(int id)
-        {
-            ProductResponse product = await this._productRepository.GetProductById(id);
-
-            return product;
         }
     }
 }

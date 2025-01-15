@@ -246,7 +246,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
     Like = 50,
     Slug = "ao-giu-nhiet-ex-warm-modal-co-cao",
     Status = 1,
-    KeyWord = "ao,giu nhiet,ex-warm,lenzing modal,co cao,mua dong,am ap",
+    KeyWord = "ao,giunhiet,exwarm,lenzing,modal,cocao,muadong,amap",
     Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -300,7 +300,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 60,
                                 Slug = "ao-giu-nhiet-ex-warm-modal-co-trung",
                                 Status = 1,
-                                 KeyWord = "ao,giunhiet,ex-warm,lenzingmodal,cotrung,muadong,amap",
+                                 KeyWord = "ao,giunhiet,exwarm,lenzing,modal,cotrung,muadong,amap",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -354,7 +354,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 50,
                                 Slug = "ao-giu-nhiet-ex-warm-lenzing-modal-co-ngan",
                                 Status = 1,
-                                KeyWord = "ao,giunhiet,ex-warm,lenzingmodal,congan,thoaimai,mualanh,muadong,amap,tienloi",
+                                KeyWord = "ao,giunhiet,exwarm,lenzing,modal,congan,thoaimai,mualanh,muadong,amap,tienloi",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -444,7 +444,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 65,
                                 Slug = "quan-shorts-nam-coolfast-3-5-inch",
                                 Status = 1,
-                                KeyWord = "quan,quanshort,quanshortnam,chaybo,coolfast,3.5,3.5inch,thietkenhe,congnghecoolfast",
+                                KeyWord = "quan,quanshort,nam,chaybo,coolfast,3.5,3.5inch,thietkenhe,congnghecoolfast",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -462,7 +462,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 75,
                                 Slug = "quan-shorts-nam-coolfast-5-inch",
                                 Status = 1,
-                                 KeyWord = "quan,quanshort,quanshortnam,chaybo,coolfast,5,5inch,thietkenhe,congnghecoolfast",
+                                 KeyWord = "quan,quanshort,nam,chaybo,coolfast,5,5inch,thietkenhe,congnghe,coolfast",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -570,7 +570,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 50,
                                 Slug = "combo-2-doi-tat-co-trung-cotton-ribbed",
                                 Status = 1,
-                                KeyWord = "combo,2doitat,2,cotrung,ribbeb,coolmate,memmai,benbi",
+                                KeyWord = "combo,doitat,tat,2,cotrung,ribbeb,coolmate,memmai,benbi",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -588,7 +588,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 55,
                                 Slug = "combo-2-doi-tat-co-dai-cotton-ribbed",
                                 Status = 1,
-                                 KeyWord = "combo,2doitat,2,codai,cotton,ribbeb,coolmate,thoitrang,thoangkhi",
+                                 KeyWord = "combo,doitat,tat,2,codai,cotton,ribbeb,coolmate,thoitrang,thoangkhi",
                                 Deleted = false,
     CreatedAt = DateTime.Now,
     UpdatedAt = DateTime.Now
@@ -660,7 +660,7 @@ namespace PrBeleBackend.Infrastructure.Seeder
                                 Like = 70,
                                 Slug = "combo-10-doi-tat-nam-basics",
                                 Status = 1,
-                                 KeyWord = "combo,10,doitat,tatnam,bacsics,kinhte,tienloi,hangngay",
+                                 KeyWord = "combo,10,doitat,tat,tatnam,bacsics,kinhte,tienloi,hangngay",
                                 Deleted = false,
                                 CreatedAt = DateTime.Now,
                                 UpdatedAt = DateTime.Now
@@ -1543,6 +1543,1057 @@ namespace PrBeleBackend.Infrastructure.Seeder
         }
                 };
                 _context.rates.AddRange(ratesSeed);
+                _context.SaveChanges();
+            }
+
+            if(!_context.keywords.Any())
+            {
+                var keywordsSeed = new List<Keyword>()
+                {
+                    new Keyword
+                    {
+                        Key = "ao",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 1
+                            },
+                            new ProductKeyword{
+                                ProductId = 2
+                            },
+                            new ProductKeyword{
+                                ProductId = 3
+                            },
+                            new ProductKeyword{
+                                ProductId = 4
+                            },
+                            new ProductKeyword{
+                                ProductId = 5
+                            },
+                            new ProductKeyword{
+                                ProductId = 6
+                            },
+                            new ProductKeyword{
+                                ProductId = 7
+                            },
+                            new ProductKeyword{
+                                ProductId = 8
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "giunhiet",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 1
+                            },
+                            new ProductKeyword{
+                                ProductId = 2
+                            },
+                            new ProductKeyword{
+                                ProductId = 3
+                            },
+                            new ProductKeyword{
+                                ProductId = 4
+                            },
+                            new ProductKeyword{
+                                ProductId = 7
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "aothun",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 5
+                            },
+                            new ProductKeyword{
+                                ProductId = 6
+                            },
+                            new ProductKeyword{
+                                ProductId = 8
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "quan",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 9
+                            },
+                            new ProductKeyword{
+                                ProductId = 10
+                            },
+                            new ProductKeyword{
+                                ProductId = 11
+                            },
+                            new ProductKeyword{
+                                ProductId = 12
+                            },
+                            new ProductKeyword{
+                                ProductId = 13
+                            },
+                            new ProductKeyword{
+                                ProductId = 14
+                            },
+                            new ProductKeyword{
+                                ProductId = 15
+                            },
+                            new ProductKeyword{
+                                ProductId = 16
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "quanshort",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 9
+                            },
+                            new ProductKeyword{
+                                ProductId = 10
+                            },
+                            new ProductKeyword{
+                                ProductId = 11
+                            },
+                            new ProductKeyword{
+                                ProductId = 12
+                            },
+                            new ProductKeyword{
+                                ProductId = 13
+                            },
+                            new ProductKeyword{
+                                ProductId = 14
+                            },
+                            new ProductKeyword{
+                                ProductId = 15
+                            },
+                            new ProductKeyword{
+                                ProductId = 16
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "nam",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 8
+                            },
+                            new ProductKeyword{
+                                ProductId = 12
+                            },
+                            new ProductKeyword{
+                                ProductId = 13
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "chaybo",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 12
+                            },
+                            new ProductKeyword{
+                                ProductId = 13
+                            },
+                            new ProductKeyword{
+                                ProductId = 14
+                            },
+                            new ProductKeyword{
+                                ProductId = 16
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "thethao",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 8
+                            },
+                            new ProductKeyword{
+                                ProductId = 9
+                            },
+                            new ProductKeyword{
+                                ProductId = 10
+                            },
+                            new ProductKeyword{
+                                ProductId = 17
+                            },
+                            new ProductKeyword{
+                                ProductId = 21
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "pack",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 17
+                            },
+                            new ProductKeyword{
+                                ProductId = 18
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "combo",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 19
+                            },
+                            new ProductKeyword{
+                                ProductId = 20
+                            },
+                            new ProductKeyword{
+                                ProductId = 24
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "tat",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 17
+                            },
+                            new ProductKeyword{
+                                ProductId = 18
+                            },
+                            new ProductKeyword{
+                                ProductId = 19
+                            },
+                            new ProductKeyword{
+                                ProductId = 20
+                            },
+                            new ProductKeyword{
+                                ProductId = 21
+                            },
+                            new ProductKeyword{
+                                ProductId = 22
+                            },
+                            new ProductKeyword{
+                                ProductId = 23
+                            },
+                            new ProductKeyword{
+                                ProductId = 24
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "bongda",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 21
+                            },
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "3tat",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 17
+                            },
+                            new ProductKeyword{
+                                ProductId = 18
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "10",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 24
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "2",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 19
+                            },
+                            new ProductKeyword{
+                                ProductId = 20
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "3",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 17
+                            },
+                            new ProductKeyword{
+                                ProductId = 18
+                            },
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "doitat",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 19
+                            },
+                            new ProductKeyword{
+                                ProductId = 20
+                            },
+                            new ProductKeyword{
+                                ProductId = 24
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "cocao",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 1
+                            },
+                            new ProductKeyword{
+                                ProductId = 21
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "cotrung",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 3
+                            },
+                            new ProductKeyword{
+                                ProductId = 4
+                            },
+                            new ProductKeyword{
+                                ProductId = 17
+                            },
+                            new ProductKeyword{
+                                ProductId = 19
+                            },
+                            new ProductKeyword{
+                                ProductId = 22
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "cothap",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 2
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "congan",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 18
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "tatnam",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 22
+                            },
+                            new ProductKeyword{
+                                ProductId = 24
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "exwarm",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 1
+                            },
+                            new ProductKeyword{
+                                ProductId = 4
+                            },
+                            new ProductKeyword{
+                                ProductId = 7
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "lenzing",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                            new ProductKeyword{
+                                ProductId = 1
+                            },
+                            new ProductKeyword{
+                                ProductId = 4
+                            },
+                            new ProductKeyword{
+                                ProductId = 7
+                            }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "modal",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 1
+                           },
+                           new ProductKeyword{
+                                ProductId = 4
+                           },
+                           new ProductKeyword{
+                                ProductId = 7
+                           }
+                       }
+                    },
+                    new Keyword
+                    {
+                        Key = "muadong",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 1
+                           },
+                           new ProductKeyword{
+                                ProductId = 2
+                           },
+                           new ProductKeyword{
+                                ProductId = 3
+                           },
+                            new ProductKeyword{
+                                ProductId = 4
+                           },
+                           new ProductKeyword{
+                                ProductId = 7
+                           },
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "amap",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 1
+                           },
+                           new ProductKeyword{
+                                ProductId = 2
+                           },
+                           new ProductKeyword{
+                                ProductId = 3
+                           },
+                            new ProductKeyword{
+                                ProductId = 4
+                           },
+                           new ProductKeyword{
+                                ProductId = 7
+                           },
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "enssential",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 2
+                           },
+                           new ProductKeyword{
+                                ProductId = 3
+                           },
+                           new ProductKeyword{
+                                ProductId = 16
+                           },
+                            new ProductKeyword{
+                                ProductId = 22
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "brushpoly",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 2
+                           },
+                           new ProductKeyword{
+                                ProductId = 3
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "memmai",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 2
+                           },
+                           new ProductKeyword{
+                                ProductId = 3
+                           },
+                           new ProductKeyword{
+                                ProductId = 18
+                           },
+                            new ProductKeyword{
+                                ProductId = 19
+                           },
+                           new ProductKeyword{
+                                ProductId = 22
+                           },
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "relaxedfit",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 5
+                           },
+                           new ProductKeyword{
+                                ProductId = 6
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "84rising",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 5
+                           },
+                           new ProductKeyword{
+                                ProductId = 6
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "venom",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 5
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "signature",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 5
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "phongcach",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 5
+                           },
+                           new ProductKeyword{
+                                ProductId = 8
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "tretrung",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 5
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "noibat",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 5
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "nangdong",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 6
+                           },
+                           new ProductKeyword{
+                                ProductId = 14
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "thoaimai",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 6
+                           },
+                           new ProductKeyword{
+                                ProductId = 22
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "mualanh",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 7
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "hiendai",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 8
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "benbi",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 9
+                           },
+                           new ProductKeyword{
+                                ProductId = 19
+                           },
+                           new ProductKeyword{
+                                ProductId = 23
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "eccripstop",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 9
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "6inch",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 10
+                           },
+                        }
+                    },
+                     new Keyword
+                    {
+                        Key = "6",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 10
+                           },
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "raccquetsport",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 10
+                           },
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "graphicdot",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 8
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "advenceventech",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 11
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "coolfast",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 12
+                           },
+                           new ProductKeyword{
+                                ProductId = 13
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "3.5",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 12
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "3.5inch",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 12
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "thietkenhe",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 12
+                           },
+                           new ProductKeyword{
+                                ProductId = 13
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "2lop",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 14
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "fast",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 14
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "free3",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 14
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "linhhoat",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 14
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "tapluyen",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 14
+                           },
+                           new ProductKeyword{
+                                ProductId = 22
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "7",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 15
+                           },
+                           new ProductKeyword{
+                                ProductId = 16
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "7inch",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 15
+                           },
+                           new ProductKeyword{
+                                ProductId = 16
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "danang",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 15
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "tienloi",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 15
+                           },
+                           new ProductKeyword{
+                                ProductId = 24
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "hoatdong",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 15
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "dongian",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 16
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "hieuqua",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 16
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "hangngay",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 17
+                           },
+                           new ProductKeyword{
+                                ProductId = 24
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "thoangkhi",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 18
+                           },
+                           new ProductKeyword{
+                                ProductId = 20
+                           },
+                           new ProductKeyword{
+                                ProductId = 21
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "coolmate",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 19
+                           },
+                           new ProductKeyword{
+                                ProductId = 20
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "ribbeb",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 19
+                           },
+                           new ProductKeyword{
+                                ProductId = 20
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "cotton",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 20
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "thoitrang",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 20
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "chuyendung",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 10
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "tapgym",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 22
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "seamless",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 23
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "basics",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 24
+                           }
+                        }
+                    },
+                    new Keyword
+                    {
+                        Key = "kinhte",
+                        CreatedAt = DateTime.Now.ToString(),
+                        ProductKeywords = new List<ProductKeyword>{
+                           new ProductKeyword{
+                                ProductId = 24
+                           }
+                        }
+                    }
+                };
+
+                _context.keywords.AddRange(keywordsSeed);
                 _context.SaveChanges();
             }
 

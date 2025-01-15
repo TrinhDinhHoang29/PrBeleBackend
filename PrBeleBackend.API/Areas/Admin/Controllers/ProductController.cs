@@ -55,14 +55,16 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         {
             try
             {
-                IEnumerable<ProductResponse> products = await _productGetterService.GetFilteredProduct(await this._productGetterService.GetAllproduct(), field, query);
+                List<Product> products = await this._productGetterService.GetProductsWithCondition(null, null);
+
+                IEnumerable<ProductResponse> productResponses = await _productGetterService.GetFilteredProduct(await this._productGetterService.SelectProductForAdmin(products), field, query);
                 
                 if(status != null)
                 {
-                    products = products.Where(x => x.Status == status);
+                    productResponses = productResponses.Where(x => x.Status == status);
                 }
 
-                IEnumerable<ProductResponse> productPagination = products.Skip(limit * (page - 1)).Take(limit).ToList();
+                IEnumerable<ProductResponse> productPagination = productResponses.Skip(limit * (page - 1)).Take(limit).ToList();
 
                 IEnumerable<ProductResponse> productSorted = await this._productSorterService.SortProducts(productPagination, sort, order);
 
@@ -94,7 +96,9 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Detail(int id)
         {
-            ProductResponse product = await this._productGetterService.GetProductById(id);
+            List<Product> product = await this._productGetterService.GetProductsWithCondition(id, null);
+
+            ProductResponse? productResponses = (await this._productGetterService.SelectProductForAdmin(product)).FirstOrDefault();
 
             return Ok(new
             {

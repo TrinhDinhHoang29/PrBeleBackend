@@ -115,7 +115,7 @@ namespace PrBeleBackend.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -429,14 +429,14 @@ namespace PrBeleBackend.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_ProductKeyword", x => new { x.ProductId, x.KeywordId });
                     table.ForeignKey(
-                        name: "FK_ProductKeyword_Keyword_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_ProductKeyword_Keyword_KeywordId",
+                        column: x => x.KeywordId,
                         principalTable: "Keyword",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductKeyword_Product_KeywordId",
-                        column: x => x.KeywordId,
+                        name: "FK_ProductKeyword_Product_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -630,6 +630,11 @@ namespace PrBeleBackend.Infrastructure.Migrations
                 table: "Cart",
                 column: "UserId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Keyword_Key",
+                table: "Keyword",
+                column: "Key");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_UserId",

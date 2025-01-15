@@ -72,17 +72,20 @@ namespace PrBeleBackend.Infrastructure.DbContexts
 
             //product keyword start
             modelBuilder.Entity<Product>()
-                .HasMany(p => p.Keywords)
+                .HasMany(p => p.ProductKeywords)
                 .WithOne(pt => pt.Product)
-                .HasForeignKey(pt => pt.KeywordId);
+                .HasForeignKey(pt => pt.ProductId);
 
             modelBuilder.Entity<Keyword>()
                 .HasMany(key => key.ProductKeywords)
                 .WithOne(key => key.Keyword)
-                .HasForeignKey(key => key.ProductId);
+                .HasForeignKey(key => key.KeywordId);
 
             modelBuilder.Entity<ProductKeyword>()
                 .HasKey(pk => new { pk.ProductId, pk.KeywordId });
+
+            modelBuilder.Entity<Keyword>()
+                .HasIndex(key => key.Key);
 
             modelBuilder.Entity<Product>()
             .HasOne(p => p.Category)          // Product có 1 Category

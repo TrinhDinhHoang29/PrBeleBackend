@@ -12,7 +12,7 @@ using PrBeleBackend.Infrastructure.DbContexts;
 namespace PrBeleBackend.Infrastructure.Migrations
 {
     [DbContext(typeof(BeleStoreContext))]
-    [Migration("20250111102138_Init")]
+    [Migration("20250113193501_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -392,9 +392,11 @@ namespace PrBeleBackend.Infrastructure.Migrations
 
                     b.Property<string>("Key")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Key");
 
                     b.ToTable("Keyword", (string)null);
                 });
@@ -992,13 +994,13 @@ namespace PrBeleBackend.Infrastructure.Migrations
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.ProductKeyword", b =>
                 {
-                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Product", "Product")
-                        .WithMany("Keywords")
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Keyword", "Keyword")
+                        .WithMany("ProductKeywords")
                         .HasForeignKey("KeywordId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Keyword", "Keyword")
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Product", "Product")
                         .WithMany("ProductKeywords")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1184,9 +1186,9 @@ namespace PrBeleBackend.Infrastructure.Migrations
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Product", b =>
                 {
-                    b.Navigation("Keywords");
-
                     b.Navigation("ProductAttributeTypes");
+
+                    b.Navigation("ProductKeywords");
 
                     b.Navigation("ProductTags");
 
