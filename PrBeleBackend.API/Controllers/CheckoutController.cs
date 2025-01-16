@@ -187,20 +187,12 @@ namespace PrBeleBackend.API.Controllers
                 // Xóa giỏ hàng cũ và tạo giỏ hàng mới
                 await ResetCart(UserId);
 
-                return Ok(new
-                {
-                    status = 200,
-                    data = response,
-                    message = "Payment successful."
-                });
+                return Redirect($"http://localhost:3000/cart?status=00");
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = 400,
-                    message = ex.Message
-                });
+                return Redirect($"http://localhost:3000/cart?status=11&message={ex.Message}");
+
             }
         }
 

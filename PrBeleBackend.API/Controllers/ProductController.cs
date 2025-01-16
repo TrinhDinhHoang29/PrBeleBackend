@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
@@ -79,14 +80,15 @@ namespace PrBeleBackend.API.Controllers
             }
         }
 
-        [HttpPatch("{productId}")]
-        public async Task<IActionResult> ModifyWishList(int productId, string action)
+        [Authorize(Roles = "Client")]
+        [HttpPatch("wishlist/{productId}")]
+        public async Task<IActionResult> ModifyWishList(int productId, string actionWishList)
         {
             try
             {
                 int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-                bool res = await this._productModifierService.ModifyWishList(customerId, productId, action);
+                bool res = await this._productModifierService.ModifyWishList(customerId, productId, actionWishList);
 
                 return Ok(new
                 {
@@ -246,6 +248,7 @@ namespace PrBeleBackend.API.Controllers
                 .ThenInclude(av => av.AttributeType)
                 .Include(v => v.Discount)
                 .Include(v => v.Rates)
+                .Include(p => p.WishList)
                 .ThenInclude(v => v.Customer)
                 .Where(p => p.Status == 1)
                 .Select(p => new
@@ -254,10 +257,11 @@ namespace PrBeleBackend.API.Controllers
                     Name = p.Name,
                     View = p.View,
                     Like = p.Like,
-                    
+                    CategoryId = p.CategoryId,
                     Discount = p.Discount.DiscountValue,
                     Description = p.Description,
                     Slug = p.Slug,
+                    WishLists = p.WishList.Select(w => w.CustomerId),
                     Variants = p.Variants.Select(v => new
                     {
                         Id = v.Id,
