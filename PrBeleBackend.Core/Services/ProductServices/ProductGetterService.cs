@@ -78,7 +78,7 @@ namespace PrBeleBackend.Core.Services.ProductServices
                     return productByCatId;
 
                 case "CategoryRefId":
-                    List<ProductResponse> productByCatRefId = await this._productRepository.FilterProduct(products, product => this._productRepository.IsHaveCategory(product.Id, Convert.ToInt32(searchStr)));
+                    List<ProductResponse> productByCatRefId = await this._productRepository.FilterProduct(products, product => this._productRepository.IsHaveCategoryRef(product.Id, Convert.ToInt32(searchStr)));
 
                     return productByCatRefId;
 

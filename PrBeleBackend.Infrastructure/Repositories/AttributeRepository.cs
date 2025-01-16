@@ -22,6 +22,20 @@ namespace PrBeleBackend.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<List<AttributeValueResponse>> GetAttributeValue(int typeId)
+        {
+            return await this._context.attributeValues
+                .Where(av => av.Status == 1)
+                .Where(av => av.AttributeTypeId == typeId)
+                .Where(av => av.Deleted == false)
+                .Select(av => new AttributeValueResponse
+                {
+                    Name = av.Name,
+                    Value = av.Value
+                })
+                .ToListAsync();
+        }
+
         public async Task<List<AttributeTypeResponse>> GetAttributeType()
         {
             return await this._context.attributeTypes

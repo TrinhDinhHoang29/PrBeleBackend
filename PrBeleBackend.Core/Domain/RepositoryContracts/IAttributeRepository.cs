@@ -12,6 +12,8 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
 {
     public interface IAttributeRepository
     {
+        public Task<List<AttributeValueResponse>> GetAttributeValue(int typeId);
+
         public Task<List<AttributeTypeResponse>> GetAttributeType();
 
         public Task<int> GetAttributeValueCount();

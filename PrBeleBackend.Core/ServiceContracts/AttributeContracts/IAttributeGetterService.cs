@@ -10,6 +10,8 @@ namespace PrBeleBackend.Core.ServiceContracts.AttributeContracts
 {
     public interface IAttributeGetterService
     {
+        public Task<List<AttributeValueResponse>> GetAttributeValue(int typeId);
+
         public Task<List<AttributeTypeResponse>> GetAttributeType();
 
         public Task<decimal> GetAttributeValueCount();

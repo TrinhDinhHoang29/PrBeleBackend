@@ -22,6 +22,11 @@ namespace PrBeleBackend.Core.Services.AttributeServices
             _attributeRepository = attributeGetterService;
         }
 
+        public async Task<List<AttributeValueResponse>> GetAttributeValue(int typeId)
+        {
+            return await this._attributeRepository.GetAttributeValue(typeId);
+        }
+
         public async Task<List<AttributeTypeResponse>> GetAttributeType()
         {
             return await this._attributeRepository.GetAttributeType();

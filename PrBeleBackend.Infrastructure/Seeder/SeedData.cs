@@ -2714,26 +2714,427 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.settings.AddRange(settings);
                 _context.SaveChanges();
             }
-            //if (!_context.blogs.Any())
-            //{
-            //    List<Blog> blogs = new List<Blog>()
-            //    {
-            //        new Blog
-            //        {
-            //            Title = "Giới thiệu về Bele - Best Choice for Good Style",
-            //            Status = 1,
-            //            Deleted = 0,
-            //            CreatedAt = DateTime.Now.ToString(),
-            //            Contents = new List<BlogContent>()
-            //            {
-            //                new BlogContent
-            //                {
+            if (!_context.blogs.Any())
+            {
+                List<Blog> blogs = new List<Blog>()
+                {
+                    new Blog
+                    {
+                        Title = "Về chúng tôi Bele - Best Choice for Good Style",
+                        Status = 1,
+                        Deleted = 0,
+                        CreatedAt = DateTime.Now.ToString(),
+                        Contents = new List<BlogContent>()
+                        {
 
-            //                }
-            //            }
-            //        }
-            //    };    
-            //}
+                        }
+                    },
+                    new Blog
+                    {
+                        Title = "Bí kíp tạo dáng chụp ảnh nam đẹp ngầu như mẫu nam Hàn Quốc",
+                        Status = 1,
+                        Deleted = 0,
+                        CreatedAt = DateTime.Now.ToString(),
+                        Contents = new List<BlogContent>()
+                        {
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1736963720/bele/blog/blogcontent-1_de1ze1.webp",
+                                Order = 1
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Text",
+                                ContentText = "Chắc rằng không ít chàng trai cảm thấy việc chụp hình là vô cùng khó khăn. Tâm lý ngại ống kính máy ảnh, không tìm được cách pose dáng phù hợp chính là nguyên nhân khiến profile của họ thiếu vắng đi những khoảnh khắc để đời. Trong bài viết này, Coolmate sẽ hướng dẫn một số cách tạo dáng chụp ảnh nam đẹp và cool ngầu. Mong rằng với những bí kíp này sẽ gạt bỏ được những lo ngại của bạn nhé.",
+                                ImageUrl = "",
+                                Order = 2
+                            },
+                            new BlogContent
+                            {
+                                Title = "Tư thế tạo dáng chụp ảnh nam cực đẹp và thần thái",
+                                ContentType = "Text",
+                                ContentText = "Các tư thế tạo dáng chụp ảnh nam được chia thành 3 kiểu chính, đó là đứng, ngồi và ngả (nằm). Với mỗi tư thế, bạn có thể chuyển đổi các vị trí đặt chân, cánh tay hay bàn tay khác nhau. Trong bài viết này, Coolmate sẽ hướng dẫn bạn một cách cụ thể hơn về 3 tư thế này. Những tư thế ấy sẽ hoàn toàn phù hợp với bất kỳ ai, để tạo thêm độ nét cho ngôn ngữ cơ thể, nâng cao biểu cảm và tông màu cho bức ảnh của bạn. Một tư thế chuẩn thần thái sẽ tạo ấn tượng tốt đẹp với người nhìn và thể hiện đôi điều về tính cách của bạn.",
+                                ImageUrl = "",
+                                Order = 3
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737011681/bele/blog/blogcontent-2_tgqr3q.jpg",
+                                Order = 4
+                            },
+                            new BlogContent
+                            {
+                                Title = "1. Tư thế đứng",
+                                ContentType = "Text",
+                                ContentText = "Bạn có biết, cách tạo dáng chụp ảnh nam đẹp nhất thường là những tư thế được chụp khi đang di chuyển. Để cho bức ảnh thêm sinh động, chuyển động của bạn cần phải thật thoái mái và tư nhiên nhất. Nhưng bạn cũng cần chú ý cách bước chân sao cho phù hợp với không gian hay hoàn cảnh xung quanh.",
+                                ImageUrl = "",
+                                Order = 5
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737012009/bele/blog/blogcontent-3_ivti0o.png",
+                                Order = 6
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Text",
+                                ContentText = "Vậy làm thế nào để bước đi trông đẹp và phong cách đây? Với tư thế này, bạn phải chú trọng phần lưng – tránh tình trạng gù lưng, luôn giữ thẳng và ngực hướng về phía trước. Vậy thì bước đi mới khoan thai, tự tin và thu hút người nhìn.",
+                                ImageUrl = "",
+                                Order = 7
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737012122/bele/blog/blogcontent-4_ngq4t4.webp",
+                                Order = 8
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Text",
+                                ContentText = "Bên cạnh đó, bạn có thể tùy ý đưa khuôn mặt của mình theo bất kỳ hướng nào, miễn sao đó là góc mặt đẹp nhất. Đừng quên tay của bạn cũng nên đánh theo hướng đi hoặc để làm bớt trống tay thì hãy cầm một món phụ kiện, chẳng hạn như kính mắt, túi, máy ảnh, …",
+                                ImageUrl = "",
+                                Order = 9
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737012385/bele/blog/blogcontent-5_va7kjc.webp",
+                                Order = 10
+                            },
+                            new BlogContent
+                            {
+                                Title = "2. Tư thế ngồi và nằm",
+                                ContentType = "Text",
+                                ContentText = "Bạn có đang cảm thấy khi mà bức ảnh nào cũng có một kiểu tạo dáng đứng nhàm chán? Vậy thì đây sẽ là một cách tạo dáng chụp ảnh thú vị, đơn giản nhưng lại vô cùng hiệu quả và thu hút đó là tư thế ngồi.\r\n\r\nVới tư thế này, vật thể đang ngồi cũng làm tăng thêm vẻ đẹp cho bức ảnh, vậy nên đừng cho rằng đó bắt buộc phải là một chiếc ghế. Thùng đàn guitar, trên đường ray, trên mui xe, … đều có thể áp dụng với tư thế tạo dáng chụp ảnh nam này.",
+                                ImageUrl = "",
+                                Order = 11
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737012625/bele/blog/blogcontent-6_hohc0b.jpg",
+                                Order = 12
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Text",
+                                ContentText = "Ngồi suy nghĩ luôn là cách tạo dáng chụp ảnh cho nam được yêu thích bậc nhất. Bạn chỉ cần ngồi như bình thường, chống cằm trên tay.",
+                                ImageUrl = "",
+                                Order = 13
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737012709/bele/blog/blogcontent-7_rcbxhh.jpg",
+                                Order = 14
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Text",
+                                ContentText = "Bạn đã từng nghe qua câu nói này chưa “Người đàn ông quyến rũ nhất là khi đang làm việc”. Một anh chàng chú tâm vào những gì mình làm và hết mình với công việc có thể khiến bất kỳ cô gái nào xao động. Mỗi lúc như thế trông bạn sẽ cực kỳ đẹp trai, dù thỉnh thoảng hơi cau có và cơ mặt khó chịu hơn bình thường.",
+                                ImageUrl = "",
+                                Order = 15
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737012790/bele/blog/blogcontent-8_orujb1.jpg",
+                                Order = 16
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Text",
+                                ContentText = "Một dáng ngồi mạnh mẽ khác dành cho các chàng trai khi chụp ảnh mà vẫn cảm giác thoải mái đó là để bắt chéo chân.",
+                                ImageUrl = "",
+                                Order = 17
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737012891/bele/blog/blogcontent-9_b2zl3n.jpg",
+                                Order = 18
+                            },
+                            new BlogContent
+                            {
+                                Title = "3. Sử dụng tay như thế nào?",
+                                ContentType = "Text",
+                                ContentText = "Bạn biết không, đôi mắt của chúng ta hay bị thu hút bởi những gì bàn tay người khác đang làm. Cử chỉ tay của chúng ta là một phần trong giao tiếp hàng ngày. Vì vậy, cách dùng tay khi tạo dáng chụp ảnh nam cũng thể hiện phần nào tính cách cũng như thông điệp bạn muốn truyền tải.",
+                                ImageUrl = "",
+                                Order = 19
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737012978/bele/blog/blogcontent-10_drf5i1.jpg",
+                                Order = 20
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Text",
+                                ContentText = "Khoanh tay hay chéo tay trước ngực là cách tạo dáng chụp ảnh nếu bạn muốn “khoe” một thứ gì đó, ví dụ như hình xăm, đồng hồ, … Chì cần bắt chéo cánh tay mà bạn muốn người khác thấy trên ngực và nhìn ra xa máy ảnh.",
+                                ImageUrl = "",
+                                Order = 21
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737013056/bele/blog/blogcontent-11_r2ypeq.webp",
+                                Order = 22
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Text",
+                                ContentText = "Đây được xem là cách tạo dáng chụp ảnh nam kinh điển của hầu hết đàn ông hiện nay. Đơn giản, dễ thực hiện mà hiệu quả cao nên nó thường được sử dụng. Với dáng này, bạn nên đứng xoay người 45 độ so với ống kính, tay còn lại thả lỏng hoặc cử động nhẹ và khoe góc nghiêng đẹp nhất của mình.",
+                                ImageUrl = "",
+                                Order = 23
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737013174/bele/blog/blogcontent-12_xeuyc7.jpg",
+                                Order = 24
+                            },
+                             new BlogContent
+                            {
+                                Title = "Lời kết",
+                                ContentType = "Text",
+                                ContentText = "Với mỗi cách tạo dáng chụp ảnh nam cho từng phong cách cũng như không gian khác nhau, các bạn cũng có thể biến tấu để phù hợp với cá tính và phong cách riêng của mình. Và một điều cực kỳ quan trọng bên cạnh cách tạo dáng để có được những bộ ảnh thần thái đó là hãy tìm cho mình một người chụp ảnh có tâm nhé.",
+                                ImageUrl = "",
+                                Order = 25
+                            },
+                        }
+                    },
+                    new Blog
+                    {
+                        Title = "Bí kíp phối đồ tập gym nam cực chất lại thoải mái cho chàng",
+                        Status = 1,
+                        Deleted = 0,
+                        CreatedAt = DateTime.Now.ToString(),
+                        Contents = new List<BlogContent>()
+                        {
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737014181/bele/blog/blogcontent-13_a8204s.webp",
+                                Order = 1
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Text",
+                                ContentText = "Trang phục tập gym nam là một tiêu chí quan trọng được nhiều anh em quan tâm vì nó ảnh hưởng trực tiếp đến hiệu quả tập luyện của bạn. Phối đồ đúng cách không chỉ là việc chọn những bộ quần áo hợp thời trang, mà còn là việc kết hợp các loại vải, kiểu dáng và màu sắc sao cho phù hợp với mọi bài tập gym.\r\n\r\nTrong bài viết này, Coolmate sẽ giúp bạn khám phá những tips quan trọng để phối đồ tập gym nam cực chất và thoải mái, giúp bạn trở thành tâm điểm trong phòng tập.",
+                                ImageUrl = "",
+                                Order = 2
+                            },
+                            new BlogContent
+                            {
+                                Title = "Những tiêu chí gì để chọn đồ tập gym cho các chàng",
+                                ContentType = "Text",
+                                ContentText = "",
+                                ImageUrl = "",
+                                Order = 3
+                            },
+                            new BlogContent
+                            {
+                                Title = "1. Chất liệu",
+                                ContentType = "Text",
+                                ContentText = "Yếu tố quan trọng và cơ bản nhất ảnh hưởng đến chất lượng của trang phục và hiệu quả của việc luyện tập là chất liệu. Khi bạn đầu tư một cách hợp lý vào quần áo tập gym, bạn sẽ tận hưởng sự thoải mái và dễ chịu trong quá trình luyện tập.\r\n\r\nKhi mua quần áo tập gym cho nam giới, hãy chú ý xem liệu chất liệu vải có khả năng thấm hút mồ hôi tốt và thoáng khí hay không. Khi tập luyện, cơ thể sẽ sản sinh mồ hôi và cần một luồng khí tươi để lưu thông tốt hơn.\r\n\r\nDù việc tập thể dục có ích cho sức khỏe, nhưng nếu mặc những bộ quần áo không cho phép mồ hôi thoát ra, cơ thể sẽ bị ướt và dễ bị cảm lạnh.\r\n\r\n",
+                                ImageUrl = "",
+                                Order = 4
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737014758/bele/blog/blogcontent-19_qkcnnl.webp",
+                                Order = 5
+                            },
+                            new BlogContent
+                            {
+                                Title = "2. Độ co giãn",
+                                ContentType = "Text",
+                                ContentText = "Không chỉ về chất liệu, mà độ co giãn cũng đóng góp một phần quan trọng trong việc mang lại sự thoải mái và tự tin cho người mặc. Đối với một bộ đồ tập gym, độ co giãn cao là điều cần thiết để đảm bảo phạm vi hoạt động rộng khi thực hiện các động tác. Ngoài ra, lựa chọn đai quần có tính đàn hồi, ôm vừa eo cũng rất quan trọng. Tránh những chiếc quần quá chặt vì chúng có thể gây ra vết hằn và đau rát trên vùng bụng.",
+                                ImageUrl = "",
+                                Order = 6
+                            },
+                            new BlogContent
+                            {
+                                Title = "3. Size phù hợp",
+                                ContentType = "Text",
+                                ContentText = "Một bộ quần áo thể thao lý tưởng nên có kích cỡ vừa vặn, không quá rộng hoặc quá chật. Khi quần áo quá rộng, nó có thể bị vướng vào các thiết bị tập luyện hoặc gây cản trở khi thực hiện các động tác. Nếu quần áo quá chật, nó có thể hạn chế sự lưu thông máu và ảnh hưởng đến chất lượng buổi tập.",
+                                ImageUrl = "",
+                                Order = 7
+                            },
+                            new BlogContent
+                            {
+                                Title = "4. Thời tiết",
+                                ContentType = "Text",
+                                ContentText = "Trang phục mùa hè:Khi mùa hè đến, chất liệu thoáng khí và thấm hút là ưu tiên hàng đầu. Vì khí hậu nóng có thể làm bạn ra mồ hôi nhiều hơn, việc chọn sai chất liệu sẽ khiến bạn cảm thấy nóng bức và không thoải mái khi tập luyện. Đồng thời, nếu mồ hôi không được thấm hút ngay, cơ thể có thể bị lạnh. Đây là một số item phù hợp cho mùa hè:\r\n\r\nÁo ba lỗ, áo tank top: Những loại áo này thoáng mát và giúp bạn cảm thấy dễ chịu trong nắng nóng.\r\nÁo phông: Một chiếc áo phông có chất liệu thấm hút tốt cũng là một lựa chọn tốt cho mùa hè.\r\nQuần short: Để tạo sự thoải mái và linh hoạt khi tập luyện, quần short là một item phù hợp.\r\nTrang phục mùa đông: Mùa đông đòi hỏi trang phục thoải mái, thấm hút và giữ ấm cơ thể. Dưới đây là một số gợi ý cho mùa đông:\r\n\r\nÁo phông kết hợp áo ba lỗ: Lớp áo phông bên trong có thể giữ ấm cơ thể, trong khi áo ba lỗ bên ngoài có tính thoáng khí và linh hoạt hơn cho việc vận động.\r\nQuần jogger: Một chiếc quần jogger thoải mái và ấm áp là lựa chọn phù hợp trong mùa đông.\r\nÁo thun hoặc quần legging giữ nhiệt: Có sẵn những chiếc áo thun hoặc quần legging giữ nhiệt, được ưa chuộng bởi nhiều người tập gym. Đây là những item đáng xem xét để sở hữu trong những buổi tập luyện vào mùa đông.",
+                                ImageUrl = "",
+                                Order = 8
+                            },
+                            new BlogContent
+                            {
+                                Title = "Gợi ý cách phối đồ tập gym cực chất cho từng buổi tập",
+                                ContentType = "Text",
+                                ContentText = "Việc lựa chọn trang phục phù hợp khi tập gym không chỉ giúp bạn thoải mái và tự tin hơn khi tập, mà còn giúp tăng cường hiệu quả của bài tập. Hãy tham khảo cách phối đồ tập gym nam cực chất cho từng buổi tập dưới đây:",
+                                ImageUrl = "",
+                                Order = 9
+                            },
+                            new BlogContent
+                            {
+                                Title = "1. Buổi tập vai (áo ba lỗ + quần short + giày thể thao)",
+                                ContentType = "Text",
+                                ContentText = "",
+                                ImageUrl = "Cách phối đồ cho nam tập gym trong buổi tập vai phổ biến nhất là kết hợp áo ba lỗ với quần short và giày thể thao. Áo ba lỗ sẽ giúp bạn thoải mái vận động cánh tay và khoe trọng phần vai săn chắc của mình. Trong khi, quần short nam là món đồ phổ biến mà chàng trai nào cũng sở hữu vài chiếc.\r\n\r\nQuần có đặc điểm vừa mát mẻ vừa dễ dàng di chuyển qua lại. Hãy nhớ lựa chọn thêm một đôi giày thể thao êm ái để mọi vận động của bạn trở nên thoải mái. Hiện nay Coolmate đưa ra thị trường rất nhiều mẫu áo ba lỗ và những mẫu quần short vô cùng chất lượng, hợp thời trang. Sẽ không khó để bạn tìm mua các sản phẩm này với mức giá hấp dẫn kèm theo vô vàn khuyến mãi tại các gian hàng thương mại điện tử chính thức của hãng. Đừng bỏ lỡ cơ hội sở hữu cho mình những item này vào tủ đồ của mình các chàng nhé.",
+                                Order = 10
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737014181/bele/blog/blogcontent-14_ir5whu.webp",
+                                Order = 11
+                            },
+                            new BlogContent
+                            {
+                                Title = "2. Buổi tập ngực (áo ba lỗ/áo thun + quần short + giày sneaker)",
+                                ContentType = "Text",
+                                ContentText = "Nhìn chung, tập ngực cũng cần vận động thân trên và tay rất nhiều giống như tập vai. Do đó, bạn có thể mặc outfit như khi tập vai. Tuy nhiên, nếu không thích áo ba lỗ, bạn hãy linh động chuyển qua áo thun để cảm thấy thoải mái nhất. Khi tập luyện với cường độ cao, mồ hôi đặc biệt là phần ngực sẽ tiết ra rất nhiều. Những chiếc áo tối màu sẽ là lựa chọn phù hợp cho bạn trong trường hợp này.\r\n\r\nHãy đảm bảo rằng bạn chọn kích cỡ phù hợp với cơ thể của bạn. Quần short tập gym không nên quá chật hoặc quá rộng, nên mang lại sự thoải mái và hỗ trợ tốt cho các hoạt động tập luyện. Đồng thời, những đôi giày có đệm tốt cũng là lựa chọn tuyệt vời giảm áp lực lên các khớp và cơ, đảm bảo sự thông thoáng.",
+                                ImageUrl = "",
+                                Order = 12
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737014182/bele/blog/blogcontent-15_rxuzhr.webp",
+                                Order = 13
+                            },
+                            new BlogContent
+                            {
+                                Title = "3. Buổi tập lưng (áo thun + quần tập lưng cao + giày thể thao)",
+                                ContentType = "Text",
+                                ContentText = "Đến với buổi tập lưng, cách phối đồ cho nam tập gym thích hợp nhất mà bạn có thể mặc là áo thun và quần tập có phần lưng cao. Quần tập lưng cao sẽ có tác dụng ôm sát phần lưng, giúp định hình phần lưng của bạn khi tập luyện. Hãy lưu ý chọn mua những chiếc quần có phần lưng là chun, hạn chế tối đa phần lưng có khóa và cúc bấm kim loại. Ngoài ra, áo thun ôm vừa cơ thể cũng sẽ giúp bạn không bị vướng khi tập luyện như việc mặc một chiếc áo phông quá rộng rãi. Outfit này sẽ trông cực năng động khi phối thêm cùng một đôi giày thể thao đơn giản nhằm hỗ trợ quá trình tập luyện. ",
+                                ImageUrl = "",
+                                Order = 14
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737014184/bele/blog/blogcontent-16_kywtgz.webp",
+                                Order = 15
+                            },
+                            new BlogContent
+                            {
+                                Title = "4. Buổi tập tay (áo tank top + quần short + giày sneaker)",
+                                ContentType = "Text",
+                                ContentText = "Một chiếc áo tập gym có chất liệu thoáng khí và thoải mái như áo tank top hoặc áo thun tập gym không quá chật hoặc quá rộng sẽ giúp mọi di chuyển trở nên thoải mái trong quá trình tập luyện. Còn về quần và giày thì bạn có thể lựa chọn những món đồ thoải mái với độ thoáng khí tốt nhất nhằm hỗ trợ cho các hoạt động như nâng tạ, cử động tay.",
+                                ImageUrl = "",
+                                Order = 16
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737014187/bele/blog/blogcontent-17_x1wzkx.webp",
+                                Order = 17
+                            },
+                            new BlogContent
+                            {
+                                Title = "5. Buổi tập mông (áo tank top + quần jogger/legging + giày tập gym chuyên dụng)",
+                                ContentType = "Text",
+                                ContentText = "Khi bạn tham gia vào buổi tập mông, quần jogger hay legging sẽ là một trợ thủ đắc lực  giúp bạn khoe khéo vòng ba săn chắc của mình. Tuy nhiên với những người còn tự tin về bộ phận này, bạn hoàn toàn có thể đổi ra quần short để thoải mái và tự tin nhất.\r\n\r\nCác bài tập mông cũng đòi hỏi bật nhảy khá nhiều như squat, sumo squat nên một đôi giày tập gym chuyên dụng sẽ giúp bảo vệ tối đa đôi chân của bạn tránh khỏi những chấn thương. Điều quan trọng nhất khi chọn giày tập là phải đảm bảo đôi giày có đế đàn hồi và bảo vệ đủ cho chân và mắt cá chân.",
+                                ImageUrl = "",
+                                Order = 18
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737015326/bele/blog/blogcontent-20_pqnvqo.webp",
+                                Order = 19
+                            },
+                            new BlogContent
+                            {
+                                Title = "6. Buổi tập chân (áo phông + quần legging + giày thể thao chuyên dụng)",
+                                ContentType = "Text",
+                                ContentText = "Lại tiếp tục là một bài tập tập trung vào thân dưới tương tự như bài tập mông. Quần legging sẽ ôm trọn đôi chân khỏe khoắn tạo ra một tổng thể rất sporty. Còn phần áo thì các chàng thoải mái lựa chọn chiếc áo nào thoải mái, mát mẻ, có chất liệu co dãn tốt là có thể tập luyện hiệu quả. Bên cạnh đó, hãy đảm bảo giày của bạn vừa vặn và thoải mái, và cung cấp đủ không gian cho ngón chân để di chuyển tự nhiên.",
+                                ImageUrl = "",
+                                Order = 20
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737015394/bele/blog/blogcontent-21_hven1j.webp",
+                                Order = 21
+                            },
+                            new BlogContent
+                            {
+                                Title = "7. Buổi tập cardio (áo thun + quần short + giày thể thao)",
+                                ContentType = "Text",
+                                ContentText = "Cardio là một hình thức tập luyện thể thao với cường độ cao với sự phối hợp của toàn thân. Phối đồ tập gym nam cho buổi tập này cũng cần chú ý để buổi tập vừa thoải mái và vừa đạt hiệu quả. Khi tập cardio, bạn nên chọn áo thun thể thao và quần short có chất liệu như polyester hoặc vải thoáng khí sẽ giúp hút mồ hôi nhanh chóng và giữ cơ thể khô ráo. Đồ tập nên có độ ôm vừa phải để không gây cản trở chuyển động.\r\n\r\nGiày tập gym nên có đệm êm, đế mềm và đảm bảo độ bám cao để giúp bạn di chuyển linh hoạt và giảm sức độ va đập lên khớp. Ngoài ra bạn cũng cần trang bị thêm khăn lau mồ hôi, bình nước để thuận tiện nhất trong quá trình tập luyện. ",
+                                ImageUrl = "",
+                                Order = 22
+                            },
+                            new BlogContent
+                            {
+                                Title = "",
+                                ContentType = "Image",
+                                ContentText = "",
+                                ImageUrl = "https://res.cloudinary.com/dwewnjnbm/image/upload/v1737014187/bele/blog/blogcontent-18_llwfgo.webp",
+                                Order = 23
+                            },
+                        }
+                    }
+                };
+            }
         }
     }
 }

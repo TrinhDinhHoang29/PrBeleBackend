@@ -12,6 +12,8 @@ namespace PrBeleBackend.Core.Domain.Entities
 
         public int BlogId { get; set; }
 
+        public string Title { get; set; }
+
         public string ContentType { get; set; }
 
         public string ContentText { get; set; }

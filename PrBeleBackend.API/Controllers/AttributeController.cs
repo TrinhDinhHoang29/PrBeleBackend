@@ -16,6 +16,33 @@ namespace PrBeleBackend.API.Controllers
             this._attributeGetterService = attributeGetterService;
         }
 
+        [HttpGet("value/{typeId}")]
+        public async Task<IActionResult> GetAttributeValue(int typeId)
+        {
+            try
+            {
+                List<AttributeValueResponse> attVals = await this._attributeGetterService.GetAttributeValue(typeId);
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        attributeValues = attVals
+                    },
+                    message = "Get atribute value list success !"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAttributeType()
         {
