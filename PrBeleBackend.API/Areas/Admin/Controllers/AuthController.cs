@@ -34,9 +34,13 @@ namespace PrBeleBackend.API.Areas.Admin.Controllers
         public async Task<IActionResult> GetMe()
         {
             var email = User.FindFirst(ClaimTypes.Email)?.Value;
+
             AccountResponse? accountResponse = await _accountGetterService.GetAccountByEmail(email);
+
             RoleResponse role = await _roleGetterService.GetRoleById(accountResponse.Role.Id);
+
             accountResponse.Role = role;
+
             return Ok(new
             {
                 status = 200,

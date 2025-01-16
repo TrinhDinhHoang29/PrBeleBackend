@@ -1541,7 +1541,6 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.rates.AddRange(ratesSeed);
                 _context.SaveChanges();
             }
-
             if(!_context.keywords.Any())
             {
                 var keywordsSeed = new List<Keyword>()
@@ -2592,7 +2591,90 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.keywords.AddRange(keywordsSeed);
                 _context.SaveChanges();
             }
+            if (!_context.wishList.Any())
+            {
+                List<WishList> wishList = new List<WishList>()
+                {
+                    new WishList
+                    {
+                        CustomerId = 1,
+                        ProductId = 1
+                    },
+                    new WishList
+                    {
+                        CustomerId = 1,
+                        ProductId = 2
+                    },
+                    new WishList
+                    {
+                        CustomerId = 1,
+                        ProductId = 3
+                    },
+                    new WishList
+                    {
+                        CustomerId = 1,
+                        ProductId = 4
+                    },
+                    new WishList
+                    {
+                        CustomerId = 1,
+                        ProductId = 5
+                    },
+                    new WishList
+                    {
+                        CustomerId = 2,
+                        ProductId = 6
+                    },
+                    new WishList
+                    {
+                        CustomerId = 2,
+                        ProductId = 7
+                    },
+                    new WishList
+                    {
+                        CustomerId = 2,
+                        ProductId = 8
+                    },
+                    new WishList
+                    {
+                        CustomerId = 2,
+                        ProductId = 9
+                    },
+                    new WishList
+                    {
+                        CustomerId = 3,
+                        ProductId = 10
+                    },
+                    new WishList
+                    {
+                        CustomerId = 3,
+                        ProductId = 11
+                    },
+                    new WishList
+                    {
+                        CustomerId = 3,
+                        ProductId = 12
+                    },
+                    new WishList
+                    {
+                        CustomerId = 3,
+                        ProductId = 13
+                    },
+                    new WishList
+                    {
+                        CustomerId = 3,
+                        ProductId = 14
+                    },
+                    new WishList
+                    {
+                        CustomerId = 3,
+                        ProductId = 15
+                    },
+                };
 
+                _context.wishList.AddRange(wishList);
+                _context.SaveChanges();
+            }
             if (!_context.settings.Any())
             {
                 var settings = new Setting
@@ -2628,6 +2710,26 @@ namespace PrBeleBackend.Infrastructure.Seeder
                 _context.settings.AddRange(settings);
                 _context.SaveChanges();
             }
+            //if (!_context.blogs.Any())
+            //{
+            //    List<Blog> blogs = new List<Blog>()
+            //    {
+            //        new Blog
+            //        {
+            //            Title = "Giới thiệu về Bele - Best Choice for Good Style",
+            //            Status = 1,
+            //            Deleted = 0,
+            //            CreatedAt = DateTime.Now.ToString(),
+            //            Contents = new List<BlogContent>()
+            //            {
+            //                new BlogContent
+            //                {
+
+            //                }
+            //            }
+            //        }
+            //    };    
+            //}
         }
     }
 }

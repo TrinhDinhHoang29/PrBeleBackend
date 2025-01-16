@@ -9,6 +9,7 @@ using PrBeleBackend.Core.ServiceContracts.CartContracts;
 using PrBeleBackend.Core.ServiceContracts.ProductContracts;
 using PrBeleBackend.Core.ServiceContracts.RateContracts;
 using PrBeleBackend.Infrastructure.DbContexts;
+using System.Security.Claims;
 
 namespace PrBeleBackend.API.Controllers
 {
@@ -37,6 +38,76 @@ namespace PrBeleBackend.API.Controllers
             _rateRepository = rateRepository;
         }
 
+        [HttpGet("wishlish")]
+        public async Task<IActionResult> GetWishList(int page = 1, int limit = 10)
+        {
+            try
+            {
+                int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                List<ProductResponse> productResponses = await this._productGetterService.GetWishList(customerId);
+
+                productResponses = productResponses
+                    .Where(p => p.CategoryStatus == 1)
+                    .Where(p => p.Status == 1)
+                    .ToList();
+
+                List<ProductResponse> productsPagination = productResponses.Skip(limit * (page - 1)).Take(limit).ToList();
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        products = productsPagination,
+                        pagination = new
+                        {
+                            currentPage = page,
+                            totalPage = Math.Ceiling(Convert.ToDecimal(productResponses.Count()) / limit)
+                        }
+                    },
+                    message = "Get wishlist success !"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
+        [HttpPatch("{productId}")]
+        public async Task<IActionResult> ModifyWishList(int productId, string action)
+        {
+            try
+            {
+                int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                bool res = await this._productModifierService.ModifyWishList(customerId, productId, action);
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        
+                    },
+                    message = "Modify wish list success !"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetFilteredProduct(
             Dictionary<string, string>? filter,
@@ -46,12 +117,10 @@ namespace PrBeleBackend.API.Controllers
         {
             try
             {
-                List<Product> products = await this._productGetterService.GetProductsWithCondition(null, null);
-
-                List<ProductResponse> productResponses = await this._productGetterService.SelectProductForClient(products);
+                List<ProductResponse> productResponses = await this._productGetterService.GetAllProductClient();
 
                 productResponses = productResponses
-                    .Where(p => p.Category.Status == 1)
+                    .Where(p => p.CategoryStatus == 1)
                     .Where(p => p.Status == 1)
                     .ToList();
 
@@ -59,7 +128,7 @@ namespace PrBeleBackend.API.Controllers
                 {
                     foreach (var set in filter)
                     {
-                        if(set.Key != "page" && set.Key != "limit")
+                        if (set.Key != "page" && set.Key != "limit")
                         {
                             productResponses = await this._productGetterService.GetFilteredProduct(productResponses, set.Key, set.Value);
                         }
@@ -77,7 +146,7 @@ namespace PrBeleBackend.API.Controllers
                         pagination = new
                         {
                             currentPage = page,
-                            totalPage = Math.Ceiling(Convert.ToDecimal(products.Count()) / limit)
+                            totalPage = Math.Ceiling(Convert.ToDecimal(productResponses.Count()) / limit)
                         }
                     },
                     message = "Get products success !"
@@ -102,16 +171,29 @@ namespace PrBeleBackend.API.Controllers
         {
             try
             {
-                List<Product> products = await this._productSearcherService.SearchProduct(searchName, page, limit);
+                List<ProductResponse> productResponse = await this._productSearcherService.SearchProduct(searchName, page, limit);
 
-                List<ProductResponse> productResponse = await this._productGetterService.SelectProductForClient(products);
+                int totalPage = 0;
+
+                if(productResponse.Count < limit)
+                {
+                    totalPage = 1;
+                }
+                else if(productResponse.Count > limit)
+                {
+                    totalPage = page + 1;
+                }
 
                 return Ok(new
                 {
                     status = 200,
                     data = new
                     {
-                        searchedProducts = productResponse
+                        searchedProducts = productResponse,
+                        pagination = new { 
+                            currentPage = page,
+                            totalPage = totalPage
+                        }
                     },
                     message = "Search product success !"
                 });
@@ -129,9 +211,7 @@ namespace PrBeleBackend.API.Controllers
         [HttpGet("{slug}")]
         public async Task<IActionResult> Detail(string slug)
         {
-            List<Product> product = await this._productGetterService.GetProductsWithCondition(null, slug);
-
-            ProductResponse? productResponse = (await this._productGetterService.SelectProductForClient(product)).FirstOrDefault();
+            ProductResponse? productResponse = await this._productGetterService.ProductDetailClient(null, slug);
 
             return Ok(new
             {

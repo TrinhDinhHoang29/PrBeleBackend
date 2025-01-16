@@ -11,6 +11,6 @@ namespace PrBeleBackend.Core.ServiceContracts.ProductContracts
     public interface IProductSearcherService
     {
 
-        public Task<List<Product>> SearchProduct(string searchName, int page = 1, int limit = 10);
+        public Task<List<ProductResponse>> SearchProduct(string searchName, int page = 1, int limit = 10);
     }
 }

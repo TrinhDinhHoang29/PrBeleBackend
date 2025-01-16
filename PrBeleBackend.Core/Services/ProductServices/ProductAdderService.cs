@@ -33,6 +33,8 @@ namespace PrBeleBackend.Core.Services.ProductServices
 
             ValidationHelper.ModelValidation(req);
 
+            List<string> keywords = req.Keyword.Split(',').ToList();
+
             Product product = req.ToProduct();
 
             product.Slug = ConvertToSlugHelper.ConvertToUnaccentedSlug(product.Name);
@@ -46,7 +48,7 @@ namespace PrBeleBackend.Core.Services.ProductServices
                 product.Thumbnail = await this._cloudinaryService.UploadImageAsync(req.ProductFile, "product", 300, 400);
             }
 
-            return await this._productRepository.AddProduct(product);
+            return await this._productRepository.AddProduct(product, keywords);
         }
     }
 }

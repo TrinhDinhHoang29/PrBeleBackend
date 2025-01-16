@@ -179,6 +179,66 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.ToTable("AttributeValue", (string)null);
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Blog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedAt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Deleted")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Blog", (string)null);
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.BlogContent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ContentText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.ToTable("BlogContent", (string)null);
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Cart", b =>
                 {
                     b.Property<int>("Id")
@@ -875,6 +935,21 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.ToTable("VariantAttributeValue", (string)null);
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.WishList", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "CustomerId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("WishList", (string)null);
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Account", b =>
                 {
                     b.HasOne("PrBeleBackend.Core.Domain.Entities.Role", "Role")
@@ -906,6 +981,17 @@ namespace PrBeleBackend.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("AttributeType");
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.BlogContent", b =>
+                {
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Blog", "Blog")
+                        .WithMany("Contents")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Cart", b =>
@@ -1116,6 +1202,25 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("Variant");
                 });
 
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.WishList", b =>
+                {
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Customer", "Customer")
+                        .WithMany("WishList")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Product", "Product")
+                        .WithMany("WishList")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Account", b =>
                 {
                     b.Navigation("Rates");
@@ -1131,6 +1236,11 @@ namespace PrBeleBackend.Infrastructure.Migrations
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.AttributeValue", b =>
                 {
                     b.Navigation("VariantAttributeValues");
+                });
+
+            modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Blog", b =>
+                {
+                    b.Navigation("Contents");
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Cart", b =>
@@ -1153,6 +1263,8 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Rates");
+
+                    b.Navigation("WishList");
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Discount", b =>
@@ -1186,6 +1298,8 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Navigation("Rates");
 
                     b.Navigation("Variants");
+
+                    b.Navigation("WishList");
                 });
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Role", b =>

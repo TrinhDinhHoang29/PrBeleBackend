@@ -39,6 +39,10 @@ namespace PrBeleBackend.Infrastructure.DbContexts
         public DbSet<ProductCart> productCarts { get; set; }
         public DbSet<Keyword> keywords { get; set; }
         public DbSet<ProductKeyword> productKeywords { get; set; }
+        public DbSet<WishList> wishList { get; set; }
+        public DbSet<Blog> blogs { get; set; }
+        public DbSet<BlogContent> blogContents { get; set; }
+
 
 
         protected override void  OnModelCreating(ModelBuilder modelBuilder)
@@ -69,6 +73,31 @@ namespace PrBeleBackend.Infrastructure.DbContexts
             modelBuilder.Entity<ProductCart>().ToTable("ProductCart");
             modelBuilder.Entity<Keyword>().ToTable("Keyword");
             modelBuilder.Entity<ProductKeyword>().ToTable("ProductKeyword");
+            modelBuilder.Entity<WishList>().ToTable("WishList");
+            modelBuilder.Entity<Blog>().ToTable("Blog");
+            modelBuilder.Entity<BlogContent>().ToTable("BlogContent");
+
+            //blog start
+            modelBuilder.Entity<BlogContent>()
+                .HasOne(bc => bc.Blog)
+                .WithMany(bc => bc.Contents)
+                .HasForeignKey(bc => bc.BlogId);
+            //blog end
+
+            //product customer start
+            modelBuilder.Entity<Product>()
+                .HasMany(p => p.WishList)
+                .WithOne(p => p.Product)
+                .HasForeignKey(p => p.ProductId);
+
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.WishList)
+                .WithOne(c => c.Customer)
+                .HasForeignKey(c => c.CustomerId);
+
+            modelBuilder.Entity<WishList>()
+                .HasKey(pk => new { pk.ProductId, pk.CustomerId });
+            //product customer end
 
             //product keyword start
             modelBuilder.Entity<Product>()
@@ -86,11 +115,12 @@ namespace PrBeleBackend.Infrastructure.DbContexts
 
             modelBuilder.Entity<Keyword>()
                 .HasIndex(key => key.Key);
+            //product keyword end
 
             modelBuilder.Entity<Product>()
-            .HasOne(p => p.Category)          // Product có 1 Category
-            .WithMany(c => c.Products)        // Category có nhiều Product
-            .HasForeignKey(p => p.CategoryId); // Sử dụng CategoryId làm Foreign Key
+                .HasOne(p => p.Category)          // Product có 1 Category
+                .WithMany(c => c.Products)        // Category có nhiều Product
+                .HasForeignKey(p => p.CategoryId); // Sử dụng CategoryId làm Foreign Key
 
             modelBuilder.Entity<AttributeType>()
                 .HasMany(a => a.AttributeValues)

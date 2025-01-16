@@ -20,7 +20,7 @@ namespace PrBeleBackend.Core.Services.ProductServices
             this._productRepository = productRepository;
         }
 
-        public async Task<List<Product>> SearchProduct(string searchName, int page = 1, int limit = 10)
+        public async Task<List<ProductResponse>> SearchProduct(string searchName, int page = 1, int limit = 10)
         {
             string keywordsStr = RemoveDiacritics.Handle(searchName.ToLower());
 
@@ -35,7 +35,7 @@ namespace PrBeleBackend.Core.Services.ProductServices
 
             keywords.AddRange(keywordsType2);
 
-            List<Product> keywordEle = await this._productRepository.SearchKeyword(keywords, page, limit);
+            List<ProductResponse> keywordEle = await this._productRepository.SearchProduct(keywords, page, limit);
 
             return keywordEle;
         }

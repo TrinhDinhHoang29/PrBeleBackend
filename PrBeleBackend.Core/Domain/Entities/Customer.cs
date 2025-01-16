@@ -31,6 +31,7 @@ namespace PrBeleBackend.Core.Domain.Entities
         public bool Deleted { get; set; } = false; // true: Deleted, false: Not Deleted
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public List<WishList> WishList { get; set; }
         public List<AddressCustomer>? AddressCustomers { get; set; }
         public List<Order> Orders { get; set; }
         public List<Rate> Rates { get; set; }

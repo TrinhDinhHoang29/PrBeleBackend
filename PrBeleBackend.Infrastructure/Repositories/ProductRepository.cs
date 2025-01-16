@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
 using PrBeleBackend.Core.DTO.CategoryDTOs;
@@ -25,7 +26,103 @@ namespace PrBeleBackend.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<List<Product>> SearchKeyword(List<string> keywords, int page = 1, int limit = 10)
+        public async Task<bool> RemoveProductFromWishList(int customerId, int productId)
+        {
+            await this._context.wishList
+                .Where(wl => wl.ProductId == productId)
+                .Where(wl => wl.CustomerId == customerId)
+                .ExecuteDeleteAsync();
+
+            try
+            {
+                await this._context.SaveChangesAsync();
+
+                return true;
+            }
+            catch(DbUpdateException ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
+        public async Task<bool> AddProductToWishList(int customerId, int productId)
+        {
+            await this._context.wishList.AddAsync(new WishList
+            {
+                CustomerId = customerId,
+                ProductId = productId
+            });
+
+            try
+            {
+                await this._context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
+        public async Task<List<ProductResponse>> GetWishList(int customerId)
+        {
+            return await this._context.wishList
+                .Where(wl => wl.CustomerId == customerId)
+                .Include(wl => wl.Product)
+                .Select(wl => new ProductResponse
+                {
+                    Id = wl.Product.Id,
+                    Name = wl.Product.Name,
+                    CategoryStatus = _context.categories
+                    .Where(c => c.Id == wl.Product.CategoryId)
+                    .Select(c => c.Status)
+                    .FirstOrDefault(),
+                    Description = wl.Product.Description,
+                    Discount = wl.Product.Discount,
+                    BasePrice = wl.Product.BasePrice,
+                    Slug = wl.Product.Slug,
+                    View = wl.Product.View,
+                    Like = wl.Product.Like,
+                    Thumbnail = wl.Product.Thumbnail,
+                    Status = wl.Product.Status,
+                    UpdatedAt = wl.Product.UpdatedAt,
+                    CreatedAt = wl.Product.CreatedAt,
+                    RateAVG = _context.rates
+                    .Where(r => r.ProductId == wl.Product.Id)
+                    .Select(r => r.Star).ToList(),
+                    VariantColors = _context.variantAttributeValues
+                    .Include(varAttVal => varAttVal.Variant)
+                    .Include(varAttVal => varAttVal.AttributeValue)
+                    .ThenInclude(attVal => attVal.AttributeType)
+                    .Where(varAttVal => varAttVal.Variant.ProductId == wl.Product.Id && varAttVal.AttributeValue.AttributeType.Name == "Color")
+                    .Select(varAttVal => new VariantColorReponse
+                    {
+                        VariantId = varAttVal.VariantId,
+                        Color = varAttVal.AttributeValue.Value,
+                        ColorId = varAttVal.AttributeValueId,
+                        Thumbnail = varAttVal.Variant.Thumbnail,
+                        Price = varAttVal.Variant.Price
+                    }).ToList(),
+                    Tags = _context.tags.Join(
+                    _context.productTags,
+                    t => t.Id,
+                    pt => pt.TagId,
+                    (t, pt) => new { t, pt }
+                ).Where(res => res.pt.ProductId == wl.Product.Id)
+                .Select(res => res.t).ToList(),
+                //    AttributeTypes = _context.attributeTypes.Join(
+                //    _context.productAttributeTypes,
+                //    at => at.Id,
+                //    pat => pat.AttributeTypeId,
+                //    (at, pat) => new { at, pat }
+                //).Where(res => res.pat.ProductId == wl.Product.Id)
+                //.Select(res => res.at).ToList()
+                })
+                .ToListAsync();
+        }
+
+        public async Task<List<ProductResponse>> SearchProduct(List<string> keywords, int page = 1, int limit = 10)
         {
             List<ProductKeyword> result = new List<ProductKeyword>();
 
@@ -37,25 +134,82 @@ namespace PrBeleBackend.Infrastructure.Repositories
                         .Where(k => k.Key == keyword)
                         .FirstOrDefault();
 
-                if(item != null)
+                if (item != null)
                 {
                     result.AddRange(item.ProductKeywords);
                 }
             }
 
-            List<Product?> products = result
+            if(result.Count == 0)
+            {
+                foreach (string keyword in keywords)
+                {
+                    Keyword? item = this._context.keywords
+                            .Include(k => k.ProductKeywords)
+                            .ThenInclude(k => k.Product)
+                            .Where(k => k.Key.Contains(keyword))
+                            .FirstOrDefault();
+
+                    if (item != null)
+                    {
+                        result.AddRange(item.ProductKeywords);
+                    }
+                }
+            }
+
+            List<ProductResponse?> products = result
                 .GroupBy(k => k.ProductId)
-                .OrderBy(k => k.Count())
+                .OrderByDescending(k => k.Count())
                 .Skip(limit * (page - 1))
                 .Take(limit)
-                .Select(pk => pk.Select(p => new Product
+                .Select(pk => pk.Select(p => new ProductResponse
                 {
                     Id = p.Product.Id,
                     Name = p.Product.Name,
+                    CategoryStatus = _context.categories
+                    .Where(c => c.Id == p.Product.CategoryId)
+                    .Select(c => c.Status)
+                    .FirstOrDefault(),
+                    Description = p.Product.Description,
                     Discount = p.Product.Discount,
                     BasePrice = p.Product.BasePrice,
                     Slug = p.Product.Slug,
+                    //View = p.Product.View,
+                    //Like = p.Product.Like,
                     Thumbnail = p.Product.Thumbnail,
+                    Status = p.Product.Status,
+                    UpdatedAt = p.Product.UpdatedAt,
+                    CreatedAt = p.Product.CreatedAt,
+                    RateAVG = _context.rates
+                    .Where(r => r.ProductId == p.Product.Id)
+                    .Select(r => r.Star).ToList(),
+                    VariantColors = _context.variantAttributeValues
+                    .Include(varAttVal => varAttVal.Variant)
+                    .Include(varAttVal => varAttVal.AttributeValue)
+                    .ThenInclude(attVal => attVal.AttributeType)
+                    .Where(varAttVal => varAttVal.Variant.ProductId == p.Product.Id && varAttVal.AttributeValue.AttributeType.Name == "Color")
+                    .Select(varAttVal => new VariantColorReponse
+                    {
+                        VariantId = varAttVal.VariantId,
+                        Color = varAttVal.AttributeValue.Value,
+                        ColorId = varAttVal.AttributeValueId,
+                        Thumbnail = varAttVal.Variant.Thumbnail,
+                        Price = varAttVal.Variant.Price
+                    }).ToList(),
+                    Tags = _context.tags.Join(
+                    _context.productTags,
+                    t => t.Id,
+                    pt => pt.TagId,
+                    (t, pt) => new { t, pt }
+                ).Where(res => res.pt.ProductId == p.Product.Id)
+                .Select(res => res.t).ToList(),
+                //    AttributeTypes = _context.attributeTypes.Join(
+                //    _context.productAttributeTypes,
+                //    at => at.Id,
+                //    pat => pat.AttributeTypeId,
+                //    (at, pat) => new { at, pat }
+                //).Where(res => res.pat.ProductId == p.Product.Id)
+                //.Select(res => res.at).ToList()
                 }).FirstOrDefault())
                 .ToList();
 
@@ -80,32 +234,75 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .Any(vav => vav.Variant.ProductId == productId && vav.AttributeValue.Value == value);
         }
 
-        public async Task<List<Product>> GetProductsWithCondition(int? id, string? slug)
+        public bool IsHaveCategory(int productId, int categoryId)
         {
-            return await  _context.products
+            return this._context.products.Any(p => p.Id == productId && p.CategoryId == categoryId);
+        }
+
+        public bool IsHaveCategoryRef(int productId, int categoryRefId)
+        {
+            return this._context.products
+                .Include(p => p.Category)
+                .Any(p => p.Id == productId && p.Category.ReferenceCategoryId == categoryRefId);
+        }
+
+        public async Task<ProductResponse?> ProductDetailAdmin(int id)
+        {
+            return await _context.products
            .Include(p => p.Discount)
            .Include(p => p.Category)
            .Where(product => product.Deleted == false)
-           .Where(p => id == null? true: (p.Id == id))
-            .Where(p => slug == null ? true : (p.Slug.Contains(slug)))
-           .ToListAsync();
+            .Where(p => p.Id == id)
+           .Select(p => new ProductResponse
+           {
+               Id = p.Id,
+               Name = p.Name,
+               Category = _context.categories
+                    .Where(c => c.Id == p.CategoryId)
+                    .FirstOrDefault(),
+               Description = p.Description,
+               Discount = p.Discount,
+               BasePrice = p.BasePrice,
+               Slug = p.Slug,
+               View = p.View,
+               Like = p.Like,
+               Thumbnail = p.Thumbnail,
+               Status = p.Status,
+               UpdatedAt = p.UpdatedAt,
+               CreatedAt = p.CreatedAt,
+               AttributeTypes = _context.attributeTypes.Join(
+                    _context.productAttributeTypes,
+                    at => at.Id,
+                    pat => pat.AttributeTypeId,
+                    (at, pat) => new { at, pat }
+                ).Where(res => res.pat.ProductId == p.Id)
+                .Select(res => res.at).ToList()
+           })
+            .FirstOrDefaultAsync();
         }
 
-        public List<ProductResponse> SelectProductForClient(List<Product> products)
+        public async Task<ProductResponse?> ProductDetailClient(int? id, string? slug)
         {
-            return products.Select(p => new ProductResponse
+            return await _context.products
+           .Include(p => p.Discount)
+           .Include(p => p.Category)
+           .Where(product => product.Deleted == false)
+           .Where(p => id == null ? true : (p.Id == id))
+           .Where(p => slug == null ? true : (p.Slug.Contains(slug)))
+           .Select(p => new ProductResponse
             {
                 Id = p.Id,
                 Name = p.Name,
-                Category = _context.categories
+               CategoryStatus = _context.categories
                     .Where(c => c.Id == p.CategoryId)
+                    .Select(c => c.Status)
                     .FirstOrDefault(),
-                Description = p.Description,
+               Description = p.Description,
                 Discount = p.Discount,
                 BasePrice = p.BasePrice,
                 Slug = p.Slug,
-                View = p.View,
-                Like = p.Like,
+                //View = p.View,
+                //Like = p.Like,
                 Thumbnail = p.Thumbnail,
                 Status = p.Status,
                 UpdatedAt = p.UpdatedAt,
@@ -133,20 +330,82 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     (t, pt) => new { t, pt }
                 ).Where(res => res.pt.ProductId == p.Id)
                 .Select(res => res.t).ToList(),
-                AttributeTypes = _context.attributeTypes.Join(
-                    _context.productAttributeTypes,
-                    at => at.Id,
-                    pat => pat.AttributeTypeId,
-                    (at, pat) => new { at, pat }
-                ).Where(res => res.pat.ProductId == p.Id)
-                .Select(res => res.at).ToList()
+                //AttributeTypes = _context.attributeTypes.Join(
+                //    _context.productAttributeTypes,
+                //    at => at.Id,
+                //    pat => pat.AttributeTypeId,
+                //    (at, pat) => new { at, pat }
+                //).Where(res => res.pat.ProductId == p.Id)
+                //.Select(res => res.at).ToList()
             })
-            .ToList();
+            .FirstOrDefaultAsync();
         }
 
-        public async Task<List<ProductResponse>> SelectProductForAdmin(List<Product> products)
+        public async Task<List<ProductResponse>> GetAllProductClient()
         {
-            return products.Select(p => new ProductResponse
+            return await _context.products
+           .Include(p => p.Discount)
+           .Include(p => p.Category)
+           .Where(product => product.Deleted == false)
+           .Select(p => new ProductResponse
+           {
+               Id = p.Id,
+               Name = p.Name,
+               CategoryStatus = _context.categories
+                    .Where(c => c.Id == p.CategoryId)
+                    .Select(c => c.Status)
+                    .FirstOrDefault(),
+               Description = p.Description,
+               Discount = p.Discount,
+               BasePrice = p.BasePrice,
+               Slug = p.Slug,
+               //View = p.View,
+               //Like = p.Like,
+               Thumbnail = p.Thumbnail,
+               Status = p.Status,
+               UpdatedAt = p.UpdatedAt,
+               CreatedAt = p.CreatedAt,
+               RateAVG = _context.rates
+                    .Where(r => r.ProductId == p.Id)
+                    .Select(r => r.Star).ToList(),
+               VariantColors = _context.variantAttributeValues
+                    .Include(varAttVal => varAttVal.Variant)
+                    .Include(varAttVal => varAttVal.AttributeValue)
+                    .ThenInclude(attVal => attVal.AttributeType)
+                    .Where(varAttVal => varAttVal.Variant.ProductId == p.Id && varAttVal.AttributeValue.AttributeType.Name == "Color")
+                    .Select(varAttVal => new VariantColorReponse
+                    {
+                        VariantId = varAttVal.VariantId,
+                        Color = varAttVal.AttributeValue.Value,
+                        ColorId = varAttVal.AttributeValueId,
+                        Thumbnail = varAttVal.Variant.Thumbnail,
+                        Price = varAttVal.Variant.Price
+                    }).ToList(),
+               Tags = _context.tags.Join(
+                    _context.productTags,
+                    t => t.Id,
+                    pt => pt.TagId,
+                    (t, pt) => new { t, pt }
+                ).Where(res => res.pt.ProductId == p.Id)
+                .Select(res => res.t).ToList(),
+               //AttributeTypes = _context.attributeTypes.Join(
+               //     _context.productAttributeTypes,
+               //     at => at.Id,
+               //     pat => pat.AttributeTypeId,
+               //     (at, pat) => new { at, pat }
+               // ).Where(res => res.pat.ProductId == p.Id)
+               // .Select(res => res.at).ToList()
+           })
+            .ToListAsync();
+        }
+
+        public async Task<List<ProductResponse>> GetAllProductAdmin()
+        {
+            return await _context.products
+           .Include(p => p.Discount)
+           .Include(p => p.Category)
+           .Where(product => product.Deleted == false)
+           .Select(p => new ProductResponse
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -171,7 +430,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 ).Where(res => res.pat.ProductId == p.Id)
                 .Select(res => res.at).ToList()
             })
-            .ToList();
+            .ToListAsync();
         }
 
         public async Task<List<ProductResponse>> FilterProduct(List<ProductResponse> products, Func<ProductResponse, bool> predicate)
@@ -180,9 +439,42 @@ namespace PrBeleBackend.Infrastructure.Repositories
         }
 
 
-        public async Task<Product> AddProduct(Product product)
+        public async Task<Product> AddProduct(Product product, List<string>? keywords)
         {
+            product.ProductKeywords = new List<ProductKeyword>();
+
+            foreach(var keyword in keywords)
+            {
+                Keyword? keywordMatch = await this._context.keywords
+                    .Where(k => k.Key == keyword)
+                    .FirstOrDefaultAsync();
+
+                if(keywordMatch == null)
+                {
+                    Keyword keywordInsert = new Keyword()
+                    {
+                        Key = keyword,
+                        CreatedAt = DateTime.Now.ToString()
+                    };
+
+                    await this._context.keywords.AddAsync(keywordInsert);
+
+                    product.ProductKeywords.Add(new ProductKeyword
+                    {
+                        KeywordId = keywordInsert.Id
+                    });
+                }
+                else
+                {
+                    product.ProductKeywords.Add(new ProductKeyword
+                    {
+                        KeywordId = keywordMatch.Id
+                    });
+                }
+            }
+
             await this._context.products.AddAsync(product);
+
             await this._context.SaveChangesAsync();
 
             return product;
