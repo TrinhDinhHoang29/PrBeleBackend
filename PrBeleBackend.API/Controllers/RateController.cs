@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PrBeleBackend.Core.Domain.Entities;
+using PrBeleBackend.Core.DTO.ProductDTOs;
 using PrBeleBackend.Core.DTO.RateDTOs;
 using PrBeleBackend.Core.Helpers;
+using PrBeleBackend.Core.ServiceContracts.ProductContracts;
 using PrBeleBackend.Core.ServiceContracts.RateContracts;
 using PrBeleBackend.Infrastructure.DbContexts;
 using System.Security.Claims;
@@ -18,11 +20,13 @@ namespace PrBeleBackend.API.Controllers
     {
         private readonly BeleStoreContext _dbContext;
         private readonly IRateGetterService _rateGetterService;
+        private readonly IProductGetterService _productGetterService;
 
-        public RateController(BeleStoreContext dbContext,IRateGetterService rateGetterService)
+        public RateController(BeleStoreContext dbContext,IRateGetterService rateGetterService,IProductGetterService productGetterService)
         {
             _dbContext = dbContext;
             _rateGetterService = rateGetterService;
+            _productGetterService = productGetterService;
         }
 
         [HttpGet("rated")]
@@ -126,19 +130,28 @@ namespace PrBeleBackend.API.Controllers
             var rates = await _dbContext.productOrders
                 .Include(p => p.Order)
                 .Include(p => p.Variant)
-                .ThenInclude(v => v.Product)
-                .Where(p => p.Order.UserId == customerId && p.IsRating == false)
+                .Where(p => p.Order.UserId == customerId && p.IsRating == false && p.Order.Status == 4)
                 .Select(p => new
                 {
                     orderId = p.OrderId,
-                    pId = p.Variant.ProductId,
-                    pName = p.Variant.Product.Name,
-                    pImage = p.Variant.Product.Thumbnail,
+                    productId = p.Variant.Id
                 }).ToListAsync();
+            var productResponses = new List<dynamic>();
+            foreach (var rate in rates)
+            {
+                ProductResponse a = await _productGetterService.ProductDetailClient(rate.productId, null);
+                productResponses.Add(new
+                {
+                    orderId = rate.orderId,
+                    product = a
+                });
+            }
+
+
             return Ok(new
             {
                 status = 200,
-                items = rates,
+                items = productResponses,
                 message = "Data fetched successfully."
             });
         }
