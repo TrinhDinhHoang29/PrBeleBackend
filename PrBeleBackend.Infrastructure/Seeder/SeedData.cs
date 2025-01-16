@@ -1518,11 +1518,9 @@ namespace PrBeleBackend.Infrastructure.Seeder
                     new Rate
         {
             ProductId = 1,
-            UserType = "Customer",
             UserId = 1,
             Star = 5,
             Content = "Great product! Highly recommend.",
-            ReferenceRateId = 0,
             Status = 1,
             Deleted = false,
             CreatedAt = DateTime.UtcNow.AddDays(-10),
@@ -1531,11 +1529,9 @@ namespace PrBeleBackend.Infrastructure.Seeder
                     new Rate
         {
             ProductId = 1,
-            UserType = "Customer",
             UserId = 2,
             Star = 5,
             Content = "Good quality, but shipping was slow.",
-            ReferenceRateId = 0,
             Status = 1,
             Deleted = false,
             CreatedAt = DateTime.UtcNow.AddDays(-7),

@@ -73,6 +73,7 @@ namespace PrBeleBackend.API.Controllers
                 id = v.Variant.Id,
                 name = v.Variant.Product?.Name,
                 thumbnail = v.Variant.Thumbnail,
+                productId = v.Variant.ProductId,
                 price = v.Variant.Price,
                 quantity = v.Quantity,
                 attribute = v.Variant.VariantAttributeValues?.Select(e => new Dictionary<string, string>

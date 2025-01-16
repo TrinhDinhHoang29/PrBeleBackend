@@ -637,6 +637,9 @@ namespace PrBeleBackend.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -648,9 +651,6 @@ namespace PrBeleBackend.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReferenceRateId")
                         .HasColumnType("int");
 
                     b.Property<int>("Star")
@@ -665,11 +665,9 @@ namespace PrBeleBackend.Infrastructure.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserType")
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
 
                     b.HasIndex("ProductId");
 
@@ -1048,15 +1046,13 @@ namespace PrBeleBackend.Infrastructure.Migrations
 
             modelBuilder.Entity("PrBeleBackend.Core.Domain.Entities.Rate", b =>
                 {
+                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Account", null)
+                        .WithMany("Rates")
+                        .HasForeignKey("AccountId");
+
                     b.HasOne("PrBeleBackend.Core.Domain.Entities.Product", "Product")
                         .WithMany("Rates")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PrBeleBackend.Core.Domain.Entities.Account", "Account")
-                        .WithMany("Rates")
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1065,8 +1061,6 @@ namespace PrBeleBackend.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Account");
 
                     b.Navigation("Customer");
 

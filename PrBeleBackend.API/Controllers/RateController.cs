@@ -32,19 +32,11 @@ namespace PrBeleBackend.API.Controllers
                 int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
                 List<Rate> rates = await _dbContext.rates
                 .Include(r => r.Product)
-                .Include(r => r.Account)
                 .Include(r => r.Customer)
                 .Where(r => r.UserId == customerId)
-                .Where(r => r.Deleted == false && r.UserType != "Admin")
+                .Where(r => r.Deleted == false)
                 .ToListAsync();
-                foreach (var rate in rates)
-                {
-                    if (rate.ReferenceRateId > 0)
-                    {
-                        rate.RateReference = await _dbContext.rates
-                            .FirstOrDefaultAsync(r => r.Id == rate.ReferenceRateId);
-                    }
-                }
+               
                 List<RateResponse> rateResponses = rates.Select(r => r.ToRateResponse()).ToList();
 
                 return Ok(new
@@ -67,42 +59,62 @@ namespace PrBeleBackend.API.Controllers
         [HttpPost]  
         public async Task<IActionResult> Post(RateAddRequest rateAdd)
         {
-            int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            try
+            {
+                int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            ProductOrder? rateExist = await _dbContext.productOrders
-                .Include(po => po.Order)
-                .Include(po => po.Variant)
-                .Where(o => o.Order.UserId == customerId && o.IsRating == false)
-                .FirstOrDefaultAsync(po => po.OrderId == rateAdd.OrderId && po.Variant.ProductId == rateAdd.ProductId);
-            if(rateExist == null)
+                ProductOrder? rateExist = await _dbContext.productOrders
+                    .Include(po => po.Order)
+                    .Include(po => po.Variant)
+                    .Where(o => o.Order.Status == 4)
+                    .Where(o => o.Order.UserId == customerId && o.IsRating == false)
+                    .FirstOrDefaultAsync(po => po.OrderId == rateAdd.OrderId && po.Variant.ProductId == rateAdd.ProductId);
+                if (rateExist == null)
+                {
+                    return BadRequest(new
+                    {
+                        status = 400,
+                        message = "Request invalid."
+                    });
+                }
+                rateExist.IsRating = true;
+                Rate rate = new Rate
+                {
+                    ProductId = rateAdd.ProductId,
+                    Content = rateAdd.Content,
+                    UserId = customerId,
+                    Star = rateAdd.Star,
+                    Status = 1,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                };
+                await _dbContext.rates.AddAsync(rate);
+                await _dbContext.SaveChangesAsync();
+                Rate? result = await _dbContext.rates.Include(r => r.Customer).FirstOrDefaultAsync(r => r.Id == rate.Id);
+                return Created("", new
+                {
+                    status = 201,
+                    data = new
+                    {
+                        rate = new
+                        {
+                            FullName = result.Customer.FullName,
+                            Star = result.Star,
+                            Content = result.Content,
+                            CreatedAt = result.CreatedAt.ToString("dd/MM/yyyy")
+                        }
+                    },
+                    message = "Success"
+                });
+            }catch(Exception ex)
             {
                 return BadRequest(new
                 {
                     status = 400,
-                    message = "Request invalid."
+                    message = ex.Message
                 });
             }
-            rateExist.IsRating = true;
-            Rate rate = new Rate
-            {
-                UserType = "Customer",
-                ProductId = rateAdd.ProductId,
-                Content = rateAdd.Content,
-                UserId = customerId,
-                Star = rateAdd.Star,
-                ReferenceRateId = 0,
-                Status = 1,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
-            };
-            await _dbContext.rates.AddAsync(rate);
-            await _dbContext.SaveChangesAsync();
-            return Ok(new
-            {
-                status = 200,
-                rate = rate,
-                message = "Success"
-            });
+            
 
         }
         [HttpGet("Not-Rated")]
