@@ -13,6 +13,7 @@ using PrBeleBackend.Core.ServiceContracts.AccountContracts;
 using PrBeleBackend.Core.ServiceContracts.AddressContracts;
 using PrBeleBackend.Core.ServiceContracts.AttributeContracts;
 using PrBeleBackend.Core.ServiceContracts.AuthContracts;
+using PrBeleBackend.Core.ServiceContracts.BlogContracts;
 using PrBeleBackend.Core.ServiceContracts.CartContracts;
 using PrBeleBackend.Core.ServiceContracts.CategoryContracts;
 using PrBeleBackend.Core.ServiceContracts.ContactContracts;
@@ -32,6 +33,7 @@ using PrBeleBackend.Core.Services.AccountServices;
 using PrBeleBackend.Core.Services.AddressServices;
 using PrBeleBackend.Core.Services.AttributeServices;
 using PrBeleBackend.Core.Services.AuthServices;
+using PrBeleBackend.Core.Services.BlogServices;
 using PrBeleBackend.Core.Services.CartServices;
 using PrBeleBackend.Core.Services.CategoryServices;
 using PrBeleBackend.Core.Services.ContactServices;
@@ -106,6 +108,11 @@ namespace PrBeleBackend.API.StartupExtensions
                 var config = provider.GetRequiredService<IOptions<CloudinaryConfig>>().Value;
                 return new Cloudinary(new Account(config.CloudName, config.ApiKey, config.ApiSecret));
             });
+
+            #region DI Blog
+            Services.AddScoped<IBlogRepository, BlogRepository>();
+            Services.AddScoped<IBlogGetterService, BlogGetterService>();
+            #endregion
 
             #region DI Category
             Services.AddScoped<ICategoryRepository, CategoryRepository>();

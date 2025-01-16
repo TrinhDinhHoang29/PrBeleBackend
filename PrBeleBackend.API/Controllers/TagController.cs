@@ -5,6 +5,7 @@ using PrBeleBackend.Core.ServiceContracts.TagContracts;
 namespace PrBeleBackend.API.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class TagController : Controller
     {
         private readonly ITagGetterService _tagGetterService;

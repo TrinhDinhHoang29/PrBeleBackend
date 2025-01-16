@@ -5,6 +5,7 @@ using PrBeleBackend.Core.ServiceContracts.AttributeContracts;
 namespace PrBeleBackend.API.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class AttributeController : Controller
     {
         private readonly IAttributeGetterService _attributeGetterService;

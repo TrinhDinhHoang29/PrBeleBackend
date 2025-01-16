@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PrBeleBackend.Core.Domain.Entities;
 using PrBeleBackend.Core.Domain.RepositoryContracts;
@@ -14,6 +15,7 @@ using System.Security.Claims;
 namespace PrBeleBackend.API.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class ProductController : Controller
     {
         private readonly IProductGetterService _productGetterService;
@@ -39,6 +41,7 @@ namespace PrBeleBackend.API.Controllers
         }
 
         [HttpGet("wishlish")]
+        [Authorize(Roles = "Client")]
         public async Task<IActionResult> GetWishList(int page = 1, int limit = 10)
         {
             try
@@ -79,14 +82,16 @@ namespace PrBeleBackend.API.Controllers
             }
         }
 
-        [HttpPatch("{productId}")]
-        public async Task<IActionResult> ModifyWishList(int productId, string action)
+        [HttpPatch("wishlist/{productId}")]
+        [Authorize(Roles = "Client")]
+        public async Task<IActionResult> ModifyWishList(int productId, string modifyAction)
         {
             try
             {
-                int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                //int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                int customerId = 1;
 
-                bool res = await this._productModifierService.ModifyWishList(customerId, productId, action);
+                bool res = await this._productModifierService.ModifyWishList(customerId, productId, modifyAction);
 
                 return Ok(new
                 {
@@ -223,6 +228,7 @@ namespace PrBeleBackend.API.Controllers
                 message = "Get product success !"
             });
         }
+
         [HttpGet("Detail/{slug}")]
         public async Task<IActionResult> HoangDetail(string slug)
         {

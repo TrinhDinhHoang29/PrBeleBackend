@@ -6,6 +6,7 @@ using PrBeleBackend.Core.ServiceContracts.VariantContracts;
 namespace PrBeleBackend.API.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class VariantController : Controller
     {
         private readonly IVariantGetterService _variantGetterService;
