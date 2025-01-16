@@ -74,11 +74,10 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 throw new ArgumentNullException("Id Address is null");
             }
             //kiểm tra địa chỉ trước đó là mặc định hay k ?      
-            if(addressExist.IsDefault == false)
+            if(addressExist.IsDefault == false && address.IsDefault == true)
             {
                 //Nếu nó không mặc định mà giờ cập nhật thành mặc định thì phải
-                if (address.IsDefault == true)
-                {
+         
                     AddressCustomer? addressCustomer = await _context
                    .addressCustomers
                    .Where(a => a.CustomerId == address.CustomerId)
@@ -86,14 +85,16 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     // => cập nhật lại address đang mặc định trước đó
                     if (addressCustomer != null)
                         addressCustomer.IsDefault = false;
-                }
+                    else
+                        addressExist.IsDefault = true;
+                
             }
             //Nếu nó không mặc định thì thôi cập nhật bth
             addressExist.FullName = address.FullName;
             addressExist.Phone = address.Phone;
-            address.Address = address.Address;
+            addressExist.Address = address.Address;
             addressExist.UpdateAt = DateTime.Now;
-            _context.addressCustomers.Add(addressExist);
+            //_context.addressCustomers.Add(addressExist);
             await _context.SaveChangesAsync();
             return addressExist;
         }
