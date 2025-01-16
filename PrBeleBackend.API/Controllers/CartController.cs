@@ -121,9 +121,9 @@ namespace PrBeleBackend.API.Controllers
                 var CartItems = cartResult?.ProductCarts.Select(item => new
                 {
                     ProductId = item.Variant?.ProductId,
+                    VariantId = item.VariantId,
                     ProductName = item.Variant?.Product?.Name,
                     ProductPrice = item.Variant?.Price,
-                    VariantId = item.VariantId,
                     Thumbnail = item.Variant.Thumbnail,
                     Attributes = item?.Variant?.VariantAttributeValues?.Select(e => new Dictionary<string, string?>
                 {

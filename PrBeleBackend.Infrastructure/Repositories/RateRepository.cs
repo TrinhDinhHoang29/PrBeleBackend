@@ -30,11 +30,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
             {
                 return false;
             }
-            Rate? rateChild = await _context.rates.FirstOrDefaultAsync(r => r.Id == rate.ReferenceRateId);
-            if(rateChild != null)
-            {
-                 _context.rates.Remove(rateChild);
-            }
+           
             _context.rates.Remove(rate);
             await _context.SaveChangesAsync();
             return true;
@@ -44,18 +40,10 @@ namespace PrBeleBackend.Infrastructure.Repositories
         {
             List<Rate> rates = await _context.rates
                 .Include(r => r.Product)
-                .Include(r => r.Account)
                 .Include(r => r.Customer)
-                .Where(r => r.Deleted == false && r.UserType != "Admin")
+                .Where(r => r.Deleted == false)
                 .ToListAsync();
-            foreach (var rate in rates)
-            {
-                if (rate.ReferenceRateId>0)
-                {
-                    rate.RateReference = await _context.rates
-                        .FirstOrDefaultAsync(r => r.Id == rate.ReferenceRateId);
-                }
-            }
+     
 
 
             return rates;
@@ -65,17 +53,12 @@ namespace PrBeleBackend.Infrastructure.Repositories
         {
             Rate? rate = await _context.rates
                 .Include(r => r.Product)
-                .Include(r => r.Account)
                 .Include(r => r.Customer)
-                .Where(r => r.Deleted == false && r.UserType != "Admin")
+                .Where(r => r.Deleted == false)
                 .FirstOrDefaultAsync(r => r.Id == Id);
             if (rate == null)
                 return null;
-            if(rate.ReferenceRateId > 0)
-            {
-                rate.RateReference = await _context.rates
-                        .FirstOrDefaultAsync(r => r.Id == rate.ReferenceRateId);
-            }
+    
             return rate;
         }
 
@@ -83,9 +66,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
         {
             List<Rate> rates = await _context.rates
                 .Include(r => r.Product)
-                .Include(r => r.Account)
                 .Include(r => r.Customer)
-                .Where(r => r.Deleted == false && r.UserType != "Admin")
+                .Where(r => r.Deleted == false)
                 .Where(predicate)
                 .ToListAsync();
             return rates;
@@ -98,24 +80,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
             if (rateExist == null) { 
                 throw new ArgumentNullException(nameof(rate));
             }
-            Rate? rateChild = await _context.rates.FirstOrDefaultAsync(r => r.Id == rateExist.ReferenceRateId);
-            if (rateExist.Status == 0)
-            {
-
-                if (rateChild != null)
-                {
-                    rateChild.Status = 0;
-                    rateChild.UpdatedAt = DateTime.Now;
-                }
-            }
-            else
-            {
-                if (rateChild != null)
-                {
-                    rateChild.Status = 1;
-                    rateChild.UpdatedAt = DateTime.Now;
-                }
-            }
+            
             rateExist.UpdatedAt = DateTime.Now;
 
             await _context.SaveChangesAsync();
@@ -126,8 +91,6 @@ namespace PrBeleBackend.Infrastructure.Repositories
         {
             Rate? parentRate = await _context.rates.FirstOrDefaultAsync(r => r.Id == RateParentId);
             rate.ProductId = parentRate.ProductId;
-            rate.UserType = "Admin";
-            rate.ReferenceRateId = 0;
             rate.Star = 0;
             rate.Status = 1;
             rate.CreatedAt = DateTime.Now;
@@ -135,7 +98,6 @@ namespace PrBeleBackend.Infrastructure.Repositories
             rate.Deleted = false;
             await _context.rates.AddAsync(rate);
             await _context.SaveChangesAsync();
-            parentRate.ReferenceRateId = rate.Id;
             await _context.SaveChangesAsync();
             return rate;
         }

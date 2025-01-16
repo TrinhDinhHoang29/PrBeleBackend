@@ -14,10 +14,8 @@ namespace PrBeleBackend.Core.DTO.RateDTOs
         public string? pImage { get; set; }
         public string? pName { get; set; }
         public string? Name { get; set; }
-        public string? RName { get; set; }
         public int Star { get; set; }
         public string? Content { get; set; }
-        public string? Reply { get; set; }
         public int Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
@@ -31,11 +29,9 @@ namespace PrBeleBackend.Core.DTO.RateDTOs
                 Id = rate.Id,
                 pImage = rate.Product?.Thumbnail,
                 pName = rate.Product?.Name,
-                Name = rate.UserType == "Customer"? rate.Customer.FullName : rate.Account.FullName,
-                RName = rate.RateReference?.Account?.FullName,
+                Name = rate.Customer.FullName,
                 Star = rate.Star,
                 Content = rate.Content,
-                Reply = rate.RateReference?.Content,
                 Status = rate.Status,
                 CreatedAt = rate.CreatedAt,
                 UpdatedAt = rate.UpdatedAt,

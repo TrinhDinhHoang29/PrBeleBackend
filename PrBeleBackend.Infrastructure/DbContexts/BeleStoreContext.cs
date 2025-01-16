@@ -212,16 +212,11 @@ namespace PrBeleBackend.Infrastructure.DbContexts
                 .HasOne(r => r.Product)
                 .WithMany(p => p.Rates)
                 .HasForeignKey(r => r.ProductId);
-            modelBuilder.Entity<Account>()
-                .HasMany(a => a.Rates)
-                .WithOne(r => r.Account)
-                .HasForeignKey(r => r.UserId);
             modelBuilder.Entity<Customer>()
               .HasMany(a => a.Rates)
               .WithOne(r => r.Customer)
               .HasForeignKey(r => r.UserId);
-            modelBuilder.Entity<Rate>()
-                .Ignore(r => r.RateReference);
+
             //cart
             modelBuilder.Entity<Cart>()
                 .HasOne(c => c.Customer)

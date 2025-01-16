@@ -17,13 +17,7 @@ namespace PrBeleBackend.Core.Services.RateServices
         public async Task<string> ReplyRate(int userId, ReplyRateRequest replyRateRequest)
         {
              Rate? rateExist = await _rateRepository.GetRateById(replyRateRequest.Id);
-            if (rateExist == null) { 
-                throw new ArgumentNullException("Id rate not found.");
-            }
-            if (rateExist.ReferenceRateId > 0 || rateExist.UserType == "Admin")
-            {
-                throw new ArgumentException("Invalid");
-            }
+
             ValidationHelper.ModelValidation(replyRateRequest);
             Rate rateRequest = new Rate { UserId = userId, Content = replyRateRequest.Reply };
             await _rateRepository.ReplyRate(replyRateRequest.Id,rateRequest);

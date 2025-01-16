@@ -305,7 +305,7 @@ namespace PrBeleBackend.API.Controllers
                         : 1) * item.Quantity,
                 IsRating = false
             }).ToList();
-
+            order.TotalMoney = productOrders.Select(p => p.FinalPrice).Sum();
             foreach (var productOrder in productOrders)
             {
                 var variant = await _dbContext.variants

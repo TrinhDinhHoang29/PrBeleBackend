@@ -1,7 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PrBeleBackend.Core.Domain.Entities;
+using PrBeleBackend.Core.Domain.RepositoryContracts;
+using PrBeleBackend.Core.DTO.CartDTOs;
 using PrBeleBackend.Core.DTO.ProductDTOs;
+using PrBeleBackend.Core.DTO.RateDTOs;
+using PrBeleBackend.Core.ServiceContracts.CartContracts;
 using PrBeleBackend.Core.ServiceContracts.ProductContracts;
+using PrBeleBackend.Core.ServiceContracts.RateContracts;
+using PrBeleBackend.Infrastructure.DbContexts;
 using System.Security.Claims;
 
 namespace PrBeleBackend.API.Controllers
@@ -12,16 +19,23 @@ namespace PrBeleBackend.API.Controllers
         private readonly IProductGetterService _productGetterService;
         private readonly IProductModifierService _productModifierService;
         private readonly IProductSearcherService _productSearcherService;
+        private readonly ICartGetterService _cartGetterService;
+        private readonly BeleStoreContext _beleStoreContext;
+        private readonly IRateRepository _rateRepository;
 
         public ProductController(
             IProductGetterService productGetterService, 
             IProductModifierService productModifierService,
-            IProductSearcherService productSearcherService
+            IProductSearcherService productSearcherService,
+            BeleStoreContext beleStoreContext,
+            IRateRepository rateRepository
         )
         {
             this._productGetterService = productGetterService;
             this._productModifierService = productModifierService;
             this._productSearcherService = productSearcherService;
+            _beleStoreContext = beleStoreContext;
+            _rateRepository = rateRepository;
         }
 
         [HttpGet("wishlish")]
@@ -208,6 +222,78 @@ namespace PrBeleBackend.API.Controllers
                 },
                 message = "Get product success !"
             });
+        }
+        [HttpGet("Detail/{slug}")]
+        public async Task<IActionResult> HoangDetail(string slug)
+        {
+
+            var rateResponses = await _beleStoreContext.rates
+                .Include(r => r.Customer)
+                .Include(r => r.Product)
+                .Where(r => r.Status == 1 && r.Product.Slug == slug)
+                .Select(r => new {
+                    FullName = r.Customer.FullName,
+                    Star = r.Star,
+                    Content = r.Content,
+                    CreatedAt = r.CreatedAt.ToString("dd/MM/yyyy"),
+
+                }).ToListAsync();
+
+            var productExist = await _beleStoreContext.products
+                .Include(p => p.Variants)
+                .ThenInclude(v => v.VariantAttributeValues)
+                .ThenInclude(vav => vav.AttributeValue)
+                .ThenInclude(av => av.AttributeType)
+                .Include(v => v.Discount)
+                .Include(v => v.Rates)
+                .ThenInclude(v => v.Customer)
+                .Where(p => p.Status == 1)
+                .Select(p => new
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    View = p.View,
+                    Like = p.Like,
+                    
+                    Discount = p.Discount.DiscountValue,
+                    Description = p.Description,
+                    Slug = p.Slug,
+                    Variants = p.Variants.Select(v => new
+                    {
+                        Id = v.Id,
+                        Price = v.Price,
+                        Thumbnail = v.Thumbnail,
+                        Stock = v.Stock,
+                        Attributes = v.VariantAttributeValues.Select(e => new Dictionary<string, string?>
+                        {
+                            { e.AttributeValue.AttributeType.Name, e.AttributeValue.Name },
+                            {"Value",e.AttributeValue.Value }
+                        }),
+
+                    }),
+                    Rates = rateResponses
+                })
+                .FirstOrDefaultAsync(p => p.Slug == slug);
+                
+            if(productExist == null)
+            {
+                return NotFound(new
+                {
+                    status = 404,
+                    message = "Can't find product from slug." 
+                });
+            }
+
+            return Ok(new
+            {
+                status = 200,
+                data = new
+                {
+                    product = productExist
+                },
+                message = "Fetch successful."
+            });
+
         }
 
         [HttpPatch("{id}")]
