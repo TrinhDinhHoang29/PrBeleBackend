@@ -84,9 +84,6 @@ namespace PrBeleBackend.API.Controllers
 
         [HttpPatch("wishlist/{productId}")]
         [Authorize(Roles = "Client")]
-        public async Task<IActionResult> ModifyWishList(int productId, string modifyAction)
-        [Authorize(Roles = "Client")]
-        [HttpPatch("wishlist/{productId}")]
         public async Task<IActionResult> ModifyWishList(int productId, string actionWishList)
         {
             try
@@ -94,7 +91,6 @@ namespace PrBeleBackend.API.Controllers
                 //int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
                 int customerId = 1;
 
-                bool res = await this._productModifierService.ModifyWishList(customerId, productId, modifyAction);
                 bool res = await this._productModifierService.ModifyWishList(customerId, productId, actionWishList);
 
                 return Ok(new
