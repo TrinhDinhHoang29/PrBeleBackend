@@ -292,7 +292,7 @@ namespace PrBeleBackend.API.Controllers
                 return NotFound(new
                 {
                     status = 404,
-                    message = "Can't find product from slug." 
+                    message = "Can't find product from slug!." 
                 });
             }
 
