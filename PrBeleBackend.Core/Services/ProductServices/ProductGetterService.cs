@@ -82,6 +82,13 @@ namespace PrBeleBackend.Core.Services.ProductServices
 
                     return productByCatRefId;
 
+                case "Price":
+                    List<string> prices = searchStr.Split('-').ToList();
+
+                    List<ProductResponse> productByPrice = await this._productRepository.FilterProduct(products, product => this._productRepository.IsInPriceRange(product.Id, Convert.ToDecimal(prices[0]), Convert.ToDecimal(prices[1])));
+
+                    return productByPrice;
+
                 case "Color":
                 case "Size":
                     List<ProductResponse> productsByAttValId = await this._productRepository.FilterProduct(products, product => this._productRepository.IsHaveAttributeValue(product.Id, searchStr));

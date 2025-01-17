@@ -7,11 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DAD9B8DF-7EF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{51A00807-F732-4DF7-BECD-69757456512E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrBeleBackend.Core", "PrBeleBackend.core\PrBeleBackend.Core.csproj", "{651CF958-F152-40B3-8744-987E6D67B86A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrBeleBackend.Core", "PrBeleBackend.core\PrBeleBackend.Core.csproj", "{651CF958-F152-40B3-8744-987E6D67B86A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrBeleBackend.Infrastructure", "PrBeleBackend.Infrastructure\PrBeleBackend.Infrastructure.csproj", "{E09772A5-5C30-4F5F-8698-8193598E0135}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrBeleBackend.Infrastructure", "PrBeleBackend.Infrastructure\PrBeleBackend.Infrastructure.csproj", "{E09772A5-5C30-4F5F-8698-8193598E0135}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrBeleBackend.API", "PrBeleBackend.API\PrBeleBackend.API.csproj", "{50E728EF-3367-4EF8-BE6F-C363B2C01EEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrBeleBackend.API", "PrBeleBackend.API\PrBeleBackend.API.csproj", "{50E728EF-3367-4EF8-BE6F-C363B2C01EEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

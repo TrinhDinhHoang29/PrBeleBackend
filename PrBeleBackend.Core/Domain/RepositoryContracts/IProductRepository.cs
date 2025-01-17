@@ -31,6 +31,8 @@ namespace PrBeleBackend.Core.Domain.RepositoryContracts
 
         public bool IsHaveCategoryRef(int productId, int categoryRefId);
 
+        public bool IsInPriceRange(int productId, decimal minPrice, decimal maxPrice)
+
         public Task<ProductResponse?> ProductDetailAdmin(int id);
 
         public Task<ProductResponse?> ProductDetailClient(int? id, string? slug);
