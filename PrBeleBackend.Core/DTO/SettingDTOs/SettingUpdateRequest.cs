@@ -10,11 +10,9 @@ namespace PrBeleBackend.Core.DTO.SettingDTOs
 {
     public class SettingUpdateRequest
     {
-        [Required]
-        public IFormFile? MainLogo { get; set; }
-        [Required]
+        public IFormFile? MainLogo { get; set; } = null;
 
-        public IFormFile? SloganLogo { get; set; }
+        public IFormFile? SloganLogo { get; set; } = null;
         [Required]
         public string? Slogan { get; set; }
         [Required]
@@ -37,18 +35,12 @@ namespace PrBeleBackend.Core.DTO.SettingDTOs
         public string? InstagramLink { get; set; }
         [Required]
         public string? YoutubeLink { get; set; }
-        [Required]
-        public IFormFile? MainBanner { get; set; }
-        [Required]
-        public IFormFile? SubBanner1 { get; set; }
-        [Required]
-        public IFormFile? SubBanner2 { get; set; }
-        [Required]
-        public IFormFile? SlideshowBanner1 { get; set; }
-        [Required]
-        public IFormFile? SlideshowBanner2 { get; set; }
-        [Required]
-        public IFormFile? SlideshowBanner3 { get; set; }
+        public IFormFile? MainBanner { get; set; } = null;
+        public IFormFile? SubBanner1 { get; set; } = null;
+        public IFormFile? SubBanner2 { get; set; } = null;
+        public IFormFile? SlideshowBanner1 { get; set; } = null;
+        public IFormFile? SlideshowBanner2 { get; set; } = null;
+        public IFormFile? SlideshowBanner3 { get; set; } = null;
         [Required]
         public string? Description { get; set; }
         [Required]
