@@ -151,6 +151,7 @@ namespace PrBeleBackend.API.Controllers
             try
             {
                 List<ProductResponse> productResponses = await this._productGetterService.GetAllProductClient();
+                int totalProduct = productResponses.Count;
 
                 productResponses = productResponses
                     .Where(p => p.CategoryStatus == 1)
@@ -179,7 +180,8 @@ namespace PrBeleBackend.API.Controllers
                         pagination = new
                         {
                             currentPage = page,
-                            totalPage = Math.Ceiling(Convert.ToDecimal(productResponses.Count()) / limit)
+                            totalPage = Math.Ceiling(Convert.ToDecimal(productResponses.Count()) / limit),
+                            totalProduct = totalProduct
                         }
                     },
                     message = "Get products success !"
