@@ -17,7 +17,7 @@ namespace PrBeleBackend.Core.DTO.OrderDTOs
         public string? PhoneNumber { get; set; }
         [Required, StringLength(255)]
         public string? Address { get; set; }
-        public string? Note { get; set; }
+        public string? Note { get; set; } = "Không có";
 
     }
 }

@@ -146,12 +146,14 @@ namespace PrBeleBackend.API.Controllers
                 PaymentResponseModel response = _vnPayService.PaymentExecute(Request.Query);
                 if (!response.Success)
                 {
-                    return Ok(new
-                    {
-                        status = 400,
-                        data = response,
-                        message = "Payment failed."
-                    });
+                    //return Ok(new
+                    //{
+                    //    status = 400,
+                    //    data = response,
+                    //    message = "Payment failed."
+                    //});
+                    return Redirect($"http://localhost:3000/cart?status=11&message={"Payment failed."}");
+
                 }
 
                 // Lấy thông tin giỏ hàng
@@ -174,14 +176,18 @@ namespace PrBeleBackend.API.Controllers
                                  });
                 if (order == null)
                 {
-                    return BadRequest(new { status = 400, message = "Failed to create order." });
+                    //return BadRequest(new { status = 400, message = "Failed to create order." });
+                    return Redirect($"http://localhost:3000/cart?status=11&message={"Failed to create order."}");
+
                 }
 
                 // Cập nhật kho hàng và xử lý sản phẩm trong đơn hàng
                 var result = await ProcessOrderItems(order, cart);
                 if (!result)
                 {
-                    return BadRequest(new { status = 400, message = "Failed to process order items." });
+                    return Redirect($"http://localhost:3000/cart?status=11&message={"Failed to process order items."}");
+
+                    //return BadRequest(new { status = 400, message = "Failed to process order items." });
                 }
 
                 // Xóa giỏ hàng cũ và tạo giỏ hàng mới
@@ -207,7 +213,7 @@ namespace PrBeleBackend.API.Controllers
                 Order? orderExist = await _dbContext.orders
                 .Include(o => o.ProductOrders)
                 .ThenInclude(o => o.Variant)
-                .Where(o => o.Status == 1 && o.UserId == customerId)
+                .Where(o => (o.Status == 1||o.Status == 2) && o.UserId == customerId)
                 .FirstOrDefaultAsync(o => o.Id == Id);
                 if (orderExist == null)
                 {

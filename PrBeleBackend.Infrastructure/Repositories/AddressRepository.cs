@@ -85,7 +85,6 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     // => cập nhật lại address đang mặc định trước đó
                     if (addressCustomer != null)
                         addressCustomer.IsDefault = false;
-                    else
                         addressExist.IsDefault = true;
                 
             }
