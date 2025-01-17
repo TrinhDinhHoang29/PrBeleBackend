@@ -58,6 +58,10 @@ namespace PrBeleBackend.API.Controllers
                 return Ok(new
                 {
                     status = 200,
+                    data = new
+                    {
+
+                    },
                     message = "Password changed successfully."
 
                 });
