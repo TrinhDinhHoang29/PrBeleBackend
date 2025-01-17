@@ -301,8 +301,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 Discount = p.Discount,
                 BasePrice = p.BasePrice,
                 Slug = p.Slug,
-                //View = p.View,
-                //Like = p.Like,
+                View = p.View,
+                Like = p.Like,
                 Thumbnail = p.Thumbnail,
                 Status = p.Status,
                 UpdatedAt = p.UpdatedAt,
@@ -546,18 +546,18 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     }
                 case nameof(Product.Like):
                     {
-                        if (req.ModifyAction != "Reduce" || req.ModifyAction != "Increase")
+                        if (req.ModifyAction != "Reduce" && req.ModifyAction != "Increase")
                         {
                             throw new ArgumentNullException("Wrong action!");
                         }
 
                         if(req.ModifyAction == "Reduce")
                         {
-                            productMatching.Like++;
+                            productMatching.Like--;
                         }
                         else
                         {
-                            productMatching.Like--;
+                            productMatching.Like++;
                         }
 
                         break;
@@ -571,11 +571,11 @@ namespace PrBeleBackend.Infrastructure.Repositories
 
                         if (req.ModifyAction == "Reduce")
                         {
-                            productMatching.View++;
+                            productMatching.View--;
                         }
                         else
                         {
-                            productMatching.View--;
+                            productMatching.View++;
                         }
 
                         break;
