@@ -50,6 +50,13 @@ namespace PrBeleBackend.Core.Services.OrderServices.cs
             {
                 throw new Exception("Request invalid !");
             }
+            if(StatusRequest.Status == 3)
+            {
+                orderExist.ShipDate = DateTime.Now;
+            }
+            if(StatusRequest.Status == 4){
+                orderExist.ReceiveDate = DateTime.Now;
+            }
             orderExist.Status = StatusRequest.Status;
 
             Order result = await _orderRepository.UpdateOrder(orderExist);
