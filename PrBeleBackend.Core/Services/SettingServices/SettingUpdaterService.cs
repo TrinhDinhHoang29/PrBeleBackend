@@ -20,17 +20,32 @@ namespace PrBeleBackend.Core.Services.SettingServices
         }
         public async Task<Setting> UpdateSetting(SettingUpdateRequest settingUpdateRequest)
         {
+            string mainLogo = "";
+            string sloganLogo = "";
+            string mainBanner = "";
+            string subBanner1 = "";
+            string subBanner2 = "";
+            string slideshowBanner1="";
+            string slideshowBanner2 = "";
+            string slideshowBanner3 = "";
+
+            if (settingUpdateRequest.MainLogo!=null)
+                 mainLogo = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.MainLogo, "Settings", 2000, 1000);
+            if (settingUpdateRequest.SloganLogo != null)
+                sloganLogo = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.SloganLogo, "Settings", 2000, 1000);
+            if (settingUpdateRequest.MainBanner != null)
+                 mainBanner = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.MainBanner, "Settings", 1722, 620);
+            if (settingUpdateRequest.SubBanner1 != null)
+                subBanner1 = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.SubBanner1, "Settings", 820, 620);
+            if (settingUpdateRequest.SubBanner2 != null)
+                 subBanner2 = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.SubBanner2, "Settings", 820, 620);
+            if (settingUpdateRequest.SlideshowBanner1 != null)
+                slideshowBanner1 = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.SlideshowBanner1, "Settings", 1920, 787);
+            if (settingUpdateRequest.SlideshowBanner2 != null)
+                 slideshowBanner2 = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.SlideshowBanner2, "Settings", 1920, 787);
+            if (settingUpdateRequest.SlideshowBanner3 != null)
+                slideshowBanner3 = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.SlideshowBanner3, "Settings", 1920, 787);
             ValidationHelper.ModelValidation(settingUpdateRequest);
-
-            string mainLogo = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.MainLogo, "Settings", 200, 100);
-            string sloganLogo = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.SloganLogo, "Settings", 200, 100);
-            string mainBanner = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.MainBanner, "Settings", 861, 310);
-            string subBanner1 = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.SubBanner1, "Settings", 85, 62);
-            string subBanner2 = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.SubBanner2, "Settings", 85, 62);
-            string slideshowBanner1 = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.SlideshowBanner1, "Settings", 1920, 787);
-            string slideshowBanner2 = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.SlideshowBanner2, "Settings", 1920, 787);
-            string slideshowBanner3 = await _cloudinaryContract.UploadImageAsync(settingUpdateRequest.SlideshowBanner3, "Settings", 1920, 787);
-
 
             Setting setting = settingUpdateRequest.ToSetting();
             setting.MainLogo = mainLogo;
