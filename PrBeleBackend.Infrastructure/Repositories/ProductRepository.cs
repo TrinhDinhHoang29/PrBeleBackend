@@ -246,6 +246,11 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .Any(p => p.Id == productId && p.Category.ReferenceCategoryId == categoryRefId);
         }
 
+        public bool IsInPriceRange(int productId, decimal minPrice, decimal maxPrice)
+        {
+            return this._context.products.Any(p => p.Id == productId && p.BasePrice >= minPrice && p.BasePrice <= maxPrice);
+        }
+
         public async Task<ProductResponse?> ProductDetailAdmin(int id)
         {
             return await _context.products

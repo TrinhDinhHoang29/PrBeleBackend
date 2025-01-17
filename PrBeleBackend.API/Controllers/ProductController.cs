@@ -112,9 +112,38 @@ namespace PrBeleBackend.API.Controllers
             }
         }
 
+        [HttpGet("maxPrice")]
+        public async Task<IActionResult> GetMaxPrice()
+        {
+            try
+            {
+                decimal maxPrice = this._beleStoreContext.products
+                    .Where(p => p.Deleted == false && p.Status == 1)
+                    .Max(p => p.BasePrice);
+
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        maxPrice = maxPrice
+                    },
+                    message = "Get products success !"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = ex.Message
+                });
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetFilteredProduct(
-            Dictionary<string, string>? filter,
+            [FromQuery] Dictionary<string, string>? filter,
             int page = 1,
             int limit = 10
         )
