@@ -76,6 +76,7 @@ namespace PrBeleBackend.API.Controllers
                 productId = v.Variant.ProductId,
                 price = v.Variant.Price,
                 quantity = v.Quantity,
+                discount = v.Variant.Product.Discount.DiscountValue,
                 attribute = v.Variant.VariantAttributeValues?.Select(e => new Dictionary<string, string>
                 {
                     { e.AttributeValue.AttributeType.Name, e.AttributeValue.Name }

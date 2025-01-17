@@ -88,8 +88,7 @@ namespace PrBeleBackend.API.Controllers
         {
             try
             {
-                //int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                int customerId = 1;
+                int customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
                 bool res = await this._productModifierService.ModifyWishList(customerId, productId, actionWishList);
 

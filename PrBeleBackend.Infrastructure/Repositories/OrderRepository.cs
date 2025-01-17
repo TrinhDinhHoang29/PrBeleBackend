@@ -69,6 +69,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 .Include(o => o.ProductOrders)
                     .ThenInclude(po => po.Variant)
                     .ThenInclude(v=>v.Product)
+                    .ThenInclude(v => v.Discount)
 
                .FirstOrDefaultAsync(o => o.Id == Id);
 

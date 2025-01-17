@@ -207,7 +207,7 @@ namespace PrBeleBackend.API.Controllers
                 Order? orderExist = await _dbContext.orders
                 .Include(o => o.ProductOrders)
                 .ThenInclude(o => o.Variant)
-                .Where(o => o.Status == 1 && o.UserId == customerId)
+                .Where(o => (o.Status == 1||o.Status == 2) && o.UserId == customerId)
                 .FirstOrDefaultAsync(o => o.Id == Id);
                 if (orderExist == null)
                 {

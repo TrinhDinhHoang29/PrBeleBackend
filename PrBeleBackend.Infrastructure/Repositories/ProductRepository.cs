@@ -564,7 +564,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     }
                 case nameof(Product.View):
                     {
-                        if (req.ModifyAction != "Reduce" || req.ModifyAction != "Increase")
+                        if (req.ModifyAction != "Reduce" && req.ModifyAction != "Increase")
                         {
                             throw new ArgumentNullException("Wrong action!");
                         }
