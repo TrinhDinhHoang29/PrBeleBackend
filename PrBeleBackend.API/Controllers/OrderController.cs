@@ -25,36 +25,61 @@ namespace PrBeleBackend.API.Controllers
             _orderUpdaterService = orderUpdaterService;
         }
         [HttpGet]   
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int? status)
         {
+            
             var customerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             List<OrderResponse> orderResponses = await _orderGetterService.GetAllOrder();
-            var orders = orderResponses.Where(o => o.UserId == int.Parse(customerId)).Select(orderResponses => new
-            {
-                id = orderResponses.Id,
-                name = orderResponses.FullName,
-                phoneNumber = orderResponses.PhoneNumber,
-                address = orderResponses.Address,
-                note = orderResponses.Note,
-                payMethod = orderResponses.PayMethod,
-                shipDate = orderResponses.ShipDate,
-                receiveDate = orderResponses.ReceiveDate,
-                status = orderResponses.Status,
-                totalMoney = orderResponses.TotalMoney,
-                createdAt = orderResponses.CreatedAt,
-            }).ToList();
+            if(status != null)
+                return Ok(new
+                {
+                    status = 200,
+                    data = new
+                    {
+                        orders = orderResponses.Where(o => o.UserId == int.Parse(customerId) && o.Status == status
+                                ).Select(orderResponses => new
+                                {
+                                    id = orderResponses.Id,
+                                    name = orderResponses.FullName,
+                                    phoneNumber = orderResponses.PhoneNumber,
+                                    address = orderResponses.Address,
+                                    note = orderResponses.Note,
+                                    payMethod = orderResponses.PayMethod,
+                                    shipDate = orderResponses.ShipDate,
+                                    receiveDate = orderResponses.ReceiveDate,
+                                    status = orderResponses.Status,
+                                    totalMoney = orderResponses.TotalMoney,
+                                    createdAt = orderResponses.CreatedAt,
+                                }).ToList(),
+                     },
+                    message = "Data fetched successfully."
+                });
             return Ok(new
             {
                 status = 200,
                 data = new
                 {
-                    orders = orders
+                    orders = orderResponses.Where(o => o.UserId == int.Parse(customerId)
+                               ).Select(orderResponses => new
+                               {
+                                   id = orderResponses.Id,
+                                   name = orderResponses.FullName,
+                                   phoneNumber = orderResponses.PhoneNumber,
+                                   address = orderResponses.Address,
+                                   note = orderResponses.Note,
+                                   payMethod = orderResponses.PayMethod,
+                                   shipDate = orderResponses.ShipDate,
+                                   receiveDate = orderResponses.ReceiveDate,
+                                   status = orderResponses.Status,
+                                   totalMoney = orderResponses.TotalMoney,
+                                   createdAt = orderResponses.CreatedAt,
+                               }).ToList(),
                 },
                 message = "Data fetched successfully."
             });
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("detail/{Id}")]
         public async Task<IActionResult> Detail(int Id)
         {
             OrderResponse? orderResponses = await _orderGetterService.GetOrderById(Id);
