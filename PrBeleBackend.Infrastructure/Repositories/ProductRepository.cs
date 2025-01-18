@@ -158,6 +158,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
             }
 
             List<ProductResponse?> products = result
+                .Where(p => p.Product.Deleted == false)
                 .GroupBy(k => k.ProductId)
                 .OrderByDescending(k => k.Count())
                 .Skip((limit - 1) * (page - 1))
@@ -448,10 +449,6 @@ namespace PrBeleBackend.Infrastructure.Repositories
         {
             product.ProductKeywords = new List<ProductKeyword>();
 
-            await this._context.products.AddAsync(product);
-
-            await this._context.SaveChangesAsync();
-
             foreach (var keyword in keywords)
             {
                 Keyword? keywordMatch = await this._context.keywords
@@ -468,6 +465,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
 
                     await this._context.keywords.AddAsync(keywordInsert);
 
+                    await this._context.SaveChangesAsync();
+
                     product.ProductKeywords.Add(new ProductKeyword
                     {
                         KeywordId = keywordInsert.Id
@@ -481,6 +480,8 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     });
                 }
             }
+
+            await this._context.products.AddAsync(product);
 
             await this._context.SaveChangesAsync();
 
