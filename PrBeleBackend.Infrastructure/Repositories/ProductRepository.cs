@@ -160,7 +160,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
             List<ProductResponse?> products = result
                 .GroupBy(k => k.ProductId)
                 .OrderByDescending(k => k.Count())
-                .Skip(limit * (page - 1))
+                .Skip((limit - 1) * (page - 1))
                 .Take(limit)
                 .Select(pk => pk.Select(p => new ProductResponse
                 {
