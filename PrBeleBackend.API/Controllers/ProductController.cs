@@ -206,17 +206,22 @@ namespace PrBeleBackend.API.Controllers
         {
             try
             {
-                List<ProductResponse> productResponse = await this._productSearcherService.SearchProduct(searchName, page, limit);
+                List<ProductResponse> productResponse = await this._productSearcherService.SearchProduct(searchName, page, limit + 1);
 
                 int totalPage = 0;
 
-                if(productResponse.Count < limit)
-                {
-                    totalPage = 1;
-                }
-                else if(productResponse.Count > limit)
+                if (productResponse.Count > limit)
                 {
                     totalPage = page + 1;
+                }
+                else if (productResponse.Count <= limit)
+                {
+                    totalPage = page;
+                }
+
+                if (productResponse.Count > limit)
+                {
+                    productResponse = productResponse.Slice(0, productResponse.Count - 1);
                 }
 
                 return Ok(new

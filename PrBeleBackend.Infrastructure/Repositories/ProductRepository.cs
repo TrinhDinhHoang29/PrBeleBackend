@@ -448,7 +448,11 @@ namespace PrBeleBackend.Infrastructure.Repositories
         {
             product.ProductKeywords = new List<ProductKeyword>();
 
-            foreach(var keyword in keywords)
+            await this._context.products.AddAsync(product);
+
+            await this._context.SaveChangesAsync();
+
+            foreach (var keyword in keywords)
             {
                 Keyword? keywordMatch = await this._context.keywords
                     .Where(k => k.Key == keyword)
@@ -477,8 +481,6 @@ namespace PrBeleBackend.Infrastructure.Repositories
                     });
                 }
             }
-
-            await this._context.products.AddAsync(product);
 
             await this._context.SaveChangesAsync();
 
@@ -595,7 +597,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
         public async Task<Product> DeleteProduct(int id)
         {
             Product? product = await this._context.products
-                .Where(product => !product.Deleted)
+                .Where(product => product.Deleted == false)
                 .Where(product => product.Id == id)
                 .FirstOrDefaultAsync();
 
@@ -604,7 +606,7 @@ namespace PrBeleBackend.Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(product));
             }
 
-            product.Deleted = false;
+            product.Deleted = true;
 
             await this._context.SaveChangesAsync();
 
